@@ -62,6 +62,16 @@ python aday_bp_colab.py --csv my_bp.csv # 실데이터 (열: ID,day,tod,SBP,DBP,
 </div>
 
 <div class="card">
+<h2>🧑‍💻 FTF 라이브 아바타 — 토큰 서버</h2>
+<p>QnA의 <b>FTF 모드</b>(반듯이 라이브 영상 대화)는 HeyGen 스트리밍 토큰이 필요합니다. 라이브 키는 <b>서버에서만</b> 쓰고 노출하지 않습니다. <code>TTT·STS</code>는 토큰 없이 바로 작동, <code>FTF</code>만 이 서버 필요.</p>
+<pre>Vercel: api/heygen-token.js + 환경변수 HEYGEN_LIVE_API_KEY  → /api/heygen-token 자동연결
+로컬:   HEYGEN_LIVE_API_KEY=... python server_local.py  (window.HEYGEN_TOKEN_URL 지정)</pre>
+<div class="btns">
+<a class="btn b-git" href="https://github.com/sdkparkforbi/bp-interpolation-book/tree/main/skill/ftf" target="_blank" rel="noopener">📂 ftf/ (Vercel 함수·로컬 서버·README)</a>
+</div>
+</div>
+
+<div class="card">
 <h2>📦 포함 내용</h2>
 <ul>
 <li><b>PART1 보간</b> — 정제·분할·분단위 하이브리드 보간</li>
