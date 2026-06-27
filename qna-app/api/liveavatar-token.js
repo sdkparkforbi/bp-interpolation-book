@@ -23,6 +23,8 @@ export default async function handler(req, res) {
     const avatarId = body.avatar_id;
     const contextId = body.context_id || null;
     const interactivityType = body.interactivity_type || "CONVERSATIONAL";
+    // voice_id 또는 context_id 중 하나는 필요(LiveAvatar). voice_id는 env LIVEAVATAR_VOICE_ID(ElevenLabs) 권장.
+    const voiceId = process.env.LIVEAVATAR_VOICE_ID || body.voice_id || null;
 
     if (!avatarId) return res.status(400).json({ error: "avatar_id required" });
 
@@ -40,7 +42,7 @@ export default async function handler(req, res) {
         avatar_persona: {
           context_id: contextId,
           language: "ko",
-          voice_settings: { model: "eleven_flash_v2_5", speed: 1.0 },
+          voice_settings: { ...(voiceId ? { voice_id: voiceId } : {}), model: "eleven_flash_v2_5", speed: 1.0 },
           stt_config: { provider: "deepgram" },
         },
         interactivity_type: interactivityType,
