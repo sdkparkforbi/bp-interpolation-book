@@ -25,7 +25,10 @@ export default async function handler(req, res) {
     const contextId = body.context_id || null;
     const interactivityType = body.interactivity_type || "CONVERSATIONAL";
     // 아바타에 워크스페이스 음성이 없으면 voice_id가 필요. LiveAvatar는 voice_id를 avatar_persona 바로 아래에서 받음.
-    const voiceId = process.env.LIVEAVATAR_VOICE_ID || body.voice_id || "33868819-2331-4d2f-8b7d-dd589c82cead";
+    const DEFAULT_VOICE_ID = "33868819-2331-4d2f-8b7d-dd589c82cead";
+    let voiceId = process.env.LIVEAVATAR_VOICE_ID || body.voice_id || DEFAULT_VOICE_ID;
+    // 가드: voice_id 자리에 실수로 avatar_id가 들어간 경우(예: env 오설정) 기본 voice로 교정.
+    if (!voiceId || voiceId === avatarId) voiceId = DEFAULT_VOICE_ID;
 
     if (!avatarId) return res.status(400).json({ error: "avatar_id required" });
 
