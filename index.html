@@ -22,6 +22,9 @@ h1{font-size:32px;margin:.2em 0}.sub{color:#9aa7bd;font-size:16px;margin-bottom:
 <h1>🩸 혈압(BP) 분석 그림책</h1>
 <p class="sub">마스킹된 혈압을 어떻게 채우고(보간), 내일을 어떻게 내다보고(예측), 새 사람의 혈압을 어떻게 추정할까(추정) — 120명 데이터로 푸는 방법론. 팀 이해용.</p>
 <div class="cards">
+<a class="card" href="plan.html">
+<img src="thumbnail_plan.png" alt="연구 계획">
+<div class="body"><h2>📋 연구 계획</h2><p>전체 연구 설계 — PART1 데이터·정제·보간 / PART2 추정(Nowcasting) / PART3 예측(Forecasting). 전 모형계열(시계열·회귀·스펙트럴·perceptron·tree·transformer × single·multi), day1 튜닝·day2~6 학습·day7 예측, 평가는 실측에서만. 환자 대시보드 mock-up. 팀 공유용.</p><span class="tag">Research Plan</span></div></a>
 <a class="card" href="part1.html">
 <img src="thumbnail_part1.png" alt="PART 1 보간">
 <div class="body"><h2>PART 1 · 혈압 보간</h2><p>마스킹된 혈압을 주변값·합성커널로 복원. 가중규칙×추정수준, 군집별 합성커널 3개+2경로 회귀. 120명 부록.</p><span class="tag">Interpolation</span></div></a>
@@ -31,9 +34,6 @@ h1{font-size:32px;margin:.2em 0}.sub{color:#9aa7bd;font-size:16px;margin-bottom:
 <a class="card" href="part3.html">
 <img src="thumbnail_part3.png" alt="PART 3 추정">
 <div class="body"><h2>PART 3 · 혈압 추정</h2><p>혈압 이력 없는 새 사람을 위한 3단계 분해 — 설문(KNHANES 외부앵커)으로 평균 수준, 1일 보정으로 개인 확정, 연령×성별 합성커널로 일주기. 누수차단·전국 일반화. 120명.</p><span class="tag">Estimation</span></div></a>
-<a class="card" href="plan.html">
-<img src="thumbnail_plan.png" alt="연구 계획">
-<div class="body"><h2>📋 연구 계획</h2><p>전체 연구 설계 — PART1 데이터·정제·보간 / PART2 추정(Nowcasting) / PART3 예측(Forecasting). 전 모형계열(시계열·회귀·스펙트럴·perceptron·tree·transformer × single·multi), day1 튜닝·day2~6 학습·day7 예측, 평가는 실측에서만. 환자 대시보드 mock-up. 팀 공유용.</p><span class="tag">Research Plan</span></div></a>
 <a class="card" href="paper.html">
 <img src="thumbnail_paper.png" alt="연구 논문">
 <div class="body"><h2>📄 연구 논문</h2><p>개인 일주기 프로파일 기반 일상생활 24시간 혈압 예측. 위상·역시간·군집 커널 13모형, 1시간 전방 SBP 3.83·DBP 2.78(BHS Grade A). N=120.</p><span class="tag">Paper</span>
