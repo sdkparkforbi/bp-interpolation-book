@@ -70,8 +70,10 @@ python aday_bp_colab.py --csv my_bp.csv # 실데이터 (열: ID,day,tod,SBP,DBP,
   LIVEAVATAR_API_KEY  # FTF (LiveAvatar.com)
   AVATAR_ID           # FTF 아바타 UUID</pre>
 <div class="btns">
-<a class="btn b-git" href="https://github.com/sdkparkforbi/bp-interpolation-book/tree/main/qna-app" target="_blank" rel="noopener">📂 qna-app/ (api 4개 + index.html + README)</a>
+<a class="btn" style="background:#000;color:#fff" href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fsdkparkforbi%2Fbp-interpolation-book&root-directory=qna-app&env=OPENAI_API_KEY,LIVEAVATAR_API_KEY,LIVEAVATAR_VOICE_ID&envDescription=TTT/STS=OPENAI_API_KEY,%20FTF=LIVEAVATAR_API_KEY(=HEYGEN_LIVE_API_KEY)+LIVEAVATAR_VOICE_ID&project-name=day-bp-qna" target="_blank" rel="noopener">▲ Deploy to Vercel (원클릭)</a>
+<a class="btn b-git" href="https://github.com/sdkparkforbi/bp-interpolation-book/tree/main/qna-app" target="_blank" rel="noopener">📂 qna-app/</a>
 </div>
+<p class="muted" style="margin-top:8px">버튼 클릭 → GitHub 연결 → <b>Root Directory를 <code>qna-app</code></b> 확인 → 환경변수 3개 입력 → Deploy. (<code>LIVEAVATAR_API_KEY</code> = 본인 <code>HEYGEN_LIVE_API_KEY</code> 값, <code>AVATAR_ID</code>는 코드에 dkpark 기본 내장)</p>
 <p class="muted" style="margin-top:10px">GitHub Pages는 정적이라 서버리스 api가 안 돌아갑니다 — Vercel에 올려야 TTT/STS/FTF가 실작동. 현재 사이트의 <a href="qna.html" style="color:#0e7c63;font-weight:700">qna.html</a>은 정적 데모(TTT·STS 브라우저, FTF는 토큰서버 필요).</p>
 </div>
 
