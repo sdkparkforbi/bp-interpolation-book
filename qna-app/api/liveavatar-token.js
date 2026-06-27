@@ -24,11 +24,10 @@ export default async function handler(req, res) {
     // 선택: 지식(RAG) 컨텍스트를 묶으려면 body.context_id 로 전달(없으면 null).
     const contextId = body.context_id || null;
     const interactivityType = body.interactivity_type || "CONVERSATIONAL";
-    // 아바타에 워크스페이스 음성이 없으면 voice_id가 필요. LiveAvatar는 voice_id를 avatar_persona 바로 아래에서 받음.
-    const DEFAULT_VOICE_ID = "33868819-2331-4d2f-8b7d-dd589c82cead";
-    let voiceId = process.env.LIVEAVATAR_VOICE_ID || body.voice_id || DEFAULT_VOICE_ID;
-    // 가드: voice_id 자리에 실수로 avatar_id가 들어간 경우(예: env 오설정) 기본 voice로 교정.
-    if (!voiceId || voiceId === avatarId) voiceId = DEFAULT_VOICE_ID;
+    // voice_id 고정(요청): env에 의존하지 않고 dkpark 음성으로 박음. LiveAvatar는 voice_id를 avatar_persona 바로 아래에서 받음.
+    // (body.voice_id로만 예외 override 가능. 잘못된 LIVEAVATAR_VOICE_ID env는 무시.)
+    let voiceId = body.voice_id || "33868819-2331-4d2f-8b7d-dd589c82cead";
+    if (!voiceId || voiceId === avatarId) voiceId = "33868819-2331-4d2f-8b7d-dd589c82cead";
 
     if (!avatarId) return res.status(400).json({ error: "avatar_id required" });
 
