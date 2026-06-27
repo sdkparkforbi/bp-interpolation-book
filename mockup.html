@@ -25,10 +25,10 @@ svg{width:100%;height:auto;display:block}
 .scn{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 4px}
 .scn button{background:#141b2e;border:1px solid #2a3450;color:#cdd6e8;border-radius:11px;padding:8px 14px;font-size:13px;cursor:pointer;font-weight:700;transition:.15s}
 .scn button:hover{border-color:#16a085}.scn button.on{background:#16a085;border-color:#16a085;color:#fff}
-.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px}
-.tb{border-radius:13px;padding:12px 13px;border:1px solid}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}
+.tb{border-radius:12px;padding:10px 9px;border:1px solid;min-width:0;overflow:hidden}
 .tb.past{background:#0e1730;border-color:#23314e}.tb.now{background:#0f2a22;border-color:#1c6b54}.tb.fut{background:#1a1330;border-color:#3a2c5e}
-.tb .l{font-size:11.5px;color:#9aa6bd;font-weight:700}.tb .v{font-size:26px;font-weight:800;margin-top:2px}.tb .u{font-size:11px;color:#7a85a0}
+.tb .l{font-size:11px;color:#9aa6bd;font-weight:700;white-space:nowrap}.tb .v{font-size:19px;font-weight:800;margin-top:3px;white-space:nowrap}.tb .u{font-size:10.5px;color:#7a85a0}
 .tb.now .v{color:#3ddc97}.tb.fut .v{color:#b9a4f0}
 .grade{display:inline-flex;align-items:center;gap:6px;background:#0f3d2e;color:#3ddc97;border-radius:9px;padding:5px 11px;font-weight:800;font-size:13px;margin-top:10px}
 .row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #1b2336;font-size:13.5px}
