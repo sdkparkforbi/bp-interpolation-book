@@ -21,10 +21,10 @@ export default async function handler(req, res) {
   try {
     const body = req.body || {};
     const avatarId = body.avatar_id;
-    // FTF는 context_id(LiveAvatar 페르소나: 음성+지식 RAG, 권장) 또는 voice_id(ElevenLabs) 중 하나 필요.
-    const contextId = body.context_id || process.env.LIVEAVATAR_CONTEXT_ID || null;
+    // 음성은 LiveAvatar 워크스페이스의 아바타에 이미 설정돼 있습니다 → voice_id를 따로 넣지 않습니다(참고앱 방식).
+    // 선택: 지식(RAG) 컨텍스트를 묶으려면 body.context_id 로 전달(없으면 null).
+    const contextId = body.context_id || null;
     const interactivityType = body.interactivity_type || "CONVERSATIONAL";
-    const voiceId = process.env.LIVEAVATAR_VOICE_ID || body.voice_id || null;
 
     if (!avatarId) return res.status(400).json({ error: "avatar_id required" });
 
@@ -42,7 +42,7 @@ export default async function handler(req, res) {
         avatar_persona: {
           context_id: contextId,
           language: "ko",
-          voice_settings: { ...(voiceId ? { voice_id: voiceId } : {}), model: "eleven_flash_v2_5", speed: 1.0 },
+          voice_settings: { model: "eleven_flash_v2_5", speed: 1.0 },
           stt_config: { provider: "deepgram" },
         },
         interactivity_type: interactivityType,
