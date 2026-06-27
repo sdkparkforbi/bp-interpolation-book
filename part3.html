@@ -11,6 +11,10 @@ body{margin:0;font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;color
 .hero{background:linear-gradient(135deg,#5a2410,#d85a30);color:#fff;padding:40px 30px 30px}
 .hero h1{font-size:32px;margin:0 0 6px}.hero p{font-size:16px;color:#fadbcf;margin:6px 0 0}
 .toc{font-size:13px;color:var(--accent2);margin:14px 0 0;line-height:2}.toc a{color:var(--accent2);text-decoration:none;margin:0 8px 0 0;white-space:nowrap;display:inline-block}
+.chapnav{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:9px;margin:18px 0}
+.chapnav a{display:flex;flex-direction:column;align-items:center;gap:5px;background:#fff;border:1px solid #f0ddd3;border-radius:13px;padding:13px 8px;text-decoration:none;color:#3a2419;text-align:center;transition:.15s;box-shadow:0 1px 6px rgba(90,36,16,.05)}
+.chapnav a:hover{border-color:var(--accent);transform:translateY(-3px)}
+.chapnav .ci{font-size:25px;line-height:1}.chapnav .ct{font-size:12px;font-weight:700;color:#5a3526}
 .chap{display:flex;align-items:center;gap:12px;margin:48px 0 6px}
 .chap .no{flex:none;min-width:54px;height:40px;padding:0 12px;border-radius:20px;background:var(--accent);color:#fff;font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center}
 .chap h2{font-size:22px;margin:0}
@@ -37,7 +41,14 @@ th,td{border:1px solid #e6e6ee;padding:6px 8px;text-align:center}th{background:#
 <div class="hero"><h1>🔮 PART 3 · 혈압 예측 (Forecasting)</h1>
 <p>비워둔 <b>7일째</b>를 PART2 추정 모형으로 내다본다 — <b>정적(static, 1-step 재앵커)</b>과 <b>동적(dynamic, 예측 굴림)</b>. 그리고 세션을 Grade A로 올리려면 무엇이 필요한가</p></div>
 <div class="wrap">
-<p class="toc">📑 <a href="#c1">1. 예측이란</a><a href="#c2">2. 정적 vs 동적</a><a href="#c3">3. 한 환자 궤적</a><a href="#c4">4. 결과</a><a href="#c5">5. 세션을 A로 — 무엇이 필요한가</a><a href="#c6">6. 결론</a></p>
+<p style="font-size:13px;color:var(--muted);margin:14px 0 2px;font-weight:700">📑 챕터 바로가기</p>
+<div class="chapnav">
+<a href="#c1"><span class="ci">🔗</span><span class="ct">예측이란</span></a>
+<a href="#c2"><span class="ci">👣</span><span class="ct">정적 vs 동적</span></a>
+<a href="#c3"><span class="ci">📈</span><span class="ct">환자 궤적</span></a>
+<a href="#c4"><span class="ci">🏁</span><span class="ct">결과</span></a>
+<a href="#c5"><span class="ci">🔬</span><span class="ct">세션 A 조건</span></a>
+<a href="#c6"><span class="ci">∎</span><span class="ct">결론</span></a></div>
 
 <div class="lead"><b>PART 3은 "예측(forecasting)"이다.</b> PART2에서 만든 추정 모형(E0 = 수준 + 위상, 편차 = 워치 + 지난추정)을 <b>자기회귀(AR)</b>로 굴려 <b>비워둔 7일째</b>를 맞힌다. 두 방식 — 매 순간 실측을 보고 한 걸음만 내다보는 <b>정적</b>, 자기 예측을 믿고 하루를 통째로 굴리는 <b>동적</b>. 성과는 7일째 실측에서만 잰다(MAE + BHS).</div>
 

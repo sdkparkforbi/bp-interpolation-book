@@ -11,6 +11,10 @@ body{margin:0;font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;color
 .hero{background:linear-gradient(135deg,#10463b,#16a085);color:#fff;padding:40px 30px 30px}
 .hero h1{font-size:32px;margin:0 0 6px}.hero p{font-size:16px;color:#d3f3ea;margin:6px 0 0}
 .toc{font-size:13px;color:var(--purple);margin:14px 0 0;line-height:2}.toc a{color:var(--purple);text-decoration:none;margin:0 8px 0 0;white-space:nowrap;display:inline-block}
+.chapnav{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:9px;margin:18px 0}
+.chapnav a{display:flex;flex-direction:column;align-items:center;gap:5px;background:#fff;border:1px solid #e4ece9;border-radius:13px;padding:13px 8px;text-decoration:none;color:#22303a;text-align:center;transition:.15s;box-shadow:0 1px 6px rgba(20,70,59,.05)}
+.chapnav a:hover{border-color:var(--teal);transform:translateY(-3px)}
+.chapnav .ci{font-size:25px;line-height:1}.chapnav .ct{font-size:12px;font-weight:700;color:#34495e}
 .chap{display:flex;align-items:center;gap:12px;margin:48px 0 6px}
 .chap .no{flex:none;min-width:54px;height:40px;padding:0 10px;border-radius:20px;background:var(--teal);color:#fff;font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center}
 .chap h2{font-size:22px;margin:0}
@@ -36,7 +40,18 @@ th,td{border:1px solid #e6e6ee;padding:5px 7px;text-align:center}th{background:#
 <div class="hero"><h1>🩺 PART 2 · 혈압 추정 (Nowcasting)</h1>
 <p>설문·외부데이터로 <b>수준</b>, 일주기로 <b>위상</b>, 워치·지난 추정으로 <b>편차</b> — 신규 환자의 <b>분단위 혈압</b>을 추정한다. days2-6, 검증 24명. (day7은 PART3 예측 전용)</p></div>
 <div class="wrap">
-<p class="toc">📑 <a href="#c0">0. 추정의 구조</a><a href="#c1">2-1 외부(KNHANES)</a><a href="#c2">2-2 내부데이터</a><a href="#c3">2-3 1-day calibration</a><a href="#c4">2-4 위상 커널</a><a href="#c5">2-5 와치(핵심)</a><a href="#c6">편차 모델</a><a href="#c7">20모형 zoo</a><a href="#c8">과적합</a><a href="#c9">결론</a></p>
+<p style="font-size:13px;color:var(--muted);margin:14px 0 2px;font-weight:700">📑 챕터 바로가기</p>
+<div class="chapnav">
+<a href="#c0"><span class="ci">🧭</span><span class="ct">추정 구조</span></a>
+<a href="#c1"><span class="ci">🌏</span><span class="ct">2-1 외부</span></a>
+<a href="#c2"><span class="ci">🏥</span><span class="ct">2-2 내부</span></a>
+<a href="#c3"><span class="ci">📅</span><span class="ct">2-3 1day</span></a>
+<a href="#c4"><span class="ci">🌀</span><span class="ct">2-4 위상</span></a>
+<a href="#c5"><span class="ci">⌚</span><span class="ct">2-5 와치</span></a>
+<a href="#c6"><span class="ci">📐</span><span class="ct">편차 모델</span></a>
+<a href="#c7"><span class="ci">🏆</span><span class="ct">20모형 zoo</span></a>
+<a href="#c8"><span class="ci">⚠️</span><span class="ct">과적합</span></a>
+<a href="#c9"><span class="ci">🏁</span><span class="ct">결론</span></a></div>
 
 <div class="lead"><b>PART 2는 "추정(estimation·Nowcasting)"이다.</b> 새 사람이 와도 — 설문과 외부 코호트(KNHANES)로 <b>평균 수준 L</b>을 잡고, 하루의 <b>위상(일주기)</b>을 더해 구조적 추정치 <b>E0 = 수준 + 위상</b>을 만든다. 그 뒤 남는 <b>편차 r = 실측 − E0</b>를 워치(급성 생리)와 지난 BP 추정으로 줄인다. 최종은 <b>분단위 혈압 곡선</b>이며, 성과는 실측 시점에서만 잰다(MAE + BHS, 세션·일평균).</div>
 
