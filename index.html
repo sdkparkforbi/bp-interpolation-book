@@ -1,10 +1,10 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>혈압(BP) 분석 그림책 — 보간 · 예측</title>
+<title>혈압(BP) 분석 그림책 — 보간 · 예측 · 추정</title>
 <meta property="og:type" content="website">
-<meta property="og:title" content="🩸 혈압(BP) 분석 그림책 — 보간(PART1) · 예측(PART2)">
-<meta property="og:description" content="마스킹된 혈압 보간 + 개인 시계열 24h 예측. 합성커널·VAR·VARX·군집별 모형까지, 120명 데이터로 푸는 방법론 그림책. 팀 이해용.">
-<meta property="og:image" content="https://sdkparkforbi.github.io/bp-interpolation-book/thumbnail_part1.png">
+<meta property="og:title" content="🩸 혈압(BP) 분석 그림책 — 보간(PART1) · 예측(PART2) · 추정(PART3)">
+<meta property="og:description" content="마스킹된 혈압 보간 + 개인 시계열 24h 예측 + 새 사람의 혈압 추정(KNHANES 외부앵커·1일 보정·합성커널). 120명 데이터로 푸는 방법론 그림책. 팀 이해용.">
+<meta property="og:image" content="https://sdkparkforbi.github.io/bp-interpolation-book/thumbnail_part3.png">
 <style>
 body{margin:0;font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#0f1320;color:#eee;line-height:1.7}
 .wrap{max-width:920px;margin:0 auto;padding:48px 20px 80px}
@@ -20,7 +20,7 @@ h1{font-size:32px;margin:.2em 0}.sub{color:#9aa7bd;font-size:16px;margin-bottom:
 .foot{color:#6b7688;font-size:13px;margin-top:40px;text-align:center}
 </style></head><body><div class="wrap">
 <h1>🩸 혈압(BP) 분석 그림책</h1>
-<p class="sub">마스킹된 혈압을 어떻게 채우고(보간), 내일을 어떻게 내다볼까(예측) — 120명 데이터로 푸는 방법론. 팀 이해용.</p>
+<p class="sub">마스킹된 혈압을 어떻게 채우고(보간), 내일을 어떻게 내다보고(예측), 새 사람의 혈압을 어떻게 추정할까(추정) — 120명 데이터로 푸는 방법론. 팀 이해용.</p>
 <div class="cards">
 <a class="card" href="part1.html">
 <img src="thumbnail_part1.png" alt="PART 1 보간">
@@ -28,6 +28,9 @@ h1{font-size:32px;margin:.2em 0}.sub{color:#9aa7bd;font-size:16px;margin-bottom:
 <a class="card" href="part2.html">
 <img src="thumbnail_part2.png" alt="PART 2 예측">
 <div class="body"><h2>PART 2 · 혈압 예측</h2><p>개인 시계열로 day6 24h 예측. 위상커널·합성커널·군집·ML 13모형, static/dynamic, BHS 등급, 선행연구 비교. 120명.</p><span class="tag">Forecasting</span></div></a>
+<a class="card" href="part3.html">
+<img src="thumbnail_part3.png" alt="PART 3 추정">
+<div class="body"><h2>PART 3 · 혈압 추정</h2><p>혈압 이력 없는 새 사람을 위한 3단계 분해 — 설문(KNHANES 외부앵커)으로 평균 수준, 1일 보정으로 개인 확정, 연령×성별 합성커널로 일주기. 누수차단·전국 일반화. 120명.</p><span class="tag">Estimation</span></div></a>
 <a class="card" href="paper.html">
 <img src="thumbnail_paper.png" alt="연구 논문">
 <div class="body"><h2>📄 연구 논문</h2><p>개인 일주기 프로파일 기반 일상생활 24시간 혈압 예측. 위상·역시간·군집 커널 13모형, 1시간 전방 SBP 3.83·DBP 2.78(BHS Grade A). N=120.</p><span class="tag">Paper</span>
