@@ -1,0 +1,77 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DAY BP · 스킬 & 프로그램 다운로드</title>
+<meta property="og:title" content="DAY BP · 스킬 & Colab/서버 프로그램 다운로드">
+<meta property="og:description" content="혈압 추정·예측 파이프라인을 Claude 스킬·Colab 노트북·서버 스크립트로. 합성 데모로 즉시 실행, 실데이터 연결.">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#0c1020;color:#eef1f8;line-height:1.75;padding:24px}
+.wrap{max-width:820px;margin:0 auto}
+.hd{text-align:center;margin-bottom:26px}
+.hd h1{font-size:28px;color:#7fe7cf}.hd p{color:#9aa7bd;font-size:15px;margin-top:8px}
+.card{background:#141d2e;border:1px solid #223047;border-radius:18px;padding:22px 24px;margin-bottom:18px}
+.card h2{font-size:18px;color:#9fe7d4;margin-bottom:8px}
+.card p{color:#c2cbdd;font-size:14.5px;margin-bottom:10px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:700;font-size:14px;border-radius:11px;padding:11px 17px}
+.b-colab{background:#f9ab00;color:#1a1a1a}
+.b-dl{background:#16a085;color:#fff}
+.b-git{background:#222b40;color:#cdd6e8;border:1px solid #33405c}
+.btn:hover{opacity:.9}
+code{background:#0a0e1a;border:1px solid #222b40;border-radius:6px;padding:2px 7px;font-size:13px;color:#9fe7d4;font-family:Consolas,monospace}
+pre{background:#0a0e1a;border:1px solid #222b40;border-radius:10px;padding:13px 15px;overflow-x:auto;font-size:12.5px;color:#cdd6e8;margin:10px 0;line-height:1.6}
+.muted{color:#8a94a8;font-size:12.5px}
+.foot{text-align:center;color:#6b7688;font-size:13px;margin-top:26px}.foot a{color:#16a085;text-decoration:none;font-weight:700}
+ul{margin:8px 0 8px 20px;font-size:14px;color:#c2cbdd}li{margin:4px 0}
+</style></head><body><div class="wrap">
+<div class="hd"><h1>🧰 스킬 &amp; 프로그램</h1><p>혈압 추정·예측 파이프라인을 <b>Claude 스킬 · Colab 노트북 · 서버 스크립트</b>로. 합성 데모로 즉시 실행, 실데이터 연결.</p></div>
+
+<div class="card">
+<h2>▶ Google Colab — 바로 실행</h2>
+<p>설치 없이 브라우저에서 합성 데모를 실행합니다(수준+위상=E0, 편차 모형, MAE+BHS, 정적/동적 예측). 노트북이 스크립트를 자동으로 받아 돌립니다.</p>
+<div class="btns">
+<a class="btn b-colab" href="https://colab.research.google.com/github/sdkparkforbi/bp-interpolation-book/blob/main/skill/scripts/aday_bp_colab.ipynb" target="_blank" rel="noopener">▶ Open in Colab</a>
+<a class="btn b-dl" href="skill/scripts/aday_bp_colab.ipynb" download>⬇ 노트북(.ipynb) 다운로드</a>
+</div>
+</div>
+
+<div class="card">
+<h2>🖥 서버 / 로컬 — 단독 실행 스크립트</h2>
+<p>경로 하드코딩 없는 portable 파이프라인. 합성 데모로 즉시 실행되고, 실데이터는 <code>--csv</code>로 연결합니다.</p>
+<pre>pip install scikit-learn pandas numpy matplotlib
+python aday_bp_colab.py                 # 합성 데모
+python aday_bp_colab.py --csv my_bp.csv # 실데이터 (열: ID,day,tod,SBP,DBP,HR,METs,age,cl)</pre>
+<div class="btns">
+<a class="btn b-dl" href="skill/scripts/aday_bp_colab.py" download>⬇ 스크립트(.py) 다운로드</a>
+<a class="btn b-git" href="https://github.com/sdkparkforbi/bp-interpolation-book/tree/main/skill/scripts" target="_blank" rel="noopener">📂 전체 scripts/ (GitHub)</a>
+</div>
+</div>
+
+<div class="card">
+<h2>🤖 Claude 스킬 — 다운받아 사용</h2>
+<p><code>aday-bp-pipeline</code> 스킬. <code>skill/</code> 폴더를 받아 자신의 스킬 디렉터리에 두면 <code>/aday-bp-pipeline</code>로 호출됩니다.</p>
+<pre>~/.claude/skills/aday-bp-pipeline/
+  ├─ SKILL.md          # 방법론·파일맵·실행순서
+  ├─ heygen_knowledge.md
+  └─ scripts/          # PART1 보간·PART2 추정·PART3 예측 + 그림/책 빌더 + 레퍼런스 JSON</pre>
+<div class="btns">
+<a class="btn b-git" href="https://github.com/sdkparkforbi/bp-interpolation-book/tree/main/skill" target="_blank" rel="noopener">📂 skill/ 폴더 (GitHub)</a>
+<a class="btn b-dl" href="skill/SKILL.md" download>⬇ SKILL.md</a>
+</div>
+<p class="muted" style="margin-top:10px">⬇ 폴더 전체는 저장소를 <code>git clone</code> 하거나 GitHub의 <b>Code → Download ZIP</b>으로 받으세요.</p>
+</div>
+
+<div class="card">
+<h2>📦 포함 내용</h2>
+<ul>
+<li><b>PART1 보간</b> — 정제·분할·분단위 하이브리드 보간</li>
+<li><b>PART2 추정</b> — 특징행렬·20모형 zoo·웨이블릿·편차 ablation</li>
+<li><b>PART3 예측</b> — AR 정적/동적</li>
+<li><b>빌더</b> — 책·논문·그림 자동 생성</li>
+<li><b>선행연구 JSON</b> — 워치 변수·세션 Grade A 요건(DOI)</li>
+</ul>
+<p class="muted">환자 데이터는 민감정보라 미포함. 스크립트는 방법론 템플릿이며 합성 데모로 동작합니다.</p>
+</div>
+
+<div class="foot"><a href="index.html">← 책으로</a> · <a href="part2.html">PART2</a> · <a href="part3.html">PART3</a> · <a href="paper.html">논문</a></div>
+</div></body></html>
