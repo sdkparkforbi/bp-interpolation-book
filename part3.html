@@ -67,7 +67,7 @@ th,td{border:1px solid #e6e6ee;padding:6px 8px;text-align:center}th{background:#
 
 <div class="chap" id="c3"><div class="no">3</div><h2>한 환자의 7일째 궤적</h2></div>
 <div class="card">
-<div class="fig"><img src="fig_p3_rollout.png"><div class="cap">한 환자(test)의 7일째 SBP. <b>검은 점=실측, 회색 점선=E0(수준+위상), 초록 △=정적(1-step), 주황 ✕=동적(rollout)</b>. 정적은 실측에 밀착하고, 동적은 E0 주변에서 굴러가며 그날의 출렁임을 덜 잡는다.</div></div>
+<div class="fig"><img src="fig_p3_rollout.png"><div class="cap"><b>왼쪽</b> — 한 환자 7일째 SBP: 정적(초록)이 동적(주황)보다 실측에 <b>더 가깝다</b>. 단 모형은 <b>추정값만</b> 쓰므로(실측은 평가용·모형엔 미사용) 그날의 급변(실측 스파이크)은 다 못 잡는다. <b>오른쪽</b> — day7 세션 순서가 늦을수록(예측 지평↑) <b>동적은 오차 누적</b>, 정적은 평탄. 정적이 "실측에 밀착"하는 게 아니라 "동적보다 덜 틀린다"는 뜻.</div></div>
 </div>
 
 <div class="chap" id="c4"><div class="no">4</div><h2>결과 — 정적 ≫ 동적</h2></div>
