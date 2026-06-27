@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DAY BP · AI 안내소</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
+<!-- FTF: LiveAvatar는 LiveKit 위에서 동작 (UMD 전역 window.LivekitClient) -->
+<script src="https://cdn.jsdelivr.net/npm/livekit-client/dist/livekit-client.umd.min.js"></script>
+<style>
+  :root {
+    --accent: #16a085;
+    --accent-dark: #0e7460;
+    --accent-light: #e8f6f3;
+    --bg: #f6f8f8;
+    --bg-card: #ffffff;
+    --bg-chat: #f2f5f5;
+    --text: #1a2b29;
+    --text-secondary: #5b6b69;
+    --border: #e2e8e7;
+    --radius: 12px;
+    --shadow: 0 1px 3px rgba(16,32,30,.08), 0 1px 2px rgba(16,32,30,.04);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 24px 20px 64px; }
+
+  /* Header */
+  header.site {
+    background: var(--accent);
+    color: #fff;
+    padding: 18px 20px;
+    text-align: center;
+  }
+  header.site h1 { font-size: 20px; font-weight: 700; letter-spacing: -.3px; }
+  header.site p { font-size: 13px; opacity: .9; margin-top: 2px; }
+
+  /* Intro card: video + guide */
+  .intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px;
+    margin-top: 24px;
+  }
+  .intro video {
+    width: 100%;
+    border-radius: 10px;
+    background: #000;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+  }
+  .guide { display: flex; flex-direction: column; justify-content: center; }
+  .guide .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    align-self: flex-start;
+    background: var(--accent-light); color: var(--accent-dark);
+    font-size: 12px; font-weight: 700;
+    padding: 4px 10px; border-radius: 999px; margin-bottom: 10px;
+  }
+  .guide h2 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .guide p { font-size: 14px; color: var(--text-secondary); }
+  .guide a { color: var(--accent-dark); font-weight: 500; }
+
+  /* Mode tabs */
+  .mode-tabs {
+    display: flex; gap: 8px;
+    margin-top: 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 6px;
+    box-shadow: var(--shadow);
+  }
+  .mode-tab {
+    flex: 1; text-align: center;
+    padding: 12px 8px;
+    border: none; background: transparent; cursor: pointer;
+    border-radius: 8px;
+    font-family: inherit; font-size: 14px; font-weight: 500;
+    color: var(--text-secondary);
+    transition: background .15s, color .15s;
+  }
+  .mode-tab .t { font-weight: 700; display: block; }
+  .mode-tab .s { font-size: 11px; opacity: .8; }
+  .mode-tab.active { background: var(--accent); color: #fff; }
+  .mode-tab:not(.active):hover { background: var(--accent-light); color: var(--accent-dark); }
+
+  /* Panels */
+  .panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-top: 16px;
+    overflow: hidden;
+  }
+  .panel-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+  }
+  .panel-head .title { font-size: 15px; font-weight: 700; }
+  .panel-head .sub { font-size: 12px; color: var(--text-secondary); }
+  .dot {
+    display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+    background: #c2cdcb; margin-right: 6px; vertical-align: middle;
+  }
+  .dot.online { background: var(--accent); }
+
+  /* TTT chat */
+  .chat-messages {
+    height: 380px; overflow-y: auto;
+    padding: 16px 18px;
+    background: var(--bg-chat);
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .msg { max-width: 80%; padding: 10px 14px; border-radius: 14px; font-size: 14px; white-space: pre-wrap; word-break: break-word; }
+  .msg.user { align-self: flex-end; background: var(--accent); color: #fff; border-bottom-right-radius: 4px; }
+  .msg.bot  { align-self: flex-start; background: #fff; border: 1px solid var(--border); border-bottom-left-radius: 4px; }
+  .chat-input-row { display: flex; gap: 8px; padding: 14px 18px; border-top: 1px solid var(--border); }
+  .chat-input-row input {
+    flex: 1; padding: 11px 14px; border: 1px solid var(--border);
+    border-radius: 10px; font-family: inherit; font-size: 14px; outline: none;
+  }
+  .chat-input-row input:focus { border-color: var(--accent); }
+  .btn {
+    border: none; cursor: pointer; font-family: inherit; font-weight: 700;
+    background: var(--accent); color: #fff; border-radius: 10px;
+    padding: 11px 18px; font-size: 14px; transition: background .15s;
+  }
+  .btn:hover { background: var(--accent-dark); }
+  .btn:disabled { opacity: .55; cursor: default; }
+  .btn.stop { background: #c0392b; }
+  .btn.stop:hover { background: #a93226; }
+  .typing-dots span {
+    display: inline-block; width: 6px; height: 6px; margin: 0 2px;
+    background: var(--text-secondary); border-radius: 50%; opacity: .4;
+    animation: blink 1.2s infinite;
+  }
+  .typing-dots span:nth-child(2) { animation-delay: .2s; }
+  .typing-dots span:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%,60%,100% { opacity: .25; } 30% { opacity: 1; } }
+
+  /* STS */
+  .center-col { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 28px 18px; }
+  .visualizer {
+    width: 120px; height: 120px; border-radius: 50%;
+    background: var(--accent-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 40px; transition: transform .2s, box-shadow .2s;
+  }
+  .visualizer.listening { box-shadow: 0 0 0 8px rgba(22,160,133,.18); }
+  .visualizer.speaking { box-shadow: 0 0 0 8px rgba(22,160,133,.32); transform: scale(1.05); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100% { transform: scale(1.05); } 50% { transform: scale(1.12); } }
+  .status-text { font-size: 14px; color: var(--text-secondary); min-height: 20px; text-align: center; }
+  .transcript { font-size: 13px; color: var(--text); text-align: center; min-height: 20px; max-width: 90%; }
+
+  /* FTF */
+  .avatar-stage {
+    position: relative; width: 100%; aspect-ratio: 16/10;
+    background: #0c1413; border-radius: 10px; overflow: hidden;
+  }
+  .avatar-stage video { width: 100%; height: 100%; object-fit: cover; display: none; }
+  .avatar-placeholder {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 10px;
+    color: #9fb4b0; font-size: 14px;
+  }
+  .avatar-placeholder .ico { font-size: 44px; }
+
+  .hint { font-size: 12px; color: var(--text-secondary); padding: 12px 18px 0; }
+  footer.site { text-align: center; font-size: 12px; color: var(--text-secondary); margin-top: 40px; }
+  footer.site a { color: var(--accent-dark); }
+
+  @media (max-width: 640px) {
+    .intro { grid-template-columns: 1fr; }
+    .mode-tab .s { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <h1>DAY BP · AI 안내소</h1>
+  <p>스마트워치로 하루 혈압을 그리는 연구, 안내봇 반듯이에게 물어보세요</p>
+</header>
+
+<div class="wrap">
+
+  <!-- 인트로: 소개 영상 + 안내봇 반듯이 -->
+  <section class="intro">
+    <video src="heygen_intro.mp4" controls playsinline preload="metadata"></video>
+    <div class="guide">
+      <span class="badge">🤖 안내봇 반듯이</span>
+      <h2>DAY BP가 궁금하세요?</h2>
+      <p>
+        스마트워치(애플워치)와 설문만으로 하루 혈압(SBP/DBP)을 분 단위로 추정하는 연구예요.
+        수준·위상·편차 분해, 추정과 예측, 모형 이야기까지 쉽게 설명해 드려요.<br /><br />
+        결과는 여기서 볼 수 있어요 →
+        <a href="https://sdkparkforbi.github.io/bp-interpolation-book/" target="_blank" rel="noopener">이야기책·논문·대시보드</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- 모드 탭 -->
+  <div class="mode-tabs">
+    <button class="mode-tab active" data-mode="ttt" onclick="switchMode('ttt')">
+      <span class="t">💬 글로 묻기</span><span class="s">텍스트 채팅 (TTT)</span>
+    </button>
+    <button class="mode-tab" data-mode="sts" onclick="switchMode('sts')">
+      <span class="t">🎙️ 음성 대화</span><span class="s">실시간 음성 (STS)</span>
+    </button>
+    <button class="mode-tab" data-mode="ftf" onclick="switchMode('ftf')">
+      <span class="t">🧑‍⚕️ 아바타와</span><span class="s">얼굴 보고 (FTF)</span>
+    </button>
+  </div>
+
+  <!-- TTT -->
+  <div class="panel" id="tttContainer">
+    <div class="panel-head">
+      <span class="title">반듯이와 글로 대화</span>
+      <span class="sub">DAY BP 연구 안내</span>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="msg bot">안녕하세요! DAY BP 연구 안내봇 반듯이예요. 혈압을 어떻게 추정하는지, 어떤 모형을 쓰는지 무엇이든 물어보세요. 😊</div>
+    </div>
+    <div class="chat-input-row">
+      <input id="chatInput" type="text" placeholder="예: DAY BP가 뭐야? / 챔피언 모형이 뭐예요?" onkeydown="handleChatKey(event)" />
+      <button class="btn" id="chatSend" onclick="sendChat()">보내기</button>
+    </div>
+  </div>
+
+  <!-- STS -->
+  <div class="panel" id="stsContainer" style="display:none">
+    <div class="panel-head">
+      <span class="title">반듯이와 음성 대화</span>
+      <span class="sub" id="stsConnectionStatus"><span class="dot"></span> 대기</span>
+    </div>
+    <div class="center-col">
+      <div class="visualizer" id="stsVisualizer">🎙️</div>
+      <div class="status-text" id="stsStatus">시작 버튼을 눌러 음성 대화를 시작하세요</div>
+      <div class="transcript" id="stsTranscript"></div>
+      <button class="btn" id="stsStartBtn" onclick="toggleSTS()">음성 대화 시작</button>
+      <div id="stsAudioContainer"></div>
+    </div>
+    <div class="hint">마이크 권한을 허용해 주세요. OpenAI Realtime으로 실시간 음성 대화를 해요.</div>
+  </div>
+
+  <!-- FTF -->
+  <div class="panel" id="ftfContainer" style="display:none">
+    <div class="panel-head">
+      <span class="title">아바타 반듯이</span>
+      <span class="sub" id="ftfStatus"><span class="dot"></span> <span id="ftfStateLabel">대기 중</span></span>
+    </div>
+    <div class="center-col">
+      <div class="avatar-stage">
+        <video id="ftfMediaElement" autoplay playsinline></video>
+        <div class="avatar-placeholder" id="ftfPlaceholder">
+          <div class="ico">🧑‍⚕️</div>
+          <div>아바타 시작을 누르면 반듯이가 나와요</div>
+        </div>
+      </div>
+      <button class="btn" id="ftfStartBtn" onclick="toggleFTF()">아바타 시작</button>
+    </div>
+    <div class="hint">마이크로 말을 걸면 아바타가 얼굴을 보며 답해요. (LiveAvatar + LiveKit)</div>
+  </div>
+
+  <footer class="site">
+    DAY BP 연구 안내소 · 의학적 진단·처방이 아닌 연구 설명용입니다 ·
+    <a href="https://sdkparkforbi.github.io/bp-interpolation-book/" target="_blank" rel="noopener">공개 자료</a>
+  </footer>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// 전역 상태
+// ═══════════════════════════════════════════
+let currentMode = 'ttt';
+let chatHistory = [];
+let isSending = false;
+
+// STS
+let stsActive = false;
+let stsPeerConnection = null;
+let stsDataChannel = null;
+
+// FTF
+let ftfSessionInfo = null;
+let ftfRoom = null;
+let ftfRecognition = null;
+let ftfIsListening = false;
+let ftfIsProcessing = false;
+let ftfIsSpeaking = false;
+let ftfAutoListen = true;
+let ftfSilenceTimer = null;
+let ftfSpeakTimer = null;
+let ftfKeepAliveTimer = null;
+
+// ═══════════════════════════════════════════
+// 모드 전환
+// ═══════════════════════════════════════════
+function switchMode(mode) {
+  if (currentMode === 'sts' && stsActive) stopSTS();
+  if (currentMode === 'ftf' && ftfSessionInfo) stopFTF();
+
+  currentMode = mode;
+
+  document.querySelectorAll('.mode-tab').forEach(el => {
+    el.classList.toggle('active', el.dataset.mode === mode);
+  });
+
+  document.getElementById('tttContainer').style.display = mode === 'ttt' ? 'block' : 'none';
+  document.getElementById('stsContainer').style.display = mode === 'sts' ? 'block' : 'none';
+  document.getElementById('ftfContainer').style.display = mode === 'ftf' ? 'block' : 'none';
+}
+
+// ═══════════════════════════════════════════
+// TTT — 텍스트 채팅 (/api/openai-chat)
+// ═══════════════════════════════════════════
+function handleChatKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendChat();
+  }
+}
+
+async function sendChat() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg || isSending) return;
+
+  isSending = true;
+  input.value = '';
+  document.getElementById('chatSend').disabled = true;
+
+  appendMessage('user', escapeHtml(msg));
+  const typingEl = appendMessage('bot', '<div class="typing-dots"><span></span><span></span><span></span></div>');
+
+  chatHistory.push({ role: 'user', content: msg });
+
+  try {
+    const res = await fetch('/api/openai-chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: msg, history: chatHistory.slice(-10) })
+    });
+    const data = await res.json();
+
+    typingEl.textContent = data.reply || data.error || '응답을 받지 못했어요.';
+    chatHistory.push({ role: 'assistant', content: data.reply || '' });
+    // DAY BP에는 네비게이션 대상(상품/카테고리 페이지)이 없으므로 action은 무시
+  } catch (err) {
+    typingEl.textContent = '네트워크 오류가 발생했어요. 다시 시도해 주세요.';
+  }
+
+  isSending = false;
+  document.getElementById('chatSend').disabled = false;
+  scrollChat();
+}
+
+function appendMessage(role, html) {
+  const container = document.getElementById('chatMessages');
+  const el = document.createElement('div');
+  el.className = `msg ${role}`;
+  el.innerHTML = html;
+  container.appendChild(el);
+  scrollChat();
+  return el;
+}
+
+function scrollChat() {
+  const c = document.getElementById('chatMessages');
+  c.scrollTop = c.scrollHeight;
+}
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+}
+
+// ═══════════════════════════════════════════
+// STS — OpenAI Realtime WebRTC
+// (RTCPeerConnection + getUserMedia + DataChannel)
+// ═══════════════════════════════════════════
+async function toggleSTS() {
+  if (stsActive) {
+    stopSTS();
+  } else {
+    await startSTS();
+  }
+}
+
+async function startSTS() {
+  const btn = document.getElementById('stsStartBtn');
+  const statusEl = document.getElementById('stsStatus');
+  const connStatus = document.getElementById('stsConnectionStatus');
+
+  btn.textContent = '연결 중...';
+  btn.disabled = true;
+  statusEl.textContent = '서버에 연결하고 있어요...';
+
+  try {
+    // 1. ephemeral 토큰 발급
+    const tokenRes = await fetch('/api/realtime-token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({})
+    });
+    const tokenData = await tokenRes.json();
+
+    if (!tokenData.client_secret) {
+      throw new Error(tokenData.error || 'Token 발급 실패');
+    }
+
+    // 2. PeerConnection 생성
+    const pc = new RTCPeerConnection();
+    stsPeerConnection = pc;
+
+    // 3. 원격 오디오 수신
+    const audioEl = document.createElement('audio');
+    audioEl.autoplay = true;
+    document.getElementById('stsAudioContainer').appendChild(audioEl);
+
+    pc.ontrack = (e) => {
+      audioEl.srcObject = e.streams[0];
+      updateSTSVisual('speaking');
+    };
+
+    // 4. 로컬 마이크 추가
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    pc.addTrack(stream.getTracks()[0], stream);
+
+    // 5. 이벤트용 DataChannel
+    const dc = pc.createDataChannel('oai-events');
+    stsDataChannel = dc;
+
+    dc.onmessage = (e) => {
+      try {
+        const event = JSON.parse(e.data);
+        handleSTSEvent(event);
+      } catch {}
+    };
+
+    // 6. Offer 생성 + setLocalDescription
+    const offer = await pc.createOffer();
+    await pc.setLocalDescription(offer);
+
+    // 7. OpenAI Realtime에 SDP offer 전송 → answer
+    const sdpRes = await fetch(`https://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${tokenData.client_secret.value}`,
+        'Content-Type': 'application/sdp'
+      },
+      body: offer.sdp
+    });
+    const answerSdp = await sdpRes.text();
+    await pc.setRemoteDescription({ type: 'answer', sdp: answerSdp });
+
+    stsActive = true;
+    btn.textContent = '대화 종료';
+    btn.disabled = false;
+    btn.classList.add('stop');
+    statusEl.textContent = '듣고 있어요...';
+    connStatus.innerHTML = '<span class="dot online"></span> 연결됨';
+    updateSTSVisual('listening');
+
+  } catch (err) {
+    console.error('STS start error:', err);
+    statusEl.textContent = '연결에 실패했어요: ' + err.message;
+    btn.textContent = '음성 대화 시작';
+    btn.disabled = false;
+  }
+}
+
+function handleSTSEvent(event) {
+  const statusEl = document.getElementById('stsStatus');
+  const transcriptEl = document.getElementById('stsTranscript');
+
+  switch (event.type) {
+    case 'input_audio_buffer.speech_started':
+      statusEl.textContent = '듣고 있어요...';
+      updateSTSVisual('listening');
+      break;
+    case 'input_audio_buffer.speech_stopped':
+      statusEl.textContent = '생각하고 있어요...';
+      updateSTSVisual('');
+      break;
+    case 'response.audio.started':
+    case 'response.created':
+      statusEl.textContent = '답변하고 있어요...';
+      updateSTSVisual('speaking');
+      break;
+    case 'response.audio.done':
+    case 'response.done':
+      statusEl.textContent = '듣고 있어요...';
+      updateSTSVisual('listening');
+      break;
+    case 'conversation.item.input_audio_transcription.completed':
+      if (event.transcript) {
+        transcriptEl.textContent = '나: ' + event.transcript;
+      }
+      break;
+    case 'response.audio_transcript.delta':
+      if (event.delta) {
+        transcriptEl.textContent = 'AI: ' + (transcriptEl._aiBuffer = (transcriptEl._aiBuffer || '') + event.delta);
+      }
+      break;
+    case 'response.audio_transcript.done':
+      if (event.transcript) {
+        transcriptEl.textContent = 'AI: ' + event.transcript;
+      }
+      transcriptEl._aiBuffer = '';
+      break;
+    case 'response.cancelled':
+      statusEl.textContent = '듣고 있어요...';
+      updateSTSVisual('listening');
+      transcriptEl._aiBuffer = '';
+      break;
+  }
+}
+
+function updateSTSVisual(state) {
+  const v = document.getElementById('stsVisualizer');
+  v.classList.remove('listening', 'speaking');
+  if (state) v.classList.add(state);
+}
+
+function stopSTS() {
+  if (stsPeerConnection) {
+    stsPeerConnection.getSenders().forEach(s => {
+      if (s.track) s.track.stop();
+    });
+    stsPeerConnection.close();
+    stsPeerConnection = null;
+  }
+  stsDataChannel = null;
+  stsActive = false;
+
+  document.getElementById('stsAudioContainer').innerHTML = '';
+  document.getElementById('stsStartBtn').textContent = '음성 대화 시작';
+  document.getElementById('stsStartBtn').classList.remove('stop');
+  document.getElementById('stsStatus').textContent = '시작 버튼을 눌러 음성 대화를 시작하세요';
+  document.getElementById('stsConnectionStatus').innerHTML = '<span class="dot"></span> 대기';
+  updateSTSVisual('');
+}
+
+// ═══════════════════════════════════════════
+// FTF — LiveAvatar (LiveKit 기반 WebRTC)
+// AVATAR_ID는 LiveAvatar 워크스페이스의 아바타 UUID.
+// 배포 시 window.AVATAR_ID 또는 아래 const로 지정하세요.
+// ═══════════════════════════════════════════
+const AVATAR_ID = window.AVATAR_ID || 'REPLACE_WITH_LIVEAVATAR_AVATAR_ID';
+const INTERACTIVITY_TYPE = 'CONVERSATIONAL';
+
+// LiveAvatar DataChannel 커맨드 — 모든 명령에 event_id (UUID) 필수
+function ftfGenerateEventId() {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID();
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+
+function ftfSendCommand(eventType, data) {
+  if (!ftfRoom || !ftfRoom.localParticipant) {
+    console.warn('[FTF] sendCommand skipped: no room', { eventType });
+    return;
+  }
+  const cmd = Object.assign({ event_id: ftfGenerateEventId(), event_type: eventType }, data || {});
+  const encoded = new TextEncoder().encode(JSON.stringify(cmd));
+  try {
+    ftfRoom.localParticipant.publishData(encoded, { reliable: true, topic: 'agent-control' });
+  } catch (e) { console.error('[FTF] publishData error:', e); }
+}
+
+async function ftfKeepAlive(sessionId) {
+  if (!sessionId) return;
+  try {
+    await fetch('/api/liveavatar-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'keep-alive', session_id: sessionId })
+    });
+  } catch (e) { console.warn('[FTF] keep-alive 실패:', e); }
+}
+
+function setFTFState(state) {
+  const label = document.getElementById('ftfStateLabel');
+  const labels = { idle: '대기 중', listening: '듣고 있어요...', thinking: '생각하고 있어요...', speaking: '답변하고 있어요...' };
+  label.textContent = labels[state] || state;
+}
+
+function ftfInitSpeechRecognition() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) return false;
+
+  ftfRecognition = new SR();
+  ftfRecognition.lang = 'ko-KR';
+  ftfRecognition.interimResults = true;
+  ftfRecognition.continuous = true;
+  ftfRecognition.maxAlternatives = 1;
+
+  ftfRecognition.onstart = () => {
+    ftfIsListening = true;
+    setFTFState('listening');
+  };
+
+  ftfRecognition.onresult = async (event) => {
+    clearTimeout(ftfSilenceTimer);
+    let interim = '';
+    let final = '';
+
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      const t = event.results[i][0].transcript;
+      if (event.results[i].isFinal) {
+        final += t;
+      } else {
+        interim += t;
+      }
+    }
+
+    // 아바타 발화 중에 사용자가 말하면 interrupt
+    if (ftfIsSpeaking && (final.trim() || (interim.trim() && interim.trim().length > 2))) {
+      await ftfInterrupt();
+    }
+
+    if (final.trim()) {
+      ftfStopListening();
+      ftfProcessInput(final.trim());
+    } else if (interim) {
+      // 중간 결과 후 2초 무음이면 전송
+      ftfSilenceTimer = setTimeout(() => {
+        const text = interim.trim();
+        if (text && text.length > 1) {
+          ftfStopListening();
+          ftfProcessInput(text);
+        }
+      }, 2000);
+    }
+  };
+
+  ftfRecognition.onerror = (event) => {
+    if (event.error === 'not-allowed') {
+      alert('마이크 권한이 필요합니다.\n브라우저 주소창 왼쪽의 자물쇠 아이콘을 클릭하여 마이크를 허용해 주세요.');
+      ftfAutoListen = false;
+    } else if (event.error === 'no-speech') {
+      if (ftfAutoListen && ftfSessionInfo && !ftfIsProcessing) {
+        setTimeout(ftfStartListening, 500);
+      }
+    }
+    ftfIsListening = false;
+  };
+
+  ftfRecognition.onend = () => {
+    ftfIsListening = false;
+    if (ftfAutoListen && ftfSessionInfo && !ftfIsProcessing) {
+      setTimeout(ftfStartListening, 600);
+    }
+  };
+
+  return true;
+}
+
+async function ftfInterrupt() {
+  if (!ftfIsSpeaking || !ftfRoom) return;
+  try {
+    ftfSendCommand('avatar.interrupt');
+  } catch (e) {
+    console.error('FTF interrupt error:', e);
+  }
+  clearTimeout(ftfSpeakTimer);
+  ftfIsSpeaking = false;
+  ftfIsProcessing = false;
+}
+
+function ftfStartListening() {
+  if (!ftfRecognition || ftfIsListening || ftfIsProcessing || !ftfSessionInfo) return;
+  try { ftfRecognition.start(); } catch (e) {}
+}
+
+function ftfStopListening() {
+  clearTimeout(ftfSilenceTimer);
+  ftfIsListening = false;
+  if (ftfRecognition) {
+    try { ftfRecognition.stop(); } catch (e) {}
+  }
+}
+
+async function ftfProcessInput(text) {
+  if (!text || !ftfSessionInfo || ftfIsProcessing) return;
+  ftfIsProcessing = true;
+
+  setFTFState('thinking');
+
+  try {
+    const res = await fetch('/api/openai-chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text, history: chatHistory.slice(-10) })
+    });
+    const data = await res.json();
+
+    chatHistory.push({ role: 'user', content: text });
+    chatHistory.push({ role: 'assistant', content: data.reply || '' });
+
+    // 아바타가 답변 (LiveAvatar: DataChannel speak_text)
+    ftfIsSpeaking = true;
+    setFTFState('speaking');
+
+    const ttsText = data.ttsReply || data.reply || '';
+    ftfSendCommand('avatar.speak_text', { text: ttsText });
+
+    // 한국어 평균 5자/초 기준 대기
+    const speakDuration = Math.max(3000, (ttsText.length / 5) * 1000 + 1500);
+
+    // 발화 중에도 마이크 열어서 interrupt 가능하게
+    if (ftfAutoListen && ftfSessionInfo) {
+      setTimeout(ftfStartListening, 500);
+    }
+
+    ftfSpeakTimer = setTimeout(() => {
+      ftfIsSpeaking = false;
+      ftfIsProcessing = false;
+      if (ftfAutoListen && ftfSessionInfo) {
+        if (!ftfIsListening) ftfStartListening();
+        setFTFState('listening');
+      } else {
+        setFTFState('idle');
+      }
+    }, speakDuration);
+
+  } catch (err) {
+    console.error('FTF chat error:', err);
+    ftfIsProcessing = false;
+    ftfIsSpeaking = false;
+    setFTFState('listening');
+    if (ftfAutoListen && ftfSessionInfo) ftfStartListening();
+  }
+}
+
+async function toggleFTF() {
+  if (ftfSessionInfo) {
+    stopFTF();
+  } else {
+    await startFTF();
+  }
+}
+
+async function startFTF() {
+  const btn = document.getElementById('ftfStartBtn');
+  const statusLabel = document.getElementById('ftfStateLabel');
+  const statusDot = document.querySelector('#ftfStatus .dot');
+  const mediaEl = document.getElementById('ftfMediaElement');
+  const placeholder = document.getElementById('ftfPlaceholder');
+
+  if (AVATAR_ID === 'REPLACE_WITH_LIVEAVATAR_AVATAR_ID') {
+    statusLabel.textContent = 'AVATAR_ID가 설정되지 않았어요 (배포 시 지정)';
+    return;
+  }
+
+  btn.textContent = '연결 중...';
+  btn.disabled = true;
+  statusLabel.textContent = '아바타 세션을 시작하는 중...';
+
+  try {
+    // 1. LiveAvatar 세션 토큰 + 시작 (통합 엔드포인트)
+    const sessRes = await fetch('/api/liveavatar-token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        avatar_id: AVATAR_ID,
+        interactivity_type: INTERACTIVITY_TYPE
+      })
+    });
+    const sess = await sessRes.json();
+
+    if (!sess.livekit_url || !sess.livekit_client_token) {
+      throw new Error('LiveAvatar 세션 생성 실패: ' + JSON.stringify(sess));
+    }
+    ftfSessionInfo = sess;
+
+    // 2. LiveKit 연결
+    const lk = window.LivekitClient;
+    ftfRoom = new lk.Room({
+      adaptiveStream: true,
+      dynacast: true,
+      audioCaptureDefaults: {
+        echoCancellation: true,
+        noiseSuppression: true,
+        autoGainControl: true
+      }
+    });
+
+    ftfRoom.on(lk.RoomEvent.TrackSubscribed, (track, pub, participant) => {
+      console.log('[FTF] TrackSubscribed:', track.kind, 'from', participant?.identity);
+      if (track.kind === 'video') {
+        track.attach(mediaEl);
+        mediaEl.style.display = 'block';
+        placeholder.style.display = 'none';
+      } else if (track.kind === 'audio') {
+        // LiveAvatar 패턴: 트랙마다 별도 audio element 생성 + body append
+        const audioEl = track.attach();
+        audioEl.autoplay = true;
+        audioEl.dataset.laTrack = participant?.identity || 'unknown';
+        audioEl.style.display = 'none';
+        document.body.appendChild(audioEl);
+        audioEl.play?.().catch(err => console.warn('[FTF] audio play() blocked:', err));
+      }
+    });
+
+    // interrupt 시 트랙이 잠깐 끊겨도 화면 까매지지 않게
+    ftfRoom.on(lk.RoomEvent.TrackUnsubscribed, (track) => {
+      if (!ftfSessionInfo) {
+        track.detach(mediaEl);
+      }
+    });
+
+    // LiveAvatar 이벤트 (DataReceived, topic='agent-response')
+    ftfRoom.on(lk.RoomEvent.DataReceived, (payload, _participant, _kind, topic) => {
+      try {
+        const evt = JSON.parse(new TextDecoder().decode(payload));
+        const type = evt.event_type || evt.type || '';
+        if (topic && topic !== 'agent-response') return;
+
+        if (type === 'avatar.speak_started') {
+          ftfIsSpeaking = true;
+          setFTFState('speaking');
+        } else if (type === 'avatar.speak_ended') {
+          clearTimeout(ftfSpeakTimer);
+          ftfIsSpeaking = false;
+          ftfIsProcessing = false;
+          if (ftfAutoListen && ftfSessionInfo) {
+            setFTFState('listening');
+            if (!ftfIsListening) ftfStartListening();
+          } else {
+            setFTFState('idle');
+          }
+        } else if (type === 'session.stopped') {
+          console.log('[FTF] session stopped by server');
+        }
+      } catch (e) {}
+    });
+
+    await ftfRoom.connect(sess.livekit_url, sess.livekit_client_token);
+    console.log('[FTF] LiveKit connected, session:', sess.session_id);
+
+    // 3. Keep-alive 시작 (60초마다)
+    ftfKeepAliveTimer = setInterval(() => {
+      ftfKeepAlive(sess.session_id);
+    }, 60000);
+
+    // 4. UI 업데이트
+    chatHistory = [];
+    btn.textContent = '아바타 종료';
+    btn.disabled = false;
+    btn.classList.add('stop');
+    statusDot.classList.add('online');
+
+    // 5. 인사 메시지 — 트랙 attach 직후 첫 명령 누락 방지 위해 800ms 지연
+    const greetingTTS = '안녕하세요! 디에이와이 비피 연구 안내봇 반듯이예요. 혈압을 어떻게 추정하는지 편하게 물어보세요.';
+    ftfIsSpeaking = true;
+    setFTFState('speaking');
+
+    setTimeout(() => {
+      ftfSendCommand('avatar.speak_text', { text: greetingTTS });
+    }, 800);
+
+    // 인사 끝난 후 자동 듣기 시작
+    const greetDuration = Math.max(3000, (greetingTTS.length / 5) * 1000 + 1500) + 800;
+    setTimeout(() => {
+      ftfIsSpeaking = false;
+      ftfIsProcessing = false;
+      ftfAutoListen = true;
+      const ok = ftfInitSpeechRecognition();
+      if (ok) {
+        ftfStartListening();
+      } else {
+        setFTFState('idle');
+      }
+    }, greetDuration);
+
+  } catch (err) {
+    console.error('FTF start error:', err);
+    statusLabel.textContent = '연결 실패: ' + err.message;
+    btn.textContent = '아바타 시작';
+    btn.disabled = false;
+  }
+}
+
+async function stopFTF() {
+  ftfAutoListen = false;
+  ftfStopListening();
+
+  // Keep-alive 종료
+  if (ftfKeepAliveTimer) {
+    clearInterval(ftfKeepAliveTimer);
+    ftfKeepAliveTimer = null;
+  }
+
+  if (ftfSessionInfo) {
+    try {
+      await fetch('/api/liveavatar-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'stop',
+          session_id: ftfSessionInfo.session_id,
+          reason: 'USER_CLOSED'
+        })
+      });
+    } catch (e) { console.warn('[FTF] stop API 실패:', e); }
+  }
+
+  if (ftfRoom) {
+    try { await ftfRoom.disconnect(); } catch {}
+    ftfRoom = null;
+  }
+
+  // body에 append된 audio element 정리
+  document.querySelectorAll('audio[data-la-track]').forEach(el => el.remove());
+
+  const mediaEl = document.getElementById('ftfMediaElement');
+  mediaEl.srcObject = null;
+  mediaEl.style.display = 'none';
+  document.getElementById('ftfPlaceholder').style.display = 'flex';
+
+  ftfSessionInfo = null;
+  ftfRecognition = null;
+  ftfIsProcessing = false;
+  ftfIsSpeaking = false;
+  ftfIsListening = false;
+
+  document.getElementById('ftfStartBtn').textContent = '아바타 시작';
+  document.getElementById('ftfStartBtn').classList.remove('stop');
+  document.getElementById('ftfStartBtn').disabled = false;
+  document.getElementById('ftfStateLabel').textContent = '대기 중';
+  document.querySelector('#ftfStatus .dot').classList.remove('online');
+}
+</script>
+</body>
+</html>
