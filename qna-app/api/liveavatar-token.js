@@ -21,9 +21,9 @@ export default async function handler(req, res) {
   try {
     const body = req.body || {};
     const avatarId = body.avatar_id;
-    const contextId = body.context_id || null;
+    // FTF는 context_id(LiveAvatar 페르소나: 음성+지식 RAG, 권장) 또는 voice_id(ElevenLabs) 중 하나 필요.
+    const contextId = body.context_id || process.env.LIVEAVATAR_CONTEXT_ID || null;
     const interactivityType = body.interactivity_type || "CONVERSATIONAL";
-    // voice_id 또는 context_id 중 하나는 필요(LiveAvatar). voice_id는 env LIVEAVATAR_VOICE_ID(ElevenLabs) 권장.
     const voiceId = process.env.LIVEAVATAR_VOICE_ID || body.voice_id || null;
 
     if (!avatarId) return res.status(400).json({ error: "avatar_id required" });
