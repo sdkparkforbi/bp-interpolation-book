@@ -21,10 +21,11 @@ export default async function handler(req, res) {
   try {
     const body = req.body || {};
     const avatarId = body.avatar_id;
-    // 음성은 LiveAvatar 워크스페이스의 아바타에 이미 설정돼 있습니다 → voice_id를 따로 넣지 않습니다(참고앱 방식).
     // 선택: 지식(RAG) 컨텍스트를 묶으려면 body.context_id 로 전달(없으면 null).
     const contextId = body.context_id || null;
     const interactivityType = body.interactivity_type || "CONVERSATIONAL";
+    // 아바타에 워크스페이스 음성이 없으면 voice_id가 필요. LiveAvatar는 voice_id를 avatar_persona 바로 아래에서 받음.
+    const voiceId = process.env.LIVEAVATAR_VOICE_ID || body.voice_id || "33868819-2331-4d2f-8b7d-dd589c82cead";
 
     if (!avatarId) return res.status(400).json({ error: "avatar_id required" });
 
@@ -42,6 +43,7 @@ export default async function handler(req, res) {
         avatar_persona: {
           context_id: contextId,
           language: "ko",
+          ...(voiceId ? { voice_id: voiceId } : {}),
           voice_settings: { model: "eleven_flash_v2_5", speed: 1.0 },
           stt_config: { provider: "deepgram" },
         },
