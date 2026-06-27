@@ -29,14 +29,16 @@ h1{font-size:32px;margin:.2em 0}.sub{color:#9aa7bd;font-size:16px;margin-bottom:
 <img src="thumbnail_part1.png" alt="PART 1 보간">
 <div class="body"><h2>PART 1 · 혈압 보간</h2><p>마스킹된 혈압을 주변값·합성커널로 복원. 가중규칙×추정수준, 군집별 합성커널 3개+2경로 회귀. 120명 부록.</p><span class="tag">Interpolation</span></div></a>
 <a class="card" href="part2.html">
-<img src="thumbnail_part2.png" alt="PART 2 예측">
-<div class="body"><h2>PART 2 · 혈압 예측</h2><p>개인 시계열로 day6 24h 예측. 위상커널·합성커널·군집·ML 13모형, static/dynamic, BHS 등급, 선행연구 비교. 120명.</p><span class="tag">Forecasting</span></div></a>
+<img src="thumbnail_part2.png" alt="PART 2 추정">
+<div class="body"><h2>PART 2 · 혈압 추정</h2><p>신규 환자의 분단위 혈압 추정. 수준(KNHANES+설문+1day)+위상+편차(워치·지난추정). 회귀·스펙트럴·웨이블릿·트리·GBM·딥러닝 20모형 single·multi, 챔피언 Ridge, MAE+BHS. 와치 변수별 선행연구.</p><span class="tag">Estimation · Nowcasting</span></div></a>
 <a class="card" href="part3.html">
-<img src="thumbnail_part3.png" alt="PART 3 추정">
-<div class="body"><h2>PART 3 · 혈압 추정</h2><p>혈압 이력 없는 새 사람을 위한 3단계 분해 — 설문(KNHANES 외부앵커)으로 평균 수준, 1일 보정으로 개인 확정, 연령×성별 합성커널로 일주기. 누수차단·전국 일반화. 120명.</p><span class="tag">Estimation</span></div></a>
+<img src="thumbnail_part3.png" alt="PART 3 예측">
+<div class="body"><h2>PART 3 · 혈압 예측</h2><p>비워둔 7일째 예측. AR 정적(1-step 재앵커)·동적(rollout). 정적 세션 DBP·일평균 BHS A. 세션 SBP는 센서 한계 — raw PPG·PTT 필요(선행연구 DOI).</p><span class="tag">Forecasting</span></div></a>
+<a class="card" href="mockup.html">
+<div class="body" style="padding:26px 22px"><h2>🩺 환자 대시보드 (Mock-up)</h2><p>대상을 선택하면 과거(실측)·현재(Nowcast)·미래(Forecast) 혈압이 분단위로. 7일 타임라인, 운동·수면부족·스트레스 시나리오, 예측 엔진 반듯이.</p><span class="tag">Live demo</span></div></a>
 <a class="card" href="paper.html">
 <img src="thumbnail_paper.png" alt="연구 논문">
-<div class="body"><h2>📄 연구 논문</h2><p>개인 일주기 프로파일 기반 일상생활 24시간 혈압 예측. 위상·역시간·군집 커널 13모형, 1시간 전방 SBP 3.83·DBP 2.78(BHS Grade A). N=120.</p><span class="tag">Paper</span>
+<div class="body"><h2>📄 연구 논문</h2><p>일상 혈압의 보간·추정·예측 통합 — 수준·위상·편차 분해. 20모형, 정적·동적, 일평균 BHS A(2.07/2.18), 세션 한계분석. 저자 5인. 레퍼런스 DOI 클릭. N=120.</p><span class="tag">Paper</span>
 <p style="margin-top:10px"><a href="paper.pdf" style="color:#7be7d8">PDF</a> · <a href="paper.docx" style="color:#7be7d8">DOCX</a> · <a href="paper.hwpx" style="color:#7be7d8">HWPX</a></p></div></a>
 </div>
 <p class="foot">데이터 120명 × 약 34세션 · 보간 전용(PART1) / 외생 웨어러블 포함(PART2) · 분석·그림 자동 생성</p>
