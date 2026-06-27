@@ -1,0 +1,25 @@
+{
+"verdict": "집계형 워치 변수(HR·HRV·SpO2·걸음·에너지·METs·손목온도·수면·보행) + 1-day calibration만으로는 세션(순간) BP를 BHS Grade A로 올릴 수 없다. 우리의 세션 SBP MAE ~5.7(Grade B)은 사람 평균으로 회귀하는(mean-regression) 집계형 모형의 전형적 signature다. 일평균이 A인 것은 intra-subject 분산이 작기 때문이고, 세션은 순간 변동을 노출하므로 집계 변수로는 부족하다.",
+"requirements": [
+ {"req":"raw per-beat PPG 파형 형태(morphology) 투입 — 집계 스칼라가 아니라", "evidence":"순간 BP 정보는 맥파 SHAPE에 있음: 수축/이완 peak, dicrotic notch 위치, pulse area, augmentation index(수축/이완 peak 비), reflection index, inflection-point area, 2차도함수 SDPTG(a-b-c-d-e파). 이는 intra-beat 양이라 mean HR/걸음/METs엔 존재하지 않음.",
+  "refs":["Joung et al. 2023, Sci Rep (PPG2BP-Net) — SBP 0.21±7.51 / DBP 0.15±4.55 mmHg, BHS A + AAMI pass (629명 고변동 test)","Transformer ABP synthesis 2024, arXiv:2401.05452 — MAE 3.77/2.69","Takazawa et al. 1998, Hypertension 32:365 — SDPTG 2차도함수가 혈관 tone/aging·BP 지표"]},
+ {"req":"타이밍 채널 PTT/PAT 추가 (PPG+ECG 또는 dual-site PPG)","evidence":"PTT SBP RMSE ~5.3 vs PAT ~9.8 mmHg. ECG+마이크 PTT 기기 SBP MAE 2.72±3.42. 손목 단일 광센서는 true PTT 계산 불가(2번째 타이밍 기준 필요) — 우리 하드웨어가 못 하는 구체적 능력.",
+  "refs":["Block et al. 2016, PMC4886159 — PTT 5.3 vs PAT 9.8 mmHg RMSE","PTT device ECG+mic 2023, PMC9920508 — SBP 2.72±3.42 mmHg"]},
+ {"req":"주기적(≤월 1회) 개인 재보정 — 1회 1-day calibration 불충분","evidence":"calibration-free는 SBP MAE 7.4–10.9로 열세. Aktiia·Samsung은 ~28-30일마다 cuff 재초기화해야 ISO 통과(Samsung은 28일 후 측정 거부). drift ~0.022 mmHg/day(15일경 유의).",
+  "refs":["Vybornova/Aktiia 2021, Blood Press Monit (PMID 33675592) — 월 1회 재초기화로 ISO81060-2 통과","Smartwatch drift 2024, PMC12833194 — SBP drift 0.022 mmHg/day"]},
+ {"req":"파형/타이밍을 깨끗이 뽑는 센서 front-end(반사형 multi-wavelength PPG, 또는 PPG+single-lead ECG)","evidence":"Biobeat(FDA 승인 PPG-only)·Aktiia는 전용 반사형 PPG. 집계 HR만 출력하는 워치는 intra-beat·타이밍 정보를 이미 버림. 검증된 스마트워치도 'low BP 과대·high BP 과소'(보정점 회귀)로 임상 부적합.",
+  "refs":["Nachman 2022, Front Cardiovasc Med PMC9309348 — Galaxy Watch Active2 보정점 편향, '임상 미준비'","Biobeat BB-613 — 반사형 PPG, PWTT 원리, ME≤5/SD≤8"]},
+ {"req":"진단: 집계형은 사람 set-point로 회귀 → 일평균 A·세션 B의 구조적 이유","evidence":"우리 결과(일평균 A, 세션 SBP ~5.7 B)가 mean-regression 모형의 정확한 예측. 개인모형>일반모형. BHS A는 세션 순간 BP 해상이 필요해 파형/타이밍 입력 요구.",
+  "refs":["BHS A = 5/10/15 mmHg 내 60/85/95%","PPG2BP-Net — 'high intrasubject BP variation' 전용 설계"]}
+],
+"checklist": [
+ "세션마다 raw PPG 파형(+1차·2차도함수 SDPTG) 투입 — 가장 높은 leverage",
+ "형태 feature: 수축·이완 peak, augmentation index, reflection index, pulse area, dicrotic notch timing, SDPTG b/a·d/a",
+ "타이밍 채널: single-lead ECG 또는 2번째 PPG site로 PTT(우선) 또는 PAT",
+ "1-day 1회 → 주기적(≤월) 재보정 + drift 항 모델링; 스트레스·카페인 보정점 폐기",
+ "calibration-free보다 개인 보정 모형; 보정-light면 demographics(나이·성별) 포함",
+ "하드웨어 가능하면 multi-wavelength 반사형 PPG(green+red+NIR)",
+ "BHS/AAMI/IEEE를 subject-independent·고변동 split에서 검증(PPG2BP-Net 프로토콜)",
+ "mean-regression 진단: 예측 vs 실측 세션 SBP 산점 — low 과대/high 과소면 확증"
+]
+}

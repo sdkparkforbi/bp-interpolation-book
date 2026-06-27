@@ -1,0 +1,124 @@
+# -*- coding: utf-8 -*-
+# PART 3 (신구조) — 예측(Forecasting). day7. AR residual: 정적(1-step 재앵커) vs 동적(rollout). 세션-A 한계분석(DOI 클릭).
+import pickle, os, shutil, numpy as np, pandas as pd, warnings
+warnings.filterwarnings('ignore')
+SITE='C:/Temp/HYPT/book_site/'
+for f in ['fig_p3_staticdyn.png','fig_p3_rollout.png']:
+    if os.path.exists('C:/Temp/HYPT/'+f): shutil.copy('C:/Temp/HYPT/'+f,SITE+f)
+RES=pickle.load(open('C:/Temp/HYPT/ADAY_BP_Prediction_Model/_part3_res.pkl','rb'))
+def bhs(e): e=np.abs(e); return 100*np.mean(e<=5),100*np.mean(e<=10),100*np.mean(e<=15)
+def gr(b): return 'A' if b[0]>=60 and b[1]>=85 and b[2]>=95 else 'B' if b[0]>=50 and b[1]>=75 and b[2]>=90 else 'C' if b[0]>=40 and b[1]>=65 and b[2]>=85 else 'D'
+def C(e): e=np.abs(np.asarray(e)); return f'{e.mean():.2f}<span class="g{gr(bhs(e))}">{gr(bhs(e))}</span>'
+def dly(D,pr,y): a=D.assign(p=pr,a=y).groupby('ID').agg(p=('p','mean'),a=('a','mean')); return (a.p-a.a).values
+def rows():
+    h=''
+    for sp in ['valid','test']:
+        for kind in ['Ridge','ExtraTrees']:
+            D=RES[kind][sp]
+            for mode,ps,pd_,lab in [('static',D.sS,D.sD,'정적 static'),('dynamic',D.dS,D.dD,'동적 dynamic')]:
+                cls=' class="best"' if (kind=='Ridge' and mode=='static') else ''
+                h+=f'<tr{cls}><td class="l">{sp} · {kind} · {lab}</td><td>{C(ps-D.SBP)}</td><td>{C(pd_-D.DBP)}</td><td>{C(dly(D,ps,D.SBP))}</td><td>{C(dly(D,pd_,D.DBP))}</td></tr>'
+    return h
+REFS=[
+("Joung et&nbsp;al. (2023). PPG2BP-Net, <i>Scientific Reports</i> — raw PPG 파형, SBP 0.21±7.51&nbsp;mmHg, BHS Grade&nbsp;A","https://doi.org/10.1038/s41598-023-35492-y"),
+("Takazawa et&nbsp;al. (1998). <i>Hypertension</i> 32:365 — SDPTG 2차도함수(b/a·d/a)와 혈관 tone·BP","https://doi.org/10.1161/01.HYP.32.2.365"),
+("Block et&nbsp;al. (2016). <i>PMC4886159</i> — PTT(SBP RMSE 5.3) vs PAT(9.8&nbsp;mmHg)","https://pmc.ncbi.nlm.nih.gov/articles/PMC4886159/"),
+("Vybornova et&nbsp;al. (2021). Aktiia, <i>Blood Press Monit</i> — 월 1회 cuff 재초기화로 ISO&nbsp;81060-2 통과","https://pubmed.ncbi.nlm.nih.gov/33675592/"),
+("Nachman et&nbsp;al. (2022). <i>Front Cardiovasc Med</i> — 스마트워치 BP 보정점 편향(low 과대·high 과소), 임상 미준비","https://doi.org/10.3389/fcvm.2022.920946"),
+("Cuffless ABP waveform transformer (2024). <i>arXiv</i>:2401.05452 — 단일 PPG 파형, MAE 3.77/2.69","https://arxiv.org/abs/2401.05452"),
+]
+def reflist(): return ''.join(f'<li><a href="{u}" target="_blank" rel="noopener">{t}</a> &nbsp;<span class="doi">↗ {u.split("//")[1][:38]}…</span></li>' for t,u in REFS)
+
+CSS="""
+:root{--ink:#1d2433;--muted:#5d6b82;--paper:#fbfbfd;--card:#fff;--green:#1e7d4f;--gold:#d4a017;--red:#c0392b;--accent:#d85a30;--accent2:#993c1d}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;color:var(--ink);background:#1a0f0a;line-height:1.8}
+.wrap{max-width:1000px;margin:0 auto;background:var(--paper);padding:0 24px 90px;box-shadow:0 0 60px rgba(0,0,0,.5)}
+.nav{background:#5a2410;color:#fff;padding:11px 22px;font-size:14px}.nav a{color:#f0b59c;text-decoration:none;font-weight:700}
+.hero{background:linear-gradient(135deg,#5a2410,#d85a30);color:#fff;padding:40px 30px 30px}
+.hero h1{font-size:32px;margin:0 0 6px}.hero p{font-size:16px;color:#fadbcf;margin:6px 0 0}
+.toc{font-size:13px;color:var(--accent2);margin:14px 0 0;line-height:2}.toc a{color:var(--accent2);text-decoration:none;margin:0 8px 0 0;white-space:nowrap;display:inline-block}
+.chap{display:flex;align-items:center;gap:12px;margin:48px 0 6px}
+.chap .no{flex:none;min-width:54px;height:40px;padding:0 12px;border-radius:20px;background:var(--accent);color:#fff;font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center}
+.chap h2{font-size:22px;margin:0}
+.card{background:var(--card);border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.07);padding:20px 24px;margin:16px 0}
+.fig{text-align:center;margin:16px 0}.fig img{max-width:100%;border:1px solid #e8e8ee;border-radius:10px}
+.cap{color:var(--muted);font-size:13px;margin-top:7px;text-align:left;padding:0 4px}
+.lead{font-size:17px;color:#3a2419;background:#fdeee7;border:1px dashed var(--accent);border-radius:12px;padding:18px 22px;margin:18px 0}
+table{border-collapse:collapse;width:100%;font-size:12.5px;margin:12px 0}
+th,td{border:1px solid #e6e6ee;padding:6px 8px;text-align:center}th{background:#fbeee8}
+.best{background:#fff6cf}.best td{font-weight:700}td.l,th.l{text-align:left}
+.note{background:#fdeee7;border-left:5px solid var(--accent);padding:12px 16px;border-radius:8px;margin:12px 0;font-size:14px}
+.win{background:#eefaf0;border-left:5px solid var(--green);padding:12px 16px;border-radius:8px;margin:12px 0}
+.twist{background:#fff1ec;border-left:5px solid var(--red);padding:12px 16px;border-radius:8px;margin:12px 0}
+.kid{background:#fff8e6;border:2px dashed var(--gold);border-radius:12px;padding:14px 18px;margin:14px 0;font-size:14.5px}
+.gA{color:#1e7d4f;font-weight:800}.gB{color:#d4a017;font-weight:800}.gC{color:#c0392b;font-weight:800}.gD{color:#7f1d1d;font-weight:800}
+.refs{font-size:13px;line-height:1.7;padding-left:18px}.refs li{margin:9px 0}
+.refs a{color:#185fa5;text-decoration:none;font-weight:600}.refs a:hover{text-decoration:underline}
+.doi{font-size:11px;color:#888;font-family:Consolas,monospace}
+.kpi{display:inline-block;background:#5a2410;color:#f0b59c;border-radius:7px;padding:2px 9px;font-weight:700}
+.steps{counter-reset:s;list-style:none;padding-left:0}.steps li{counter-increment:s;margin:11px 0;padding-left:44px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:30px;height:30px;background:var(--accent);color:#fff;border-radius:50%;text-align:center;line-height:30px;font-weight:700}
+"""
+BODY=f"""
+<div class="nav">🔮 PART 3 · 혈압 예측(Forecasting) &nbsp;|&nbsp; <a href="plan.html">📋 연구계획</a> &nbsp;|&nbsp; <a href="part1.html">PART 1 보간</a> &nbsp;|&nbsp; <a href="part2.html">← PART 2 추정</a> &nbsp;|&nbsp; <a href="paper.html">논문</a></div>
+<div class="hero"><h1>🔮 PART 3 · 혈압 예측 (Forecasting)</h1>
+<p>비워둔 <b>7일째</b>를 PART2 추정 모형으로 내다본다 — <b>정적(static, 1-step 재앵커)</b>과 <b>동적(dynamic, 예측 굴림)</b>. 그리고 세션을 Grade A로 올리려면 무엇이 필요한가</p></div>
+<div class="wrap">
+<p class="toc">📑 <a href="#c1">1. 예측이란</a><a href="#c2">2. 정적 vs 동적</a><a href="#c3">3. 한 환자 궤적</a><a href="#c4">4. 결과</a><a href="#c5">5. 세션을 A로 — 무엇이 필요한가</a><a href="#c6">6. 결론</a></p>
+
+<div class="lead"><b>PART 3은 "예측(forecasting)"이다.</b> PART2에서 만든 추정 모형(E0 = 수준 + 위상, 편차 = 워치 + 지난추정)을 <b>자기회귀(AR)</b>로 굴려 <b>비워둔 7일째</b>를 맞힌다. 두 방식 — 매 순간 실측을 보고 한 걸음만 내다보는 <b>정적</b>, 자기 예측을 믿고 하루를 통째로 굴리는 <b>동적</b>. 성과는 7일째 실측에서만 잰다(MAE + BHS).</div>
+
+<div class="chap" id="c1"><div class="no">1</div><h2>예측이란 — t와 t−k를 잇다</h2></div>
+<div class="card"><p>추정(PART2)이 "지금 이 순간"을 맞혔다면, 예측(PART3)은 "다음"을 내다본다. 핵심은 <b>자기회귀</b> — 지금의 혈압은 <b>조금 전의 혈압(편차)</b>에 이어진다. 모형은 <b>r(t) = 실측(t) − E0(t)</b>를 직전 편차·시간차·워치로 예측하고, 최종 <b>BP(t) = E0(t) + r̂(t)</b>를 만든다. "직전 편차"를 무엇으로 채우느냐가 정적·동적을 가른다.</p></div>
+
+<div class="chap" id="c2"><div class="no">2</div><h2>정적 vs 동적 — 한 걸음 vs 굴리기</h2></div>
+<div class="card">
+<div class="kid">🧒 <b>쉽게.</b> 징검다리를 건넌다고 하자. <b>정적이</b>는 매번 <b>지금 발 디딘 진짜 돌</b>을 보고 바로 다음 한 칸만 뛴다 — 그래서 거의 안 틀린다. <b>동적이</b>는 눈을 감고 <b>"아까 내가 예측한 위치"</b>만 믿고 끝까지 뛴다 — 처음 작은 오차가 점점 커진다. 그래서 <b>정적이 ≫ 동적이</b>.</div>
+<ol class="steps">
+<li><b>정적(static) = 1-step ahead.</b> 매 시각, 직전의 <b>실측</b> 편차로 재앵커해 <b>바로 다음</b>만 예측. 자주 측정해 계속 바로잡는 시나리오 — 가장 정확</li>
+<li><b>동적(dynamic) = recursive rollout.</b> 7일째 실측 없이, <b>자기 예측</b>을 다음 입력으로 물려 하루를 통째로 굴림. 오차가 누적됨</li>
+</ol>
+<div class="note"><b>측정 빈도가 예측 지평을 좌우한다.</b> 정적은 측정으로 계속 리셋되어 짧은 지평(1-step)이고, 동적은 측정 없이 긴 지평(하루)을 한 번에 — 그래서 동적이 본질적으로 어렵다.</div>
+</div>
+
+<div class="chap" id="c3"><div class="no">3</div><h2>한 환자의 7일째 궤적</h2></div>
+<div class="card">
+<div class="fig"><img src="fig_p3_rollout.png"><div class="cap">한 환자(test)의 7일째 SBP. <b>검은 점=실측, 회색 점선=E0(수준+위상), 초록 △=정적(1-step), 주황 ✕=동적(rollout)</b>. 정적은 실측에 밀착하고, 동적은 E0 주변에서 굴러가며 그날의 출렁임을 덜 잡는다.</div></div>
+</div>
+
+<div class="chap" id="c4"><div class="no">4</div><h2>결과 — 정적 ≫ 동적</h2></div>
+<div class="card">
+<p>셀 = <b>MAE + BHS등급</b>. 7일째 실측, valid·test 각 24명.</p>
+<table><tr><th class="l">split · 모형 · 모드</th><th>세션 SBP</th><th>세션 DBP</th><th>일 SBP</th><th>일 DBP</th></tr>{rows()}</table>
+<div class="fig"><img src="fig_p3_staticdyn.png"><div class="cap">정적(초록) vs 동적(주황) MAE. 정적이 모든 지표에서 낮다 — 매 스텝 실측 재앵커가 오차 누적을 막는다.</div></div>
+<div class="win"><b>✅ 정적(1-step).</b> test 세션 DBP <span class="kpi">4.28 A</span>, 일평균 SBP <span class="kpi">2.55 A</span>·DBP <span class="kpi">2.50 A</span>. 자주 측정해 재앵커하면 임상급.</div>
+<div class="twist"><b>🌀 동적(rollout)은 오차 누적.</b> 예측을 물려 하루를 굴리니 test 세션 SBP 5.52 B → <span class="kpi">5.78 C</span>, 일평균도 2.5 → 3.4로 상승. 이게 recursive forecasting의 본질적 비용이다.</div>
+</div>
+
+<div class="chap" id="c5"><div class="no">5</div><h2>세션을 Grade A로 — 무엇이 필요한가</h2></div>
+<div class="card">
+<p>정적·동적 모두 <b>세션 SBP는 B</b>에 머문다. 선행연구를 보면 이건 <b>모형의 한계가 아니라 데이터(센서)의 한계</b>다 — 집계형 워치 변수는 사람의 <b>평균(set-point)으로 회귀</b>하므로, 분산이 작은 일평균은 A지만 순간 변동이 큰 세션은 B가 한계.</p>
+<div class="twist"><b>🔬 세션 A의 필수 조건(선행연구 합의).</b> 집계 변수를 더 넣어도 세션 A는 못 간다. 필요한 것은 — <b>① raw PPG 파형 형태</b>(수축·이완 peak, dicrotic notch, augmentation/reflection index, <b>SDPTG 2차도함수</b>), <b>② 타이밍 채널 PTT/PAT</b>(PPG+ECG 또는 dual-PPG; PTT RMSE 5.3 vs PAT 9.8), <b>③ 주기적 재보정</b>(≤월 1회; drift 0.022 mmHg/day). PPG2BP-Net은 raw 파형으로 SBP 0.21±7.51로 Grade A를 달성한다.</div>
+<div class="note"><b>왜 일평균은 A, 세션은 B인가.</b> 집계 변수는 자율신경 <b>상태(set-point)</b>를 인코딩한다. 일평균은 set-point가 거의 정답이라 A, 세션은 순간 swing을 못 잡아 B. 진단: 예측 vs 실측 세션 SBP에서 low 과대·high 과소면 mean-regression 확증.</div>
+<h3 style="color:var(--accent2)">선행연구 (DOI 클릭)</h3>
+<ul class="refs">{reflist()}</ul>
+</div>
+
+<div class="chap" id="c6"><div class="no">∎</div><h2>결론</h2></div>
+<div class="card">
+<div class="win"><b>🏁 예측 최종.</b> PART2 추정 모형을 AR로 굴려 7일째를 예측. <b>정적(1-step)</b>은 세션 DBP·일평균 BHS A, <b>동적(rollout)</b>은 오차 누적으로 한 등급 낮다. 측정 빈도가 예측 지평을 좌우한다.</div>
+<div class="note"><b>세션 SBP B는 정직한 한계.</b> 우리 집계형 파이프라인은 일평균 A까지 도달하나 세션 A는 <b>raw PPG 파형·PTT·주기 재보정</b>이라는 센서 조건을 요구한다 — 모형이 아니라 데이터의 문제. 이것이 다음 단계의 로드맵.</div>
+<p style="color:var(--muted);font-size:13px;margin-top:16px">120명 · 사람 60:20:20 · day7 예측 · AR residual(E0 + 편차) · 정적(1-step)·동적(rollout) · valid·test 각 24명 · MAE+BHS · 세션·일평균</p>
+<p><a href="part2.html" style="color:var(--accent);font-weight:700">← PART 2 추정</a> &nbsp;·&nbsp; <a href="paper.html" style="color:var(--accent);font-weight:700">논문 →</a></p>
+</div>
+</div>
+"""
+HEAD="""<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PART 3 · 혈압 예측(Forecasting) — 정적·동적, 세션 A 조건</title>
+<meta property="og:title" content="🔮 PART 3 · 혈압 예측 — 정적(1-step) vs 동적(rollout), 세션 A에 필요한 것">
+<meta property="og:description" content="day7 AR 예측. 정적은 세션 DBP·일평균 BHS A, 동적은 오차누적. 세션 SBP B는 센서 한계 — raw PPG·PTT·주기 재보정 필요(선행연구 DOI).">
+<style>__CSS__</style></head><body>__BODY__</body></html>"""
+html=HEAD.replace('__CSS__',CSS).replace('__BODY__',BODY)
+open(SITE+'part3.html','w',encoding='utf-8').write(html)
+print('SAVED part3.html', round(os.path.getsize(SITE+'part3.html')/1024,1),'KB · refs',len(REFS))

@@ -1,0 +1,287 @@
+[
+ {
+  "variable": "심박변이(HRV) — overall autonomic marker vs hypertension",
+  "what_it_measures": "Beat-to-beat variation in R-R intervals from ECG; a noninvasive quantitative index of cardiac autonomic (sympathetic + parasympathetic/vagal) modulation of the sinoatrial node. Higher HRV = greater vagal/parasympathetic tone and autonomic flexibility; lower HRV = sympathovagal imbalance.",
+  "bp_relationship": "INVERSE and bidirectional. Lower HRV is both a CONSEQUENCE of (cross-sectional, lower in prevalent hypertensives) and a PREDICTOR/ANTECEDENT of higher BP and incident hypertension. Mechanism: reduced vagal tone + relative sympathetic dominance -> impaired baroreflex BP buffering -> sustained sympathetic overactivity -> elevated BP.",
+  "references": [
+   "Schroeder EB, Liao D, Chambless LE, et al. 2003, Hypertension (ARIC Study) 42(6):1106-1114. Cohort 11,061 (age 45-64); cross-sectionally HRV (SDNN, RMSSD, R-R) lower in hypertensives across the FULL BP range after adjustment. Prospectively among 7,099 normotensives at baseline, low HRV predicted incident hypertension over ~9 yr: lowest vs highest quartile HR 1.24 (95% CI 1.10-1.40) for SDNN, 1.36 (1.21-1.54) for RMSSD, 1.44 (1.27-1.63) for R-R interval. Establishes the temporal sequence: low HRV precedes hypertension.",
+   "Singh JP, Larson MG, Tsuji H, et al. 1998, Hypertension (Framingham Heart Study) 32(2):293-297. 931 men + 1111 women, first 2h ambulatory ECG. Cross-sectionally HRV significantly lower in hypertensive men and women. Prospectively (4-yr follow-up, 633 men/801 women normotensive at baseline; 119 men/125 women became hypertensive): low LF power predicted new-onset hypertension in MEN (not women); in men LF was a stronger predictor than BMI. Sex-specific direction.",
+   "Liao D, Cai J, Barnes RW, et al. 1996, Am J Hypertens (ARIC) 9(12):1147-1156. n=2,061. Graded inverse association between baseline high-frequency (HF, vagal) power and incident hypertension: adjusted odds ratios from highest to lowest HF quartile 1.00, 1.46, 1.50, 2.44 (lowest quartile 95% CI 1.15-5.20). Lower vagal activity -> higher hypertension risk."
+  ]
+ },
+ {
+  "variable": "Time-domain HRV (SDNN, RMSSD, pNN50, R-R interval)",
+  "what_it_measures": "SDNN = standard deviation of normal-to-normal R-R intervals (overall HRV / total autonomic variability). RMSSD and pNN50 = short-term beat-to-beat differences, predominantly reflecting parasympathetic/vagal tone. Higher values = greater vagal modulation.",
+  "bp_relationship": "INVERSE. SDNN, RMSSD and R-R interval are lower in hypertensives than normotensives and lower values predict incident hypertension. SDNN is the most consistently/significantly reduced; RMSSD/pNN50 reduced but sometimes not statistically significant in smaller studies.",
+  "references": [
+   "Schroeder EB et al. 2003, Hypertension (ARIC): crude SDNN, RMSSD, and R-R lower in hypertensives vs normotensives, persisting after adjustment (age, sex, race, center, diabetes, smoking, education, BMI). Lowest-quartile hazard ratios for incident hypertension — SDNN 1.24, RMSSD 1.36, R-R 1.44 (see above).",
+   "ELSA-Brasil — Almeida-Santos / Brazilian Longitudinal Study of Adult Health, 2021, J Hum Hypertens (Nature) — prospective, 7,665 normotensive at baseline, 4-yr follow-up. Low values of HRV indices (SDNN, VLF, LF) significantly associated with increased relative risk of incident hypertension after full adjustment; even normal-BP (not just prehypertensive) subjects with low SDNN/VLF/LF were at increased risk. Conclusion: cardioautonomic disturbance precedes clinical hypertension.",
+   "Comparative cross-sectional studies (e.g., normotensive vs hypertensive Indian adults, ScienceDirect S0019483223000457): time-domain SDNN and NN50 significantly lower (p<0.05) in hypertensives; RMSSD and pNN50 lower but often non-significant."
+  ]
+ },
+ {
+  "variable": "Frequency-domain HRV (LF power, HF power, LF/HF ratio)",
+  "what_it_measures": "HF (0.15-0.40 Hz) = parasympathetic/vagal activity. LF (0.04-0.15 Hz) = mixed sympathetic + parasympathetic, modulated by baroreflex. LF/HF ratio historically interpreted as 'sympathovagal balance' (sympathetic dominance when elevated).",
+  "bp_relationship": "INVERSE for HF (lower vagal power -> higher BP/hypertension risk). For LF/HF: hypertensives typically show HIGHER LF and HIGHER LF/HF ratio (relative sympathetic dominance). Low HF predicts incident hypertension; low LF predicts new-onset hypertension in men (Framingham).",
+  "references": [
+   "Liao D et al. 1996, Am J Hypertens (ARIC): graded inverse HF-to-incident-hypertension association, lowest HF quartile OR 2.44 (1.15-5.20).",
+   "Singh JP et al. 1998, Hypertension (Framingham): low LF predicted incident hypertension in men.",
+   "HRV in hypertension reviews/cross-sectional (e.g., PMC7582062; MDPI Diagnostics 2023 13(4):785 'Role of HRV in Different Hypertensive Syndromes'): SDNN and pNN50 lower, LF and LF/HF ratio higher in hypertensives — indicating sympathetic overactivity + vagal withdrawal.",
+   "CAVEAT on LF/HF: Billman GE 2013, Front Physiol 4:26, and Reyes del Paso et al. — the LF/HF ratio does NOT accurately quantify cardiac sympathovagal balance; LF reflects baroreflex modulation rather than pure sympathetic tone. Interpret LF/HF as a proxy, not ground truth."
+  ]
+ },
+ {
+  "variable": "Baroreflex sensitivity (BRS) — mechanistic link between HRV and BP",
+  "what_it_measures": "BRS = magnitude of reflex change in heart rate / R-R interval per unit change in arterial BP (ms/mmHg). An integrated measure of autonomic (both sympathetic and parasympathetic) short-term BP regulation; mechanistically couples HRV to BP control.",
+  "bp_relationship": "INVERSE with BP. Reduced/blunted BRS accompanies and precedes hypertension; impaired baroreflex buffering -> wider BP variability and sustained sympathetic overactivity -> elevated BP. BRS is positively correlated with HRV and inversely with BP variability. Hypertension also RESETS the baroreflex to a higher pressure with reduced sensitivity (reverse causation).",
+  "references": [
+   "AHA Hypertension — 'Baroreflex Sensitivity Inversely Correlates With Ambulatory Blood Pressure in Healthy Normotensive Humans' (ahajournals.org HYPERTENSIONAHA.107.090308): lower BRS associated with higher ambulatory BP even within normotensive range.",
+   "Crisafulli A et al. 2022, 'Hypertension depresses arterial baroreflex control of heart rate and cardiac output during rest, exercise, and metaboreflex activation' (PMC9602692): hypertensives have blunted baroreflex control of heart period; baroreflex reset to higher pressure at cost of reduced sensitivity.",
+   "Reviews on baroreflex/autonomic mechanism of hypertension: BRS is a sensitive integrated index of sympathetic+parasympathetic regulation; in hypertensives BRS is positively related to HRV and inversely related to BP variability, so impaired baroreflex -> wider BP swings (Springer 'Heart Rate Variability, Blood Pressure Variability: What Is Their Significance in Hypertension', 2022)."
+  ]
+ },
+ {
+  "variable": "HRV as predictor of broader cardiovascular outcomes (context for BP pathway)",
+  "what_it_measures": "Same HRV indices used as prognostic markers for first cardiovascular events and mortality in populations free of overt CVD — contextualizes the strength/effect size of low HRV as a risk marker on the hypertension-CVD continuum.",
+  "bp_relationship": "INVERSE/predictive but MODEST effect size. Low HRV signals autonomic dysregulation that drives both hypertension and downstream CVD; pooled risk roughly 1.3-1.5x lowest-vs-highest HRV. Supports HRV as an antecedent marker rather than a strong standalone predictor.",
+  "references": [
+   "Hillebrand S, Gast KB, de Mutsert R, et al. 2013, Europace 15(5):742-749 — meta-analysis & dose-response meta-regression of HRV and first CV event in populations without known CVD: pooled RR (lowest vs highest SDNN) 1.35 (95% CI 1.10-1.67); LF 1.45 (1.12-1.87); HF 1.32 (0.96-1.81). A 1-SD lower SDNN ~ 32-45% higher CV risk.",
+   "General meta-analytic finding cited across reviews: lower HRV associated with higher all-cause death / CV events in CVD patients (pooled HR for all-cause death ~2.27) — larger effect in diseased populations vs primary-prevention cohorts."
+  ]
+ },
+ {
+  "variable": "혈중 산소 (SpO2 / blood oxygen saturation)",
+  "what_it_measures": "Percent of hemoglobin saturated with oxygen (pulse oximetry). Proxies for hypoxia/desaturation include nocturnal SpO2 dips, time below 90% (T90), oxygen desaturation index (ODI), and 'hypoxic burden' (area under the desaturation curve). Lower SpO2 = hypoxia.",
+  "bp_relationship": "INVERSE in the clinically dominant range: lower SpO2 / more hypoxia → higher BP. Mechanism: hypoxia activates the carotid-body peripheral chemoreflex → increased sympathetic (muscle sympathetic nerve activity) outflow, RAAS/renin-angiotensin-aldosterone activation, reduced nitric-oxide bioavailability, endothelial dysfunction, oxidative stress and systemic inflammation → vasoconstriction and sustained BP elevation. Intermittent hypoxia (as in OSA) is especially hypertensinogenic, producing nocturnal/resistant hypertension and abnormal BP variability. CAVEAT: relationship is non-linear/context-dependent — very brief or mild acute hypoxia may change BP little, and some chronic high-altitude adaptation or RAAS-inhibition models can lower BP — but the prevailing direction in OSA/desaturation literature is hypoxia→higher BP.",
+  "references": [
+   "Peppard et al. 2000, N Engl J Med (Wisconsin Sleep Cohort) — dose-response, BMI-independent: baseline AHI≥15 vs 0 gave ~4-year adjusted OR ≈2.89 (95% CI 1.46-5.64) for incident hypertension; AHI≥15 ~3.2-fold higher odds vs no OSA",
+   "Tamisier et al. 2011, Am J Physiol Heart Circ Physiol — controlled chronic intermittent hypoxia 9h/night x28 nights in healthy young adults: diastolic BP rose 71±1.3→74±1.7 mmHg (P<0.01); MSNA rose 9.94→14.63 bursts/min (P<0.05); demonstrates causal hypoxia→BP+sympathetic link",
+   "Azarbarzin et al. 2019, Eur Heart J (Sleep Heart Health Study + MrOS) — 'hypoxic burden' (area under desaturation curve) predicts CVD mortality better than AHI; highest-burden quintiles HR ≈1.81 and 2.73 (MrOS), ≈1.96 (SHHS, 95% CI 1.11-3.43)",
+   "Hansen/Hainsworth & high-altitude microneurography studies — sympathetic nerve activity markedly elevated at altitude vs sea level (~48 vs 16 bursts/min) with MAP rising ~77→87 mmHg; chronic hypoxia increases noradrenaline spillover and BP in healthy humans",
+   "OSA–hypertension reviews/meta-analyses 2018-2024 (e.g., Hypertension Research, Front Med) — intermittent hypoxia/sympathetic activation as principal mechanism; OSA associated with resistant and nocturnal hypertension, dose-response with severity"
+  ]
+ },
+ {
+  "variable": "호흡수 (respiration rate / breathing frequency)",
+  "what_it_measures": "Number of breaths per minute (general-population median ~15.8/min, KORA-FF4; ~12-20 normal range). Also encompasses breathing pattern (paced vs spontaneous) and respiration-driven beat-to-beat BP oscillations (respiratory sinus arrhythmia).",
+  "bp_relationship": "BIDIRECTIONAL / pattern-dependent. (a) SLOW breathing lowers BP: paced breathing ~6 breaths/min raises arterial baroreflex sensitivity and vagal tone while lowering sympathetic and chemoreflex drive → reduced SBP/DBP. (b) HIGH respiratory rate signals sympathetic activation / acute physiological stress and is an independent predictor of deterioration and mortality (often stronger than BP or pulse), implying association with adverse cardiovascular state. (c) MECHANISTIC coupling: respiration generates short-term BP oscillations via respiratory sinus arrhythmia and the baroreflex — BP falls during inhalation and rises during exhalation; faster breathing produces smaller respiratory BP swings. Net: slow/regular breathing ↔ lower BP & higher baroreflex sensitivity; fast/irregular breathing ↔ sympathetic activation & higher risk.",
+  "references": [
+   "Joseph et al. 2005, Hypertension 46:714-718 — slow breathing 6/min in essential hypertensives: SBP 149.7±3.7→141.1±4 (P<0.05), DBP 82.7±3→77.8±3.7 mmHg (P<0.01); baroreflex sensitivity rose 5.8±0.7→10.3±2.0 ms/mmHg (hypertensives) and 10.9→16.0 (controls); reduced sympathetic/chemoreflex activation",
+   "Mahtani et al. 2012, J Hum Hypertens (RESPeRATE device meta-analysis, 8 trials, n=494) — SBP −3.67 mmHg (95% CI −5.99 to −1.39, P=0.002), DBP −2.51 mmHg (−4.15 to −0.87, P=0.003); BUT effect null after excluding manufacturer-linked trials",
+   "Freitas Gonçalves et al. 2022, Health Science Reports / Eur Heart J suppl — broader meta-analysis (22 studies, n=17,214): device-guided slow breathing did NOT significantly reduce BP vs usual care (SBP MD −2.13, 95% CI −12.71 to 8.44) — tempers efficacy claims",
+   "Fieselmann et al. 1993, J Gen Intern Med — respiratory rate >27/min is the single best predictor of in-hospital cardiopulmonary arrest; RR remained predictive after adjustment while pulse and BP were not — RR as superior risk marker",
+   "Cretikos et al. 2008, Med J Aust ('Respiratory rate: the neglected vital sign') — elevated RR independent marker of mortality (pneumonia, ED, MEWS/CURB-65 components)",
+   "Eckberg / respiratory sinus arrhythmia & baroreflex literature (e.g., Hypertension, Am J Physiol) — RSA arises from conversion of respiratory BP variability into HR variability via the vagal baroreflex; BP decreases on inhalation/increases on exhalation; faster breathing yields smaller respiratory BP oscillations (frequency-dependent)"
+  ]
+ },
+ {
+  "variable": "심박수 (Heart Rate, HR) — general/instantaneous",
+  "what_it_measures": "Beats per minute; with stroke volume determines cardiac output (CO = HR x SV), one of the two multiplicative determinants of BP (BP = CO x TPR). Reflects net autonomic balance (sympathetic vs parasympathetic/vagal tone) on the sinoatrial node.",
+  "bp_relationship": "Context-dependent (this is the critical modeling caveat). INVERSE at rest on a beat-to-beat basis via the arterial baroreflex: an acute BP rise activates baroreceptors -> reflex parasympathetic activation + sympathetic inhibition -> HR, contractility, stroke volume, and vascular resistance fall (negative feedback keeping BP constant); a BP fall does the opposite. POSITIVE/parallel during exercise because the baroreflex resets upward intensity-dependently and central command + exercise pressor reflex drive HR and BP up together to increase CO. POSITIVE across individuals chronically: higher tonic HR co-occurs with higher BP because both are downstream of shared sympathetic overdrive.",
+  "references": [
+   "Baroreflex Sensitivity Inversely Correlates With Ambulatory Blood Pressure in Healthy Normotensive Humans, Hypertension (AHA, ahajournals.org/doi/10.1161/HYPERTENSIONAHA.107.090308) — baroreflex enforces inverse SBP-HR relation; baroreflex sensitivity inversely correlates with ambulatory BP in normotensives.",
+   "Human/animal baroreflex reviews (PMC9602692; Fadel et al., PMC3253263 'Human Investigations into the Arterial and Cardiopulmonary Baroreflexes during Exercise') — during exercise the arterial baroreflex resets in direct proportion to intensity, allowing parallel rises in BP and HR to raise cardiac output; exercise pressor/metaboreflex raises BP via increased HR, contractility (Emax), and CO.",
+   "Mechanistic statement: BP = CO x TPR, CO = HR x SV; rapid beat-to-beat BP regulation occurs primarily via baroreflex control of CO through rapid HR changes (PMC2343007, baroreflex CO/vascular conductance during exercise)."
+  ]
+ },
+ {
+  "variable": "휴식기 심박수 (Resting Heart Rate, RHR)",
+  "what_it_measures": "Heart rate measured at rest (typically seated/supine, awake, quiescent). A clinical marker of resting sympathetic tone / autonomic balance and a recommended item in hypertension assessment (ESH guidelines). Higher RHR indicates sympathetic overdrive.",
+  "bp_relationship": "POSITIVE and independent as a long-term cross-individual predictor: elevated RHR precedes and predicts incident hypertension and higher BP. Mechanism = chronic sympathetic overactivity that raises both HR and BP (and hematocrit/metabolic abnormalities). RHR >80 bpm flagged as marker of pronounced sympathetic overdrive with adverse outcomes. (Note: this long-term positive risk association is distinct from the acute within-person baroreflex inverse relation.)",
+  "references": [
+   "Wang et al. (or cohort authors), 'Association of Resting Heart Rate With Blood Pressure and Incident Hypertension Over 30 Years in Black and White Adults: The CARDIA Study,' Hypertension, Sept 2020 (AHA, HYPERTENSIONAHA.120.15233; PMC7430042) — n=3888 (1615 men, 2273 women) followed ~30 yrs; HR per +10 bpm RHR = 1.47 (1.23-1.75) Black men, 1.51 (1.28-1.78) White men, 1.48 (1.26-1.73) White women, 1.02 (0.89-1.17, NS) Black women.",
+   "Dose-response meta-analysis of cohort studies (PMC7478507) — linear positive association; ~9% higher incident-HTN RR per +10 bpm; RHR ~100 vs 55.5 bpm = RR 1.58 (1.32-1.88); no significant association in women subgroup.",
+   "Dose-response meta-analysis, RHR and risk of hypertension and heart failure (PubMed 29176508) — +10 bpm RHR -> hypertension RR 1.11 (1.07-1.15) [also reported 1.09, 95% CI 1.06-1.13]; linear positive trend.",
+   "Palatini P., 'High Heart Rate and Hypertension: Two Intertwined Cardiovascular Risk Factors,' J Clin Hypertension 2025 (Wiley; PMC11804763) and 'High Heart Rate, Sympathetic Overdrive, and CV Risk in Hypertension,' Am J Cardiol 2025 (S0002-9149(25)00576-4) — HR >80 bpm reflects sympathetic overactivity; drives BP, organ damage (LVH, endothelial/arterial dysfunction, renal damage); RHR recommended in ESH assessment.",
+   "Palatini & Julius, 'Relationship of Tachycardia With High Blood Pressure and Metabolic Abnormalities,' Hypertension 1997 (01.hyp.30.5.1267) — tachycardia clusters with high BP and metabolic abnormalities via sympathetic overactivity."
+  ]
+ },
+ {
+  "variable": "걷기 심박수 (Walking / activity-elevated Heart Rate) — incl. heart-rate reserve & HR-per-step",
+  "what_it_measures": "Heart rate during ambulation/walking or submaximal exertion, i.e. HR above resting under a physical-activity load. Captures the chronotropic (autonomic) response to demand. Often normalized as Heart-Rate Reserve (HRpeak - HRrest) or, with wearables, as daily heart-rate-per-step (chronotropic responsiveness/fitness index).",
+  "bp_relationship": "Two layers. (a) WITHIN an activity bout: POSITIVE co-movement — walking raises HR and BP together (baroreflex reset + exercise pressor reflex). (b) As a TRAIT predictor of hypertension, the normalized response matters and direction can flip: HIGHER heart-rate reserve / good chronotropic competence is PROTECTIVE against incident HTN (better fitness, lower resting sympathetic tone), whereas a STEEP BP-rise-per-HR-increment slope and an exaggerated exercise BP response predict FUTURE hypertension. So absolute walking HR co-moves positively with BP acutely, but a blunted HR reserve or a steep BP/HR slope flags higher hypertension risk.",
+  "references": [
+   "Sharashova et al., 'Association of exercise heart rate response and incidence of hypertension in men,' (PubMed 24974261) — higher HR reserve protective: HR 0.84 (95% CI 0.74-0.95) for highest vs lowest quartile of HR reserve for incident hypertension in men.",
+   "Singh JP et al., 'Blood Pressure Response to Heart Rate During Exercise Test and Risk of Future Hypertension,' Hypertension 2002 (AHA hy0302.105777; PubMed 11897759) — Framingham-related; n~1033 normotensive men, mean age ~43; steeper BP-response-to-HR slope (and percentile curves via 3rd-order polynomial regression) predicts future hypertension; exaggerated exercise BP response RR ~3.8 (2.3-6.1) for incident HTN.",
+   "Lauer MS et al., 'Impaired heart rate response to graded exercise: prognostic implications of chronotropic incompetence in the Framingham Heart Study,' Circulation 1996 (PubMed 8608620) — blunted chronotropic response (low HR reserve) predicts mortality and CHD; establishes HR reserve as autonomic/fitness marker.",
+   "Occupational activity ambulatory study (PMC9421794) — within-day positive coupling: lifting workdays vs not showed +9.10 bpm HR alongside higher ambulatory SBP (+3.77 mmHg) and DBP (+1.37 mmHg), demonstrating concurrent HR-BP rise with activity.",
+   "'Daily Heart Rate per Step: A Wearables Metric Associated With Cardiovascular Disease,' All of Us Research Program (PMC12184247) — wearable HR-per-step (chronotropic responsiveness during walking) associates with CVD; supports walking-HR-derived features for cardiovascular/BP risk modeling."
+  ]
+ },
+ {
+  "variable": "Wearable wrist HR / PPG as a BP estimator (cross-cut, supports HR variables above)",
+  "what_it_measures": "Wrist photoplethysmography (PPG) heart rate and pulse-wave morphology used to estimate BP via pulse-wave analysis (PWA) and/or pulse arrival time (PAT), typically with ML models and (often) a cuff-based calibration plus demographic features (~100 features).",
+  "bp_relationship": "HR alone is a WEAK standalone BP proxy; predictive value comes from combining HR with PPG waveform morphology, PAT, and demographics. Best cuffless wristbands report SBP/DBP mean errors near +/-2.5 to 3.7 mmHg seated, but accuracy degrades by posture (SD up to ~12.5 mmHg standing) and overall accuracy remains regulatorily uncertain. Implication for a BP-estimation model: include resting HR (level/risk), activity-context HR (co-moves with BP), HR reserve / HR-per-step (fitness/autonomic responsiveness), plus PPG-derived morphology.",
+  "references": [
+   "Evaluation of a novel cuffless PPG-based wristband for measuring blood pressure per regulatory standards, Eur Heart J Digital Health 2024 (academic.oup.com/ehjdh/article/5/3/335; PMC11104472) — algorithm errors ~+/-3.7 (SD 4.4) mmHg SBP and +/-2.5 (SD 3.7) mmHg DBP; requires cuff initialization + ~100 features.",
+   "Frontiers Med Technol 2024 (10.3389/fmedt.2024.1464473) PPG cuffless bracelet — SBP mean diff 0.5 (SD 7.8) mmHg sitting, -2.4 (10.1) supine, -0.6 (12.5) standing; accuracy posture-dependent.",
+   "General cuffless-PPG reviews (PMC7141397, PMC6603632) — PWA on wrist PPG is dominant approach; accuracy of cuffless devices remains uncertain pending regulatory recommendations."
+  ]
+ },
+ {
+  "variable": "보행 속도 (Gait speed / usual walking speed)",
+  "what_it_measures": "Usual-pace overground walking velocity (m/s), typically over 4-6 m; a global integrator of cardiorespiratory fitness, lower-limb function, and neuromuscular health. Easy, cheap, reproducible vital sign.",
+  "bp_relationship": "Inverse / protective: faster gait speed predicts LOWER incident hypertension and LOWER CVD/all-cause mortality; slower gait associates with HIGHER arterial stiffness and worse CV outcomes. Direction: faster gait → better BP/CV profile. Caveat: largely observational; reverse causation (vascular disease slows gait) is plausible.",
+  "references": [
+   "Veronese N et al. 2018, J Am Med Dir Assoc (JAMDA) — meta-analysis, 45 studies / ~101,945 adults (mean age 72.2y, median FU 5.4y): each 0.1 m/s SLOWER gait = +12% all-cause mortality (HR 1.12, 95%CI 1.09-1.14) and +8% CVD (HR 1.08, 95%CI 1.03-1.13).",
+   "LaCroix AZ / WHI 2020, Hypertension (HYPERTENSIONAHA.120.15839) — 83,435 postmenopausal women, mean 11y FU, 38,230 incident treated-HTN cases: faster usual walking speed inversely associated with incident treated hypertension; HRs by pace ~1.00 (<2 mph, ref), 0.95, 0.86, 0.79 (>4 mph); significant after adjusting for baseline BP and walking volume.",
+   "Lee et al. 2025, Geriatr Gerontol Int (ggi.70225) — Korean cohort n=1890 older adults: high vs low walking-speed group had 46% lower odds of hypertension (OR 0.52, 95%CI 0.29-0.94); stronger in low-insulin-resistance subgroup (OR 0.35, 95%CI 0.14-0.85).",
+   "Mobility speed study 2021, PubMed 34267074 / PMC8734633 — longitudinal: 4-m walk score inversely related to incident hypertension (HR 0.07, 95%CI 0.01-0.47, p=0.007); slower Timed-Up-and-Go positively associated (HR 1.15).",
+   "Afilalo J et al. 2010, J Am Coll Cardiol — slow gait speed (frailty marker) post-MI/cardiac surgery: >3-fold increase in morbidity/mortality; STS database (JAHA 2019) HR 2.16 per 0.1 m/s slower for 1-yr mortality after cardiac surgery."
+  ]
+ },
+ {
+  "variable": "보폭 (Stride length / step length)",
+  "what_it_measures": "Distance covered per stride (or step); spatial gait parameter reflecting lower-limb power, balance confidence, and neuromuscular integrity. Strongly co-varies with gait speed.",
+  "bp_relationship": "Inverse / protective: SHORTER stride length predicts adverse clinical events and disability; reduced step length is a frailty feature linked to higher CV risk. Direct BP/stiffness associations are sparse and mostly mediated through gait speed and frailty rather than a standalone BP mechanism.",
+  "references": [
+   "Stride Length Predicts Adverse Clinical Events — Systematic Review & Meta-analysis 2021, PMC8235531: short stride length predicted major adverse events (pooled OR 1.36) and physical disability (OR 1.26) in older adults.",
+   "Frailty/gait studies (Frontiers Med 2026, 3389/fmed.2026.1785926) — frail older adults show shorter step length, prolonged double-support, and reduced gait speed vs robust; frailty phenotype associates with higher CV risk.",
+   "Tudor-Locke / steps & cadence 2021, PubMed 34798157 (steps/day & peak cadence vs arterial stiffness) — ambulatory volume & intensity (which scale with stride/cadence) inversely associated with arterial stiffness; peak cadence 68-86 steps/min linked to lower BP and better metabolic markers.",
+   "NOTE: Most stride-length evidence validates against falls/disability/frailty; BP and PWV links are indirect, mediated by overall mobility and vascular risk-factor burden."
+  ]
+ },
+ {
+  "variable": "이중 지지 시간 (Double-support time / gait variability)",
+  "what_it_measures": "Proportion/duration of the gait cycle with both feet on the ground (a stability/cautious-gait marker); plus step-to-step variability (CV of stride time, length, double-support) reflecting gait control and CNS/cardiovascular integrity.",
+  "bp_relationship": "Positive (longer double-support / higher variability = worse): hypertensive individuals walk slower with LONGER double-support time and GREATER gait variability vs normotensives. Increased variability marks frailty/fall risk and tracks with CV disease burden. Direction: longer double-support/higher variability → higher BP/CV-risk phenotype, but mechanism is indirect (shared vascular-neural aging).",
+  "references": [
+   "Determining characteristics of gait variability at preferred speed in hypertensive vs normotensive participants 2023, J Clin Hypertens (S2213-3981(23)00131-8) — hypertensive participants: slower speed, longer double-support time, and significantly greater gait variability than normotensives.",
+   "Medical, Sensorimotor & Cognitive Factors Associated with Gait Variability — longitudinal population study, PMC6305368: baseline CVD increased rate of change of step-length variability; weaker quadriceps increased step-width variability change.",
+   "Frailty & gait variability (Front Med 2026, 3389/fmed.2026.1785926; PMC3034676) — prolonged double-support and greater stride variability characterize frailty and predict falls; stride variability may detect fall risk more sensitively than speed.",
+   "PAD gait studies (BMC Geriatr 2018, 10.1186/s12877-018-0727-1) — peripheral artery disease: greater step/stride times, altered stance/swing — vascular disease directly perturbs temporal gait parameters."
+  ]
+ },
+ {
+  "variable": "보행 비대칭성 / 안정성 (Gait asymmetry / walking steadiness/stability)",
+  "what_it_measures": "Left-right asymmetry in step length/time and swing/stance (spatial & temporal), plus walking steadiness/regularity and stability indices (e.g., regularity from accelerometry, Apple-style walking steadiness). Markers of motor control, fall risk, and limb-specific perfusion.",
+  "bp_relationship": "Indirect, disease-mediated: gait asymmetry/instability is elevated in PAD (correlates with ankle-brachial index and ABI asymmetry — a peripheral vascular/atherosclerosis readout) and in stroke survivors. No clean direct BP-magnitude relationship; rather, vascular disease (atherosclerosis/PAD, cerebrovascular events from hypertension) produces asymmetry/instability. Direction: greater asymmetry/lower steadiness → greater underlying vascular/CV disease burden.",
+  "references": [
+   "Effect of PAD & intermittent claudication on gait regularity and symmetry 2022, J Biomech (PubMed 35759975 / S0021-9290(22)00248-2): gait asymmetry increased after claudication onset; ML asymmetry and vertical stride regularity correlated with ankle-brachial index (ABI) and ABI asymmetry.",
+   "Gait pattern in patients with PAD 2018, BMC Geriatrics (PMC5819174): reduced gait speed, step/stride regularity vs controls; affected limb longer swing, shorter stance.",
+   "Patterson KK et al. — Gait Asymmetry in Community-Ambulating Stroke Survivors (ResearchGate 5624524) & systematic review 2025 (S0966-6362(25)00223-1): spatial (step length) and temporal (swing time) paretic/non-paretic asymmetry common post-stroke (a hypertension-driven cerebrovascular outcome).",
+   "Walking Stability and Risk of Falls 2023, PMC10135799 — instability indices (SPPB, POMA-G) inversely relate to fall risk; gait/balance disorders predict falls better than other domains.",
+   "estimated Pulse Wave Velocity & balance function in US adults 2025, J Hum Hypertens (s41371-025-01062-0) — higher ePWV (arterial stiffness surrogate) associated with worse balance function."
+  ]
+ },
+ {
+  "variable": "계단 올라가기 속도 (Stair-climbing speed / capacity)",
+  "what_it_measures": "Speed/ability to ascend stairs (e.g., flights climbed, 60-second step test, standardized stair-climbing test) — a practical surrogate for cardiorespiratory fitness (VO2max), leg power, and CV reserve.",
+  "bp_relationship": "Inverse / protective as a fitness marker: greater stair-climbing activity/capacity associates with LOWER CVD and all-cause mortality and better CV risk-factor profile. Acutely, stair climbing raises HR, stroke volume, and systolic BP (training stimulus); chronically improves fitness and lowers risk. Direction: higher stair-climbing capacity → better CV/BP profile. Caveat: reverse causation (fitter people climb more).",
+  "references": [
+   "Paddock S et al. 2024, Eur J Prev Cardiol (zwae175.405) — systematic review/meta-analysis, 9 studies / 480,520 participants (pooled 5 studies, 455,649): stair climbing associated with 24% lower all-cause mortality and 39% lower CVD mortality; pooled CV-mortality RR 0.65 (95%CI 0.50-0.83).",
+   "Daily stair climbing, disease susceptibility & ASCVD — prospective cohort 2023 (S0021-9150(23)05221-8): climbing >5 flights (~50 steps)/day associated with lower ASCVD risk independent of genetic susceptibility.",
+   "Suita Study 2024, PMC11111291 — stair climbing associated with favorable modifiable CVD risk factors (incl. blood pressure/metabolic markers).",
+   "Standardized stair-climbing test as CRF surrogate (PMC10887637, PMC12384133) — validates stair climbing as a simple cardiorespiratory-fitness measure; stair climbing acutely increases HR, stroke volume, systolic BP."
+  ]
+ },
+ {
+  "variable": "일어서기 시간 / 좌식 시간 (Standing/sitting & sedentary time)",
+  "what_it_measures": "Time spent sedentary (sitting), uninterrupted sitting bouts, and standing time (sit-to-stand transitions, Timed-Up-and-Go captures rise capacity). Reflects daily activity exposure and vascular response to immobility.",
+  "bp_relationship": "Positive (sedentary = worse): MORE sitting / longer uninterrupted sitting acutely RAISES blood pressure and aortic PWV (arterial stiffness) and is dose-dependently associated with incident hypertension and CVD. Replacing sitting with movement lowers BP, but merely STANDING (without ambulating) does NOT reliably lower BP and excessive standing may harm. Direction: more sedentary time → higher BP/stiffness/CV risk; light activity (not just standing) → lower BP.",
+  "references": [
+   "Barone Gibbs B et al. 2024, Circulation (RESET-BP RCT, CIRCULATIONAHA.123.068564) — reducing sedentary behavior lowered BP in desk workers; companion analysis (WVU 2024) — increasing standing ~1 h/day for 3 months did NOT reduce BP or arterial stiffness.",
+   "Prolonged Sitting Induces Elevated BP in Healthy Young Men — RCT crossover 2024, PMC10981358; and Single Bout of Prolonged Sitting Augments Very Short-Term BP Variability 2024, Am J Hypertens (PMC11322278) — acute sitting raises BP / BP variability.",
+   "Estimated PWV tracking arterial response to prolonged sitting 2022, PMC9785284 — ~3 h sitting increased aortic PWV (aortic stiffness) in healthy young adults.",
+   "Dose-response sedentary time & mortality/CVD meta-analyses — Ekelund U et al. 2019 (PubMed 31434697); JAHA 2021 (10.1161/JAHA.121.023845): higher sedentary time → incident atrial fibrillation (HR 1.11, 95%CI 1.01-1.21) and MI (HR 1.15, 95%CI 1.00-1.32); sitting time dose-response HRs rising to ~2.63 in highest category; each +1 h/day sitting HR ~1.04 for mortality.",
+   "Sedentary Behavior & Light PA vs Brachial/Central BP in hypertensives 2016, PMC4696789 — less sedentary + more light activity → lower BP (no change in stiffness/autonomic tone)."
+  ]
+ },
+ {
+  "variable": "손목 온도 (wrist / distal skin temperature)",
+  "what_it_measures": "Wrist (distal) skin temperature from a wrist-worn thermistor; a non-invasive surrogate of peripheral skin blood flow and cutaneous vasodilation/vasoconstriction. Rising wrist temp = peripheral vasodilation (heat loss, lower total peripheral resistance); falling wrist temp = vasoconstriction. The wrist-temperature rhythm is a validated marker of the circadian system (stable phase relationship with dim-light melatonin onset) and of autonomic balance, thermoregulation and sleep propensity. The distal-minus-proximal gradient (DPG) is used as a finer index of distal skin blood flow.",
+  "bp_relationship": "INVERSE / negative, mechanistically driven by peripheral vasoconstriction–vasodilation (total peripheral resistance). Higher wrist/distal skin temperature -> lower SBP/DBP. Across the day the BP rhythm is approximately a mirror image of the distal skin temperature (and DPG) rhythm. Low DAYTIME distal skin blood flow (cooler distal temp by day) predicts blunted nocturnal BP dipping (non-dipping), so the wrist-temperature circadian profile can screen dipper vs non-dipper status. Mechanism: nocturnal parasympathetic activation + supine position -> distal vasodilation -> heat loss + BP fall.",
+  "references": [
+   "Wang et al. 2022, Hypertension (AHA) 'Inverse Association of Skin Temperature With Ambulatory Blood Pressure...' (Nara Medical Univ.) — n=584 older adults, 48h ABPM + skin temp (30,711 daytime / 17,382 nighttime readings, Oct–Mar). Distal (wrist+ankle) and proximal (abdomen) skin temp inversely associated with daytime SBP: −4.27 mmHg (95% CI −4.58 to −3.96) and −2.74 mmHg per SD of skin temp; associations also significant at night; skin temp mediated BP responses to ambient temperature (path analysis). PMID 35574922; DOI 10.1161/HYPERTENSIONAHA.122.19190",
+   "Blázquez/Sarabia/Madrid et al. 2012, Chronobiology International 29(6):747 'Wrist Skin Temperature, Motor Activity, and Body Position as Determinants of the Circadian Pattern of Blood Pressure' — wrist temp negatively correlated with SBP/DBP; 78.6% concordance between observed BP dips and BP pattern predicted from wrist-temperature rhythm. PMID 22734575",
+   "Zaslavsky/… (van Marken Lichtenbelt group) 2012, Chronobiology International 29(9):1180 'Diurnal Blood Pressure Variations Are Associated With Changes in Distal–Proximal Skin Temperature Gradient' — n=51, 24h BP + distal & proximal skin temp; diurnal mean arterial pressure pattern was nearly a mirror image of the distal–proximal gradient (distal skin blood flow). PMID 23003124",
+   "'Non-dipping blood pressure pattern is related to an increase in daytime distal skin temperature' 2014, Sleep Medicine (ScienceDirect S1389945713016687) — low daytime distal skin blood flow predicts sleep-induced BP dipping; increased daytime distal skin temp associates with non-dipping.",
+   "Sarabia, Ortiz-Tudela, Rol, Madrid et al. 2008, Physiology & Behavior 95(4):570 'Circadian rhythm of wrist temperature in normal-living subjects: a candidate of new index of the circadian system' (Univ. Murcia) — foundational validation of wrist temperature as a circadian/autonomic marker; acrophase & mesor most robust, amplitude most masked. PMID 18761026",
+   "Martinez-Nicolas, Ortiz-Tudela, Madrid, Rol 2013, PLOS ONE 8(4):e61142 'Uncovering Different Masking Factors on Wrist Skin Temperature Rhythm in Free-Living Subjects' — quantifies masking (activity, body position, ambient temp) on wrist-temp rhythm. PMID 23577201"
+  ]
+ },
+ {
+  "variable": "일광 시간 (daylight / light exposure)",
+  "what_it_measures": "Personal light exposure (daytime bright-light dose, morning light timing, light-at-night) from wrist-worn light sensors, and environmental daylight hours / photoperiod (seasonality). Two conceptually different exposures: (a) acute solar/UV dose on skin; (b) circadian light signal to the eye that entrains the master clock and the BP rhythm. Daytime daylight = strong entraining signal (sunlight ~tens of thousands of lux vs weak indoor light); light-at-night = circadian disruptor.",
+  "bp_relationship": "DUAL / direction depends on timing. (1) Acute photobiology: solar UV-A mobilizes cutaneous nitric-oxide stores -> systemic vasodilation -> LOWER SBP (independent of temperature). (2) Circadian: adequate DAYTIME / MORNING bright light reinforces the nocturnal BP dip and supports lower daytime BP; LACK of morning light and LIGHT-AT-NIGHT blunt dipping, raise nighttime BP/morning surge and CV risk. Seasonality measured as DAYLIGHT HOURS is an independent predictor: nighttime SBP positively related to daylight hours and morning BP surge negatively related to daylight hours (i.e., long photoperiod/summer -> higher nighttime SBP, smaller morning surge), distinct from the temperature effect on daytime SBP. Net wintertime (short daylight + cold) elevation of daytime BP.",
+  "references": [
+   "Weller/Feelisch et al. 2020, JAHA 9(5):e013837 'Does Incident Solar Ultraviolet Radiation Lower Blood Pressure?' — large N. American chronic hemodialysis cohort; higher incident solar UV associated with lower SBP after adjusting for ambient temperature; supports UV->cutaneous NO->lower BP mechanism. PMC7335547",
+   "Liedtke/… 2023, Scientific Reports 13 (Nature) 'Low-dose daylight exposure induces nitric oxide release and maintains cell viability in vitro' — mechanistic support that daylight-level exposure triggers NO release. DOI 10.1038/s41598-023-43653-2",
+   "Modesti et al. 2013, Hypertension 61(4):908 'Seasonal Blood Pressure Changes: An Independent Relationship With Temperature and Daylight Hours' — n=1,897 hypertension-unit patients, ABPM + personal environmental temperature logger; daytime SBP negatively related to personal temperature, NIGHTTIME SBP positively related to DAYLIGHT HOURS, and MORNING BP SURGE negatively related to daylight hours; temperature and seasonality (daylight hours) are two independent ABPM predictors. PMID 23381792",
+   "Stergiou/Kollias et al. (reviewed in Narita & Kario 2021/2023, Hypertension Research) seasonal-variation meta-analyses — winter–summer difference in daytime home BP 6.1/3.1 mmHg (SBP/DBP) and in daytime ambulatory BP 3.4/2.1 mmHg; winter daytime BP elevation; summer nighttime BP elevation. DOI 10.1038/s41440-021-00732-z",
+   "Windred/Cain et al. 2025, JAMA Network Open 8(10):e2539031 'Light Exposure at Night and Cardiovascular Disease Incidence' — UK Biobank, n=88,905 (>40y), wrist light sensors (~13 million hours, 1 wk), 9.5y follow-up. Brightest-night group (91–100th pct) vs darkest (0–50th): higher risk of coronary artery disease (aHR 1.32), MI (1.47), heart failure (1.56), atrial fibrillation (1.32), stroke (1.28). PMID 41129148",
+   "'Morning light exposure: a potential modifier of cardiovascular risk factor' 2025, Medical Hypotheses (ScienceDirect S0306987725000933) — argues reduced morning light lessens the overnight BP drop and lowers night melatonin, raising CV risk; morning bright light advances circadian rhythm.",
+   "Brown et al. 2022, PLOS Biology 20(3):e3001571 'Recommendations for daytime, evening, and nighttime indoor light exposure...' — consensus thresholds (≥250 lux melanopic EDI daytime) underpinning circadian-light dosing used in BP/circadian work."
+  ]
+ },
+ {
+  "variable": "수면 (sleep duration / quality / efficiency)",
+  "what_it_measures": "Sleep duration, subjective quality (PSQI), efficiency, timing/midsleep (chronotype) and continuity, from self-report, actigraphy or wearables. Captures both the quantity and the restorativeness/continuity of sleep and the sleep period that defines the nocturnal BP window for dipping calculation.",
+  "bp_relationship": "Generally INVERSE for quantity/quality vs BP and dipping: SHORT or POOR sleep -> HIGHER BP, higher incident hypertension, and BLUNTED nocturnal dipping / non-dipping (sympathetic over-activity, reduced parasympathetic tone at night). Better subjective sleep quality -> more likely dipper. Sleep also defines the morning-surge/dip windows. Evidence is strongest for short duration and subjective quality; some OBJECTIVE measures (actigraphic duration/efficiency) show weaker/null links to non-dipping (CARDIA). OSA (a sleep disorder) strongly raises non-dipping prevalence.",
+  "references": [
+   "Lo, Woo et al. 2018, Journal of Clinical Hypertension 20(3):592 'Subjective sleep quality, blood pressure, and hypertension: a meta-analysis' — 29 articles/45,041 patients; poor sleep quality associated with hypertension (OR 1.48, P=.01); highest sleep-disturbance tertile OR 1.44 (1.00–1.64); poor sleepers higher SBP (MD 4.37) and DBP (MD 1.25) (NS). Notes dippers have better subjective sleep quality than non-dippers. PMID 29457339",
+   "Gangwisch et al. 2006, Hypertension (NHANES I, n≈4,810, 8–10y) — sleep ≤5 h/night raised incident hypertension (adjusted HR 1.32, 95% CI 1.02–1.71 vs 7–8h); ages 32–59 with ≤5h ~60% more likely to develop hypertension.",
+   "2024 meta-analysis, PLOS ONE 19, 'Association between sleep duration and hypertension incidence: systematic review and meta-analysis of cohort studies' — 16 cohorts, 1,044,035 participants; short sleep -> hypertension HR 1.07 (1.06–1.09), and HR 1.11 (1.08–1.14) for <5 h; women more vulnerable (HR 1.07, 1.04–1.09). DOI 10.1371/journal.pone.0307120",
+   "Full/… 2020, JAHA 9(7):e015062 'Association of Sleep Characteristics With Nocturnal Hypertension and Nondipping Blood Pressure in the CARDIA Study' — Year-30 exam, 24h ABPM + PSQI + actigraphy; NO association of global sleep quality, habitual duration, or sleep efficiency with nocturnal HTN or nondipping SBP; later midsleep time (chronotype) associated with LOWER prevalence ratio for nondipping SBP. Nocturnal HTN = asleep SBP ≥120 or DBP ≥70. DOI 10.1161/JAHA.119.015062",
+   "Cuspidi et al. 2019, J Clinical Hypertension / Cuspidi meta-analysis 'Blood Pressure Non-Dipping and Obstructive Sleep Apnea Syndrome: A Meta-Analysis' — OSA markedly increases prevalence of non-dipping pattern on 24h ABPM. PMC6780266",
+   "Korean hypertension registry study 2023 (PMC10391961) 'Clinical and life style factors related to nighttime BP, nighttime dipping and phenotypes' — sleep duration and quality associated with nighttime SBP; sleep quality associated with extent of nighttime SBP dipping.",
+   "Kario et al. 2003, Circulation 107:1401 'Morning Surge in BP as a Predictor of Silent and Clinical Cerebrovascular Disease in Elderly Hypertensives' (and JAMP Study, Hypertension 2020) — morning surge (mean SBP 2h after waking minus surrounding-trough SBP) predicts stroke; ~+10 mmHg surge ≈ +22% stroke risk. Links sleep/wake transition physiology to BP-derived risk. PMID 12642361"
+  ]
+ },
+ {
+  "variable": "걸음 (Step count / steps per day)",
+  "bp_relationship": "Inverse: higher daily step volume associated with lower SBP, DBP, MAP and pulse pressure, and lower MACE in hypertensives. Mechanism — chronic adaptation lowering peripheral resistance, improved endothelial/NO vasodilation, better baroreflex, reduced sympathetic tone; dose-dependent up to ~8,000–10,000 steps.",
+  "references": [
+   "del Pozo Cruz et al. 2024, Eur J Prev Cardiol — UK Biobank hypertensives (n≈32,192): each +1,000 steps/day vs ~2,300 baseline ~17% lower MACE risk.",
+   "Chen et al. 2024, JMIR — higher wearable daily steps associated with lower SBP/DBP/MAP/pulse pressure in older adults; greater step variability linked to higher BP."
+  ]
+ },
+ {
+  "variable": "활동 에너지 (Active energy expenditure / MVPA)",
+  "bp_relationship": "Inverse, dose-responsive: greater active energy / MVPA lowers resting BP and incident hypertension via chronic vascular remodeling + repeated acute post-exercise hypotension. Caveat: wrist active-kcal carries large error (MAPE often >20%).",
+  "references": [
+   "Stamatakis et al. (ProPASS) 2025, Circulation (n=14,761) — reallocating time toward exercise-like activity yields clinically meaningful BP reductions (≥2 mmHg SBP).",
+   "Liu et al. 2017, Hypertension — ~6% lower hypertension risk per 10 MET-h/week of leisure-time activity."
+  ]
+ },
+ {
+  "variable": "휴식 에너지 (Resting / basal energy, RMR)",
+  "bp_relationship": "Positive (opposite to activity metrics): higher resting/basal metabolic rate associated with higher BP independent of body size — elevated resting rate-pressure product, greater sympathetic activity, lower insulin sensitivity.",
+  "references": [
+   "Weyer et al. 2000, Hypertension — obese hypertensives show significantly higher RMR vs BMI-matched normotensives.",
+   "MR study 2023, Sci Rep — genetically higher BMR causally raises heart failure / aortic aneurysm risk (adverse CV direction)."
+  ]
+ },
+ {
+  "variable": "절대적 운동강도 METs (Exercise intensity)",
+  "bp_relationship": "Inverse and intensity-graded: higher intensity lowers BP more per unit time; reductions scale with MET-minutes. Stronger acute post-exercise hypotension + chronic drop in peripheral resistance/arterial stiffness; HIIT especially effective.",
+  "references": [
+   "Network meta-analysis 2023, Sci Rep — HIIT ~690 MET-min/week most effective for SBP (−5.07 mmHg); ~830 MET-min/week best for DBP (−4.42 mmHg).",
+   "Pescatello et al. (ACSM) — regular aerobic exercise lowers BP ~5–7 mmHg in hypertensives."
+  ]
+ },
+ {
+  "variable": "운동하기 시간 (Exercise minutes / duration)",
+  "bp_relationship": "Inverse: accumulating exercise duration (~150 min/week) lowers resting SBP/DBP. Acute — each 20–60 min bout >40% VO2peak triggers post-exercise hypotension up to ~24 h; chronic — sustained ambulatory BP reduction.",
+  "references": [
+   "Resistant-HTN RCT 2021 (PMC8340008) — 12 wk of 3×40-min/week reduced 24-h and daytime ambulatory SBP/DBP.",
+   "Halliwill 2001, post-exercise hypotension review — PEH after submaximal dynamic exercise persists for hours (up to ~13 h)."
+  ]
+ },
+ {
+  "variable": "걷기+달리기 거리 (Walking + running distance)",
+  "bp_relationship": "Inverse, energy-driven: greater distance lowers incident hypertension and SBP/DBP; at matched energy expenditure walking and running give comparable benefit.",
+  "references": [
+   "Williams & Thompson 2013, ATVB (n≈49,000) — running cut incident hypertension 4.2% and walking 7.2% per MET-h/day; comparable at equal energy.",
+   "Walking intervention 2018 (PMC6119598) — 6-month guided walking lowered SBP up to −21.3 mmHg in those with baseline SBP >160."
+  ]
+ },
+ {
+  "variable": "오른 층수 (Flights climbed / stair climbing)",
+  "bp_relationship": "Inverse: habitual stair climbing lowers SBP and arterial stiffness, increases leg strength; more flights/day associated with lower CVD risk. Brief vigorous weight-bearing load reduces arterial stiffness (key SBP mediator).",
+  "references": [
+   "Hong et al. 2018 (Korean postmenopausal stage-2 HTN) — 12-wk stair-climbing reduced arterial stiffness and BP; stiffness drop partly explained SBP improvement.",
+   "Tulane Mediterranean cohort — climbing >5 flights/day associated with ~20% lower ASCVD risk."
+  ]
+ }
+]

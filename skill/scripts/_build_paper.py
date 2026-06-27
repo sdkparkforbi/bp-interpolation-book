@@ -1,0 +1,114 @@
+# -*- coding: utf-8 -*-
+# 통합 논문 — 보간(PART1)·추정(PART2)·예측(PART3) + 세션 Grade A 한계분석. 저자 5인. 레퍼런스 DOI 클릭.
+import os
+SITE='C:/Temp/HYPT/book_site/'
+REFS=[
+("O'Brien E, Petrie J, Littler W, et&nbsp;al. (1993). The British Hypertension Society protocol for the evaluation of blood pressure measuring devices. <i>J Hypertens</i> 11(S2):S43–S62.","https://pubmed.ncbi.nlm.nih.gov/8158768/"),
+("International Organization for Standardization. (2018). Non-invasive sphygmomanometers — Part 2 (ISO 81060-2:2018).","https://www.iso.org/standard/73339.html"),
+("IEEE. (2014). Standard for wearable cuffless blood pressure measuring devices (IEEE 1708-2014).","https://doi.org/10.1109/IEEESTD.2014.6882122"),
+("Joung J, Jung C-W, Lee H-C, et&nbsp;al. (2023). Continuous cuffless blood pressure monitoring using PPG2BP-net. <i>Sci Rep</i> 13:8605.","https://doi.org/10.1038/s41598-023-35492-y"),
+("Slapničar G, Mlakar N, Luštrek M. (2019). Blood pressure estimation from PPG using a spectro-temporal DNN. <i>Sensors</i> 19(15):3420.","https://doi.org/10.3390/s19153420"),
+("Kachuee M, Kiani MM, Mohammadzade H, Shabany M. (2017). Cuffless BP estimation for continuous health-care monitoring. <i>IEEE TBME</i> 64(4):859–869.","https://doi.org/10.1109/TBME.2016.2580904"),
+("Takazawa K, Tanaka N, Fujita M, et&nbsp;al. (1998). Assessment of vasoactive agents using the second derivative of the PPG. <i>Hypertension</i> 32(2):365–370.","https://doi.org/10.1161/01.HYP.32.2.365"),
+("Block RC, Yavarimanesh M, Natarajan K, et&nbsp;al. (2016). Conventional pulse transit times as markers of blood pressure. <i>PMC4886159</i>.","https://pmc.ncbi.nlm.nih.gov/articles/PMC4886159/"),
+("Vybornova A, Polychronopoulou E, Wurzner-Ghajarzadeh A, et&nbsp;al. (2021). Clinical validation of the Aktiia cuffless optical monitor. <i>Blood Press Monit</i> 26(4):305–311.","https://pubmed.ncbi.nlm.nih.gov/33675592/"),
+("Nachman D, Younis A, Eisenkraft A, et&nbsp;al. (2022). Wrist wearable BP devices: insufficient accuracy. <i>Front Cardiovasc Med</i> 9:920946.","https://doi.org/10.3389/fcvm.2022.920946"),
+("Su P, Ding X, Zhang Y, et&nbsp;al. (2017). Long-term blood pressure prediction with deep recurrent neural networks. <i>arXiv</i>:1705.04524.","https://arxiv.org/abs/1705.04524"),
+("Imai Y, Hosaka M, Satoh M, et&nbsp;al. (2010). Day-by-day variability of blood pressure: the Ohasama study. <i>Am J Hypertens</i>.","https://doi.org/10.1038/ajh.2010.166"),
+("Liu X, Zhang D, Liu Y, et&nbsp;al. (2017). Dose-response of physical activity and incident hypertension. <i>Hypertension</i> 69(5):813–820.","https://doi.org/10.1161/HYPERTENSIONAHA.116.08994"),
+("del Pozo Cruz B, et&nbsp;al. (2024). Daily step count and cardiovascular events in hypertension (UK Biobank). <i>Eur J Prev Cardiol</i>.","https://doi.org/10.1093/eurjpc/zwae270"),
+("American Heart Association. (2022). Cuffless blood pressure devices: a scientific statement. <i>Hypertension</i> 79(5).","https://doi.org/10.1161/HYP.0000000000000209"),
+]
+def refs_html(): return ''.join(f'<li><a href="{u}" target="_blank" rel="noopener">{t}</a><br><span class="doi">↗ {u}</span></li>' for t,u in REFS)
+
+CSS="""
+:root{--ink:#1a1a1a;--muted:#555;--line:#ddd;--accent:#1d6e56}
+*{box-sizing:border-box}
+body{margin:0;background:#f4f4f2;color:var(--ink);font-family:'Malgun Gothic','Apple SD Gothic Neo',serif;line-height:1.85}
+.page{max-width:840px;margin:0 auto;background:#fff;padding:60px 70px 90px;box-shadow:0 0 30px rgba(0,0,0,.08)}
+h1{font-size:25px;line-height:1.5;margin:0 0 6px;text-align:center}
+.sub{text-align:center;color:var(--muted);font-size:14px;margin-bottom:4px}
+.authors{text-align:center;font-size:14.5px;margin:18px 0 4px}.affil{text-align:center;color:var(--muted);font-size:12.5px;margin-bottom:26px}
+h2{font-size:18px;border-bottom:2px solid var(--accent);padding-bottom:5px;margin:38px 0 14px;color:#14463a}
+h3{font-size:15.5px;margin:22px 0 8px;color:#333}
+p{margin:0 0 13px;text-align:justify;text-indent:11px}
+.abs{background:#f0f7f4;border:1px solid #cfe3db;border-radius:6px;padding:20px 24px;margin:22px 0;font-size:14px}.abs p{text-indent:0}
+.kw{font-size:13px;color:var(--muted);margin-top:10px}
+.fig{text-align:center;margin:20px 0}.fig img{max-width:100%;border:1px solid var(--line);border-radius:6px}
+.cap{font-size:12.5px;color:var(--muted);margin-top:7px;text-align:left;padding:0 6px}
+table{border-collapse:collapse;width:100%;font-size:12px;margin:14px 0}caption{font-size:12.5px;color:var(--muted);text-align:left;margin-bottom:6px}
+th,td{border:1px solid var(--line);padding:5px 7px;text-align:center}th{background:#eef5f2}td.l,th.l{text-align:left}
+.best{background:#fff6cf;font-weight:700}
+.gA{color:#1e7d4f;font-weight:800}.gB{color:#b8860b;font-weight:800}.gC{color:#b03a2e;font-weight:800}
+.refs{font-size:12.5px}.refs li{margin-bottom:11px;text-indent:-16px;padding-left:16px;list-style:none}
+.refs a{color:#185fa5;text-decoration:none;font-weight:600}.refs a:hover{text-decoration:underline}
+.doi{font-size:10.5px;color:#999;font-family:Consolas,monospace}
+sup{font-size:10px;color:var(--accent)}hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+.note{font-size:12px;color:var(--muted)}.flag{background:#fff3cd;padding:0 3px;border-radius:3px;font-size:11px}
+"""
+BODY=f"""
+<div class="page">
+<h1>설문·웨어러블 기반 일상 혈압의 보간·추정·예측<br>— 수준·위상·편차 분해와 그 정확도 한계</h1>
+<div class="sub">Interpolation, estimation, and forecasting of daily-life blood pressure from surveys and wearables: a level–phase–deviation decomposition and its accuracy limits</div>
+<div class="authors">이규성<sup>1</sup> · 차상현<sup>1</sup> · 성봉주<sup>1</sup> · 박대근<sup>1</sup> · 김효영<sup>1</sup></div>
+<div class="affil"><sup>1</sup> [소속 확인 필요] · 데이터: A DAY Inc. (DAY BP), 120명 · 저널 [선정 중]</div>
+
+<div class="abs"><b>초록 (Abstract)</b>
+<p><b>배경.</b> 스마트워치와 설문으로 혈압을 추정·예측하는 무가압(cuffless) 접근에서, 세션(순간) 단위 정확도의 한계와 그 원인은 충분히 규명되지 않았다.</p>
+<p><b>방법.</b> 120명에게서 7일간 하루 약 5회 측정한 참조 혈압과 24종 웨어러블·설문 변수를 사용하였다. <b>(PART1)</b> 세션평균·이상점 정제 후 군집 일주기와 최근성×위상 커널로 분단위 하이브리드 보간을 구성하였다(실측 시각엔 실측 고정). <b>(PART2 추정)</b> 외부(KNHANES)+설문+1일 보정으로 개인 수준 L을, 위상 커널로 일주기를 더해 구조적 추정치 E0=수준+위상을 만들고, 남은 편차 r=실측−E0를 워치와 지난 BP 추정으로 모델하였다. 회귀·스펙트럴·웨이블릿·트리·GBM·딥러닝을 single·multi로 20종 비교하였다. <b>(PART3 예측)</b> E0+편차를 자기회귀로 굴려 비워둔 7일째를 정적(1-step 재앵커)·동적(rollout)으로 예측하였다. 사람 기준 60:20:20 분할, 평가는 실측 시점에서 MAE와 BHS 등급으로 하였다.</p>
+<p><b>결과.</b> 추정에서 선형(능선회귀)·스펙트럴이 일반화 챔피언으로, 검증 일평균 SBP 3.59·DBP 2.33 mmHg(BHS A/A), 테스트 일평균 2.07·2.18(A/A)에 도달하였다. 트리·GBM은 학습을 외워 held-out에서 등급이 하락하였다. 워치와 지난 BP 추정은 상보적이었다(워치=세션 DBP, 지난추정=일평균 level). 예측에서 정적은 테스트 세션 DBP 4.28(A)·일평균 2.5(A)였고, 동적은 오차 누적으로 한 등급 낮았다. <b>세션 SBP는 모든 방법에서 약 5.7 mmHg(Grade B)에 머물렀다.</b></p>
+<p><b>결론.</b> 집계형 웨어러블 변수와 1일 보정으로는 일평균은 Grade A에 도달하나 세션은 B가 한계이며, 이는 모형이 개인 평균으로 회귀하는 mean-regression의 구조적 결과다. 선행연구는 세션 Grade A에 raw PPG 파형 형태·PTT 타이밍·주기적 재보정이 필요함을 일관되게 지지한다.</p>
+<div class="kw"><b>키워드:</b> cuffless blood pressure, wearable, circadian phase, level–deviation decomposition, nowcasting, forecasting, BHS grade, autoregression</div>
+</div>
+
+<h2>1. 서론</h2>
+<p>혈압은 심혈관 질환의 가장 강력한 예측 인자이나 가압식 측정은 간헐적이다. 스마트워치와 설문으로 일상 혈압을 복원·예측하려는 무가압 접근이 확산되었으나, 선행 연구는 대부분 동시점 추정(estimation)에 집중하였고 (a) 측정 사이를 메우는 보간, (b) 새 사용자에 대한 추정, (c) 미래 시점 예측을 하나의 분해 틀에서 다루며 세션 단위 정확도의 한계를 규명한 사례는 드물다.</p>
+<p>본 연구는 일상 혈압을 <b>수준(level)·위상(phase)·편차(deviation)</b>로 분해하여 보간(PART1)·추정(PART2)·예측(PART3)을 하나의 파이프라인으로 통합하고, 각 단계의 정확도를 MAE와 BHS 등급으로 평가한다. 특히 일평균은 Grade A에 도달하나 세션은 Grade B에 머무는 현상의 원인을 분산 구조와 선행연구로 규명한다.</p>
+
+<h2>2. 선행 연구</h2>
+<p>무가압 혈압의 검증 표준으로 BHS는 오차 절댓값이 5·10·15 mmHg 이내에 드는 누적 비율로 A(60/85/95%)·B·C를 부여하고[1], AAMI/ISO 81060-2는 평균오차 ≤5·표준편차 ≤8 mmHg를[2], IEEE 1708은 MAE로 A(≤5)·B(≤6)·C(≤7)를 정의한다[3]. 방법론은 PPG·PTT 기반 기계학습이 주류로, raw 파형을 쓰는 PPG2BP-Net은 SBP 0.21±7.51 mmHg로 Grade A를 보고하고[4], 비보정 딥러닝은 9–16 mmHg로 악화된다[5,6]. 세션 Grade A 연구는 공통적으로 raw 파형 형태(수축·이완 peak, dicrotic notch, 2차도함수 SDPTG[7])와 PTT 타이밍(PTT RMSE 5.3 vs PAT 9.8 mmHg[8]), 주기적 재보정(Aktiia 월 1회[9])을 갖춘다. 검증된 스마트워치도 보정점으로 회귀해 임상 미준비로 평가된다[10]. 진정한 예측은 드물며 다음날 BP 예측[11]과 개인 내 일간 변동(SD 6–9 mmHg)[12]이 가장 가까운 비교 대상이다.</p>
+
+<h2>3. 방법론</h2>
+<h3>3.1 데이터·정제·보간 (PART1)</h3>
+<p>120명에게서 7일간 하루 약 5회 측정한 참조 SBP·DBP·맥박과 24종 웨어러블, 설문을 사용하였다. 1분 간격 2회 연속 측정을 세션평균으로 묶고(측정 시각=마지막 시각), 생리적으로 불가능한 값(SBP&lt;70 또는 &gt;220)을 제거하였다. 각 날을 그 날 측정만으로 분단위로 인과 보간하되 — 군집 일주기에 최근성×위상 커널을 결합하고 — <b>실측 시각에는 실측값을 고정</b>하였다(보간 잡음의 성과 왜곡 차단). 성과는 항상 실측 시점에서만 측정한다.</p>
+<h3>3.2 추정 — 수준·위상·편차 (PART2)</h3>
+<p>개인 수준 L을 외부 표본(KNHANES) 가중회귀와 설문, 1일째 보정평균을 shrinkage로 합쳐 만들고(이후 실측 과거 BP는 미사용), 군집 위상 커널을 더해 구조적 추정치 <b>E0=수준+위상</b>을 구성하였다. 남은 편차 <b>r=실측−E0</b>를 워치(급성 생리)와 지난 BP 추정(전날 동시각·과거일 평균)으로 모델하였다(E0 고정 residual mode, 최종=E0+r̂). 회귀(Ridge·Lasso·ElasticNet)·스펙트럴(하모닉)·웨이블릿·트리(RF·ExtraTrees)·GBM(XGBoost·LightGBM·CatBoost)·딥러닝(MLP)을 single·multi로 20종 비교하였다. 학습은 train 사람의 2–6일, 평가는 held-out(valid·test 각 24명)의 2–6일이며 7일째는 예측 전용으로 비워두었다.</p>
+<h3>3.3 예측 — 정적·동적 (PART3)</h3>
+<p>E0+편차를 자기회귀(AR)로 확장해 7일째를 예측하였다. <b>정적(static)</b>은 매 시각 직전 실측 편차로 재앵커해 1-step만 예측하고, <b>동적(dynamic)</b>은 자기 예측을 다음 입력으로 물려 하루를 통째로 rollout한다. 평가는 7일째 실측에서 MAE·BHS로 한다.</p>
+
+<h2>4. 결과</h2>
+<h3>4.1 추정 (PART2) — 20모형 비교</h3>
+<p>선형·스펙트럴이 신규 사람 일반화 챔피언으로, 능선회귀(Ridge)가 검증 세션 SBP 6.06(B)·DBP 4.92(B), 일평균 SBP 3.59(A)·DBP 2.33(A)에 도달하였다(표 1). 테스트 일평균은 SBP 2.07(A)·DBP 2.18(A)였다. 트리·GBM은 학습(in-sample)에선 최저였으나(LightGBM 학습 세션 SBP 4.06) held-out에서 7.05로 폭증해 과적합을 보였다. 편차 ablation에서 워치는 세션 DBP를, 지난 BP 추정은 일평균 level을 줄여 상보적이었다(그림 1).</p>
+<table><caption>표 1. PART2 추정 — 대표 모형(검증·테스트, days2-6, MAE+BHS)</caption>
+<tr><th class="l">모형</th><th>검증 세SBP</th><th>검증 세DBP</th><th>검증 일SBP</th><th>검증 일DBP</th><th>테스트 일SBP</th><th>테스트 일DBP</th></tr>
+<tr class="best"><td class="l">회귀 Ridge (챔피언)</td><td>6.06 <span class="gB">B</span></td><td>4.92 <span class="gB">B</span></td><td>3.59 <span class="gA">A</span></td><td>2.33 <span class="gA">A</span></td><td>2.07 <span class="gA">A</span></td><td>2.18 <span class="gA">A</span></td></tr>
+<tr><td class="l">스펙트럴 Harmonic+Ridge</td><td>6.12 <span class="gB">B</span></td><td>4.95 <span class="gB">B</span></td><td>3.61 <span class="gA">A</span></td><td>2.34 <span class="gA">A</span></td><td>2.09 <span class="gA">A</span></td><td>2.21 <span class="gA">A</span></td></tr>
+<tr><td class="l">GBM LightGBM (과적합)</td><td>7.05 <span class="gC">C</span></td><td>5.59 <span class="gB">B</span></td><td>4.78 <span class="gB">B</span></td><td>3.37 <span class="gA">A</span></td><td>2.65 <span class="gA">A</span></td><td>2.93 <span class="gA">A</span></td></tr>
+</table>
+<div class="fig"><img src="fig_p2_ablation.png"><div class="cap">그림 1. 편차 ablation(검증). 워치는 세션 DBP를, 지난 BP 추정은 일평균 SBP level을 줄인다 — 상보적이라 둘 다 넣어야 최저.</div></div>
+<h3>4.2 예측 (PART3) — 정적 vs 동적</h3>
+<p>정적(1-step)은 테스트 세션 DBP 4.28(A), 일평균 SBP 2.55(A)·DBP 2.50(A)였고, 동적(rollout)은 오차 누적으로 세션 SBP가 5.52(B)에서 5.78(C)로, 일평균도 2.5에서 3.4로 상승하였다(그림 2). 측정 빈도가 예측 지평을 좌우한다.</p>
+<div class="fig"><img src="fig_p3_staticdyn.png"><div class="cap">그림 2. 정적 vs 동적 day7 예측 MAE. 매 스텝 실측 재앵커(정적)가 오차 누적을 막는다.</div></div>
+<div class="fig"><img src="fig_p3_rollout.png"><div class="cap">그림 3. 한 환자의 7일째 SBP. 정적(초록)은 실측에 밀착, 동적(주황)은 E0 주변에서 굴러가며 누적.</div></div>
+
+<h2>5. 고찰</h2>
+<p>일평균이 Grade A에 도달하고 세션이 B에 머무는 것은 집계형 변수 모형이 개인 평균(set-point)으로 회귀하기 때문이다. 일평균은 intra-subject 분산이 작아 set-point가 거의 정답이지만, 세션은 순간 변동을 노출해 집계 변수로 해상할 수 없다. 선행연구는 세션 Grade A에 (1) raw PPG 파형 형태[4,7], (2) PTT/PAT 타이밍[8], (3) 주기적 재보정[9]이 필요함을 일관되게 지지하며, 집계 변수를 더해도 한계를 깨지 못한다. 즉 우리의 세션 B는 모형이 아니라 <b>센서·데이터의 한계</b>다. 한편 우리 파이프라인은 일평균·정적 예측에서 임상급(A)에 도달하고, Ohasama·J-HOP의 개인 내 변동(naive 기준선)을 분명히 밑돌아 예측 정보 이득을 보인다.</p>
+<p><b>한계.</b> 표본은 비교적 젊고 건강한 코호트이고, 웨어러블은 가공 집계 지표만 사용하였다. 세션 SBP는 Grade B로 단독 임상 사용 기준에는 미달이다. 향후 연구는 raw 파형·PTT·주기 재보정으로 세션 정확도를 높이는 데 자원을 집중해야 한다.</p>
+
+<h2>6. 결론</h2>
+<p>일상 혈압을 수준·위상·편차로 분해하면 보간·추정·예측을 하나의 틀로 통합할 수 있다. 집계형 웨어러블과 1일 보정으로 일평균·정적 예측은 BHS Grade A에 도달하나, 세션 정확도는 raw 파형·타이밍·주기 재보정을 요구한다. 본 연구는 무가압 혈압의 성능 기대치를 현실화하고, 무엇이 정확도를 실제로 높이는지에 대한 설계 지침을 제공한다.</p>
+
+<hr>
+<h2>참고문헌 (DOI 클릭)</h2>
+<ul class="refs">{refs_html()}</ul>
+<p class="note">주: 본문 수치는 제공 데이터(N=120)와 분석 출력에서 직접 산출. 서지·DOI는 게재 전 최종 검증 권장. <span class="flag">[소속·저널 확인 필요]</span></p>
+</div>
+"""
+HEAD="""<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>일상 혈압의 보간·추정·예측 — 수준·위상·편차 분해</title>
+<meta property="og:title" content="설문·웨어러블 기반 일상 혈압의 보간·추정·예측 — 수준·위상·편차 분해와 정확도 한계">
+<meta property="og:description" content="N=120. 일평균 BHS A(일 SBP 2.07/DBP 2.18), 세션은 B 한계(mean-regression). 정적>동적. 세션 A엔 raw PPG·PTT·주기 재보정 필요. 레퍼런스 DOI 클릭.">
+<style>__CSS__</style></head><body>__BODY__</body></html>"""
+html=HEAD.replace('__CSS__',CSS).replace('__BODY__',BODY)
+open(SITE+'paper.html','w',encoding='utf-8').write(html)
+print('SAVED paper.html', round(os.path.getsize(SITE+'paper.html')/1024,1),'KB · refs',len(REFS))
