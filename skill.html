@@ -62,13 +62,16 @@ python aday_bp_colab.py --csv my_bp.csv # 실데이터 (열: ID,day,tod,SBP,DBP,
 </div>
 
 <div class="card">
-<h2>🧑‍💻 FTF 라이브 아바타 — 토큰 서버</h2>
-<p>QnA의 <b>FTF 모드</b>(반듯이 라이브 영상 대화)는 HeyGen 스트리밍 토큰이 필요합니다. 라이브 키는 <b>서버에서만</b> 쓰고 노출하지 않습니다. <code>TTT·STS</code>는 토큰 없이 바로 작동, <code>FTF</code>만 이 서버 필요.</p>
-<pre>Vercel: api/heygen-token.js + 환경변수 HEYGEN_LIVE_API_KEY  → /api/heygen-token 자동연결
-로컬:   HEYGEN_LIVE_API_KEY=... python server_local.py  (window.HEYGEN_TOKEN_URL 지정)</pre>
+<h2>💬 풀 QnA 앱 (Vercel) — TTT · STS · FTF</h2>
+<p>참고 앱 패턴을 그대로 포팅한 <b>배포용 QnA</b>. <b>TTT</b>=OpenAI chat, <b>STS</b>=OpenAI Realtime(음성↔음성, WebRTC), <b>FTF</b>=LiveAvatar.com(LiveKit 라이브 아바타). 키는 전부 <code>process.env</code>(노출 0).</p>
+<pre>Vercel 배포: qna-app/ 업로드 + 환경변수
+  OPENAI_API_KEY      # TTT + STS
+  LIVEAVATAR_API_KEY  # FTF (LiveAvatar.com)
+  AVATAR_ID           # FTF 아바타 UUID</pre>
 <div class="btns">
-<a class="btn b-git" href="https://github.com/sdkparkforbi/bp-interpolation-book/tree/main/skill/ftf" target="_blank" rel="noopener">📂 ftf/ (Vercel 함수·로컬 서버·README)</a>
+<a class="btn b-git" href="https://github.com/sdkparkforbi/bp-interpolation-book/tree/main/qna-app" target="_blank" rel="noopener">📂 qna-app/ (api 4개 + index.html + README)</a>
 </div>
+<p class="muted" style="margin-top:10px">GitHub Pages는 정적이라 서버리스 api가 안 돌아갑니다 — Vercel에 올려야 TTT/STS/FTF가 실작동. 현재 사이트의 <a href="qna.html" style="color:#0e7c63;font-weight:700">qna.html</a>은 정적 데모(TTT·STS 브라우저, FTF는 토큰서버 필요).</p>
 </div>
 
 <div class="card">
