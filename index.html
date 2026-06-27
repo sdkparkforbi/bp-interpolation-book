@@ -1,47 +1,67 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>혈압(BP) 분석 그림책 — 보간 · 예측 · 추정</title>
+<title>혈압(BP) 분석 그림책 — 보간 · 추정 · 예측</title>
 <meta property="og:type" content="website">
-<meta property="og:title" content="🩸 혈압(BP) 분석 그림책 — 보간(PART1) · 예측(PART2) · 추정(PART3)">
-<meta property="og:description" content="마스킹된 혈압 보간 + 개인 시계열 24h 예측 + 새 사람의 혈압 추정(KNHANES 외부앵커·1일 보정·합성커널). 120명 데이터로 푸는 방법론 그림책. 팀 이해용.">
+<meta property="og:title" content="🩸 혈압(BP) 분석 그림책 — 보간(PART1) · 추정(PART2) · 예측(PART3)">
+<meta property="og:description" content="스마트워치+설문으로 혈압을 보간·추정·예측. 수준·위상·편차 분해, 20모형, 정적·동적, 일평균 BHS A. 환자 대시보드·QnA봇·소개영상·초등학생 이야기까지. 120명.">
 <meta property="og:image" content="https://sdkparkforbi.github.io/bp-interpolation-book/thumbnail_part3.png">
 <style>
-body{margin:0;font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#0f1320;color:#eee;line-height:1.7}
-.wrap{max-width:920px;margin:0 auto;padding:48px 20px 80px}
-h1{font-size:32px;margin:.2em 0}.sub{color:#9aa7bd;font-size:16px;margin-bottom:30px}
-.cards{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#0c1020;color:#eef1f8;line-height:1.7}
+.wrap{max-width:960px;margin:0 auto;padding:50px 20px 80px}
+.hero{text-align:center;margin-bottom:34px}
+.hero h1{font-size:34px;margin-bottom:10px}
+.hero p{color:#9aa7bd;font-size:16px;max-width:640px;margin:0 auto}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 @media(max-width:680px){.cards{grid-template-columns:1fr}}
-.card{background:#1a2030;border-radius:16px;overflow:hidden;text-decoration:none;color:#eee;box-shadow:0 4px 20px rgba(0,0,0,.4);transition:transform .15s}
-.card:hover{transform:translateY(-4px)}
-.card img{width:100%;display:block}
-.card .body{padding:18px 20px}
-.card h2{margin:.1em 0;font-size:22px}.card p{color:#9aa7bd;font-size:14px;margin:8px 0 0}
-.tag{display:inline-block;background:#2d3b55;color:#cfe9ff;border-radius:20px;padding:2px 10px;font-size:12px;margin-top:8px}
-.foot{color:#6b7688;font-size:13px;margin-top:40px;text-align:center}
+.card{background:#161d2e;border:1px solid #222b40;border-radius:18px;overflow:hidden;text-decoration:none;color:#eef1f8;box-shadow:0 4px 20px rgba(0,0,0,.35);transition:transform .15s,border-color .15s}
+.card:hover{transform:translateY(-4px);border-color:#3a4a6b}
+.thumb{height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+.thumb .ic{font-size:46px;line-height:1}
+.thumb .kick{font-size:11.5px;font-weight:800;letter-spacing:2.5px;color:rgba(255,255,255,.88)}
+.body{padding:16px 19px}
+.body h2{font-size:19px;margin-bottom:6px}
+.body p{color:#9aa7bd;font-size:13.5px}
+.tag{display:inline-block;background:#22304a;color:#bfe0ff;border-radius:20px;padding:2px 11px;font-size:11.5px;margin-top:9px}
+.feat{grid-column:1 / -1;background:linear-gradient(135deg,#0e463b,#16a085);border:0}
+.feat .body{padding:22px 24px}.feat h2{font-size:23px}.feat p{color:#d3f3ea}
+.foot{color:#6b7688;font-size:13px;margin-top:38px;text-align:center}
 </style></head><body><div class="wrap">
-<h1>🩸 혈압(BP) 분석 그림책</h1>
-<p class="sub">마스킹된 혈압을 어떻게 채우고(보간), 내일을 어떻게 내다보고(예측), 새 사람의 혈압을 어떻게 추정할까(추정) — 120명 데이터로 푸는 방법론. 팀 이해용.</p>
+<div class="hero"><h1>🩸 혈압(BP) 분석 그림책</h1>
+<p>스마트워치와 설문만으로 혈압을 <b>보간</b>하고, <b>추정</b>하고, <b>예측</b>한다 — 수준·위상·편차 분해로. 120명 데이터로 푸는 방법론, 그리고 누구나 보는 데모.</p></div>
 <div class="cards">
+
+<a class="card feat" href="story.html">
+<div class="body"><h2>🔍 혈압 탐정 이야기 <span style="font-size:13px;opacity:.85">· 초등학생용</span></h2><p>스마트워치로 혈압을 알아맞히는 연구를 누구나 아는 이야기로. 수준·위상·편차, 이해왕과 암기왕, 그리고 정직한 한계까지 — 삽화와 함께.</p><span class="tag" style="background:#0a2e26;color:#9fe7d4">For kids · Story</span></div></a>
+
 <a class="card" href="plan.html">
-<img src="thumbnail_plan.png" alt="연구 계획">
-<div class="body"><h2>📋 연구 계획</h2><p>전체 연구 설계 — PART1 데이터·정제·보간 / PART2 추정(Nowcasting) / PART3 예측(Forecasting). 전 모형계열(시계열·회귀·스펙트럴·perceptron·tree·transformer × single·multi), day1 튜닝·day2~6 학습·day7 예측, 평가는 실측에서만. 환자 대시보드 mock-up. 팀 공유용.</p><span class="tag">Research Plan</span></div></a>
+<div class="thumb" style="background:linear-gradient(135deg,#2e2a6b,#6c5ce7)"><span class="ic">📋</span><span class="kick">RESEARCH PLAN</span></div>
+<div class="body"><h2>연구 계획</h2><p>전체 설계 — PART1 보간 / PART2 추정 / PART3 예측. 전 모형계열, day1 보정·days2-6 학습·day7 예측, 평가는 실측에서만.</p><span class="tag">Plan</span></div></a>
+
 <a class="card" href="part1.html">
-<img src="thumbnail_part1.png" alt="PART 1 보간">
-<div class="body"><h2>PART 1 · 혈압 보간</h2><p>마스킹된 혈압을 주변값·합성커널로 복원. 가중규칙×추정수준, 군집별 합성커널 3개+2경로 회귀. 120명 부록.</p><span class="tag">Interpolation</span></div></a>
+<div class="thumb" style="background:linear-gradient(135deg,#10416f,#378add)"><span class="ic">🧩</span><span class="kick">PART 1 · 보간</span></div>
+<div class="body"><h2>PART 1 · 혈압 보간</h2><p>측정 사이를 군집 일주기 + 최근성·위상 커널로 분단위 복원. 실측 시각엔 실측 고정. 120명 전체.</p><span class="tag">Interpolation</span></div></a>
+
 <a class="card" href="part2.html">
-<img src="thumbnail_part2.png" alt="PART 2 추정">
-<div class="body"><h2>PART 2 · 혈압 추정</h2><p>신규 환자의 분단위 혈압 추정. 수준(KNHANES+설문+1day)+위상+편차(워치·지난추정). 회귀·스펙트럴·웨이블릿·트리·GBM·딥러닝 20모형 single·multi, 챔피언 Ridge, MAE+BHS. 와치 변수별 선행연구.</p><span class="tag">Estimation · Nowcasting</span></div></a>
+<div class="thumb" style="background:linear-gradient(135deg,#0e463b,#16a085)"><span class="ic">🩺</span><span class="kick">PART 2 · 추정</span></div>
+<div class="body"><h2>PART 2 · 혈압 추정</h2><p>수준(KNHANES+설문+1day)+위상+편차(워치·지난추정). 회귀·스펙트럴·웨이블릿·트리·GBM·딥러닝 20모형, 챔피언 Ridge, MAE+BHS.</p><span class="tag">Estimation · Nowcasting</span></div></a>
+
 <a class="card" href="part3.html">
-<img src="thumbnail_part3.png" alt="PART 3 예측">
-<div class="body"><h2>PART 3 · 혈압 예측</h2><p>비워둔 7일째 예측. AR 정적(1-step 재앵커)·동적(rollout). 정적 세션 DBP·일평균 BHS A. 세션 SBP는 센서 한계 — raw PPG·PTT 필요(선행연구 DOI).</p><span class="tag">Forecasting</span></div></a>
-<a class="card" href="mockup.html">
-<div class="body" style="padding:26px 22px"><h2>🩺 환자 대시보드 (Mock-up)</h2><p>대상을 선택하면 과거(실측)·현재(Nowcast)·미래(Forecast) 혈압이 분단위로. 7일 타임라인, 운동·수면부족·스트레스 시나리오, 예측 엔진 반듯이.</p><span class="tag">Live demo</span></div></a>
-<a class="card" href="qna.html">
-<div class="body" style="padding:26px 22px"><h2>💬 친절한 QnA 봇 + 소개영상</h2><p>궁금한 걸 물어보면 반듯이가 초등학생도 알게 답해줘요. 이해왕·암기왕, 정적·동적, 세션 A의 비밀까지. AI 아바타 소개영상도.</p><span class="tag">Q&A · Video</span></div></a>
+<div class="thumb" style="background:linear-gradient(135deg,#5a2410,#d85a30)"><span class="ic">🔮</span><span class="kick">PART 3 · 예측</span></div>
+<div class="body"><h2>PART 3 · 혈압 예측</h2><p>비워둔 7일째 예측. 정적(1-step 재앵커)·동적(rollout). 정적 세션 DBP·일평균 BHS A. 세션 A엔 raw PPG·PTT 필요(DOI).</p><span class="tag">Forecasting</span></div></a>
+
 <a class="card" href="paper.html">
-<img src="thumbnail_paper.png" alt="연구 논문">
-<div class="body"><h2>📄 연구 논문</h2><p>일상 혈압의 보간·추정·예측 통합 — 수준·위상·편차 분해. 20모형, 정적·동적, 일평균 BHS A(2.07/2.18), 세션 한계분석. 저자 5인. 레퍼런스 DOI 클릭. N=120.</p><span class="tag">Paper</span>
-<p style="margin-top:10px"><a href="paper.pdf" style="color:#7be7d8">PDF</a> · <a href="paper.docx" style="color:#7be7d8">DOCX</a> · <a href="paper.hwpx" style="color:#7be7d8">HWPX</a></p></div></a>
+<div class="thumb" style="background:linear-gradient(135deg,#1b2336,#3a465f)"><span class="ic">📄</span><span class="kick">PAPER</span></div>
+<div class="body"><h2>연구 논문</h2><p>보간·추정·예측 통합. 20모형, 정적·동적, 일평균 BHS A(2.07/2.18), 세션 한계분석. 저자 5인, 레퍼런스 DOI 클릭. N=120.</p><span class="tag">Paper</span></div></a>
+
+<a class="card" href="mockup.html">
+<div class="thumb" style="background:linear-gradient(135deg,#0a1430,#1c3a6e)"><span class="ic">📊</span><span class="kick">LIVE DASHBOARD</span></div>
+<div class="body"><h2>🩺 환자 대시보드 (Mock-up)</h2><p>대상 선택 → 과거·현재·미래 혈압이 분단위로. 7일 타임라인, 운동·수면부족·스트레스 시나리오, 예측 엔진 반듯이.</p><span class="tag">Live demo</span></div></a>
+
+<a class="card" href="qna.html">
+<div class="thumb" style="background:linear-gradient(135deg,#0b3d2e,#1d9e75)"><span class="ic">💬</span><span class="kick">Q&A · VIDEO</span></div>
+<div class="body"><h2>친절한 QnA 봇 + 소개영상</h2><p>궁금한 걸 물어보면 반듯이가 답해줘요. 이해왕·암기왕, 정적·동적, 세션 A의 비밀. AI 아바타 소개영상도.</p><span class="tag">Q&A · Video</span></div></a>
+
 </div>
-<p class="foot">데이터 120명 × 약 34세션 · 보간 전용(PART1) / 외생 웨어러블 포함(PART2) · 분석·그림 자동 생성</p>
+<p class="foot">데이터 120명 · 세션평균 하이브리드 보간 · 수준+위상+편차 · 평가는 실측에서만(MAE+BHS) · 분석·그림·영상 자동 생성</p>
 </div></body></html>
