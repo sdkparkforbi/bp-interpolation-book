@@ -63,6 +63,17 @@ python _part2_ablation.py      # 편차 ablation
 python _part3_forecast.py      # day7 예측 (정적/동적)
 ```
 
+## Colab / 서버 단독 실행 (경로 무관)
+
+`scripts/aday_bp_colab.py` — 합성 데모 데이터로 **즉시 실행**되는 portable 파이프라인(E0+편차, MAE+BHS, 정적/동적). 실데이터는 `--csv`.
+
+```
+python aday_bp_colab.py                 # 합성 데모
+python aday_bp_colab.py --csv my_bp.csv # 실데이터 (열: ID,day,tod,SBP,DBP,HR,METs,age,cl)
+```
+
+Colab: `scripts/aday_bp_colab.ipynb` 열어 셀 실행(스크립트 자동 다운로드). 합성 데모도 **정적 ≫ 동적**을 재현.
+
 ## 핵심 결과 (N=120)
 
 - 추정 챔피언 = **회귀 Ridge**(선형 shrinkage). 검증 일평균 SBP 3.59(A)·DBP 2.33(A), 테스트 일평균 2.07(A)·2.18(A)
