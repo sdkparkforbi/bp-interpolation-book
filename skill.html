@@ -63,18 +63,23 @@ python aday_bp_colab.py --csv my_bp.csv # 실데이터 (열: ID,day,tod,SBP,DBP,
 </div>
 
 <div class="card">
-<h2>💬 풀 QnA 앱 (Vercel) — TTT · STS · FTF</h2>
-<p>참고 앱 패턴을 그대로 포팅한 <b>배포용 QnA</b>. <b>TTT</b>=OpenAI chat, <b>STS</b>=OpenAI Realtime(음성↔음성, WebRTC), <b>FTF</b>=LiveAvatar.com(LiveKit 라이브 아바타). 키는 전부 <code>process.env</code>(노출 0).</p>
-<pre>Vercel 배포: qna-app/ 업로드 + 환경변수
-  OPENAI_API_KEY      # TTT + STS (필수)
-  LIVEAVATAR_API_KEY  # FTF (LiveAvatar.com)
-  # 음성은 아바타에 설정돼 있어 voice_id 불필요. AVATAR_ID는 코드 기본값(dkpark) 내장.</pre>
+<h2>📄 논문 다운로드 — PDF · DOCX · HWPX</h2>
+<p>수준·위상·편차 분해 · 20모형 · 정적/동적 예측 · <b>SHAP·시차 분석 포함</b>. 아래아한글(HWPX)·MS Word(DOCX)·PDF로 제공. N=120.</p>
+<p class="muted" style="margin:6px 0 4px"><b>🇰🇷 한국어</b></p>
 <div class="btns">
-<a class="btn" style="background:#000;color:#fff" href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fsdkparkforbi%2Fbp-interpolation-book&root-directory=qna-app&env=OPENAI_API_KEY,LIVEAVATAR_API_KEY&envDescription=TTT/STS=OPENAI_API_KEY,%20FTF=LIVEAVATAR_API_KEY(=HEYGEN_LIVE_API_KEY).%20%EC%9D%8C%EC%84%B1%EC%9D%80%20%EC%95%84%EB%B0%94%ED%83%80%EC%97%90%20%EC%84%A4%EC%A0%95%EB%90%A8(voice_id%20%EB%B6%88%ED%95%84%EC%9A%94)&project-name=day-bp-qna" target="_blank" rel="noopener">▲ Deploy to Vercel (원클릭)</a>
-<a class="btn b-git" href="https://github.com/sdkparkforbi/bp-interpolation-book/tree/main/qna-app" target="_blank" rel="noopener">📂 qna-app/</a>
+<a class="btn b-dl" href="paper.pdf" download>⬇ PDF</a>
+<a class="btn b-dl" href="paper.docx" download>⬇ DOCX</a>
+<a class="btn b-dl" href="paper.hwpx" download>⬇ HWPX</a>
+<a class="btn b-git" href="paper.html">🌐 웹으로 보기</a>
 </div>
-<p class="muted" style="margin-top:8px">버튼 클릭 → GitHub 연결 → <b>Root Directory를 <code>qna-app</code></b> 확인 → 환경변수 2개 입력 → Deploy. (<code>LIVEAVATAR_API_KEY</code> = 본인 <code>HEYGEN_LIVE_API_KEY</code> 값. 음성은 아바타에 설정돼 있어 <code>voice_id</code> 불필요, <code>AVATAR_ID</code>는 코드에 dkpark 기본 내장)</p>
-<p class="muted" style="margin-top:10px">GitHub Pages는 정적이라 서버리스 api가 안 돌아갑니다 — Vercel에 올려야 TTT/STS/FTF가 실작동. 현재 사이트의 <a href="qna.html" style="color:#0e7c63;font-weight:700">qna.html</a>은 정적 데모(TTT·STS 브라우저, FTF는 토큰서버 필요).</p>
+<p class="muted" style="margin:12px 0 4px"><b>🇬🇧 English (SCIE)</b></p>
+<div class="btns">
+<a class="btn b-dl" href="paper_en.pdf" download>⬇ PDF</a>
+<a class="btn b-dl" href="paper_en.docx" download>⬇ DOCX</a>
+<a class="btn b-dl" href="paper_en.hwpx" download>⬇ HWPX</a>
+<a class="btn b-git" href="paper_en.html">🌐 View web</a>
+</div>
+<p class="muted" style="margin-top:10px">두 언어 모두 그림 5개(ablation·정적동적·rollout·SHAP·시차)와 모형표·DOI 참고문헌 포함.</p>
 </div>
 
 <div class="card">
