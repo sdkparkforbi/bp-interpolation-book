@@ -142,6 +142,21 @@ th,td{border:1px solid #e6e6ee;padding:5px 7px;text-align:center}th{background:#
 <div class="chap" id="cscat"><div class="no">관계</div><h2>설명변수 ↔ 타깃 산점도 — 무엇이 혈압과 함께 움직이나</h2></div>
 <div class="card">
 <p>개별 설명변수(수준 E0 + 워치 8종)와 세션 혈압의 관계를 전체 <b>3,549세션</b> 산점도로 본다. 주황=OLS 회귀선, r=Pearson 상관, ***p&lt;.001.</p>
+<h3 style="margin-top:6px;color:#10463b">설명변수 생성 방법 — 원천 → 파생식 (어떻게 만들었나)</h3>
+<p style="font-size:13px;color:#5d6b82">산점도의 9개 변수를 각각 이렇게 만들었다. 원신호 점검·생리 기전·선행연구 레퍼런스 상세는 <a href="#c5">§2-5</a>, 수준 E0 상세는 <a href="#c1">§2-1</a>~<a href="#c4">2-4</a>.</p>
+<table>
+<tr><th class="l">설명변수</th><th class="l">원천</th><th class="l">생성 방법 (파생식)</th></tr>
+<tr class="best"><td class="l">수준 E0</td><td class="l">day1 실측 + KNHANES 외부앵커 L + 군집(연령×성별) 일주기</td><td class="l">E0 = lvl + α·(day1 편차의 <b>역시간×위상 커널가중</b>) + (1−α)·군집 위상곡선. &nbsp;lvl = (n·day1평균 + 2·L)/(n+2), &nbsp;α = Σw/(Σw+5)</td></tr>
+<tr><td class="l">심박수 HR</td><td class="l"><code>last_심박수</code></td><td class="l">세션의 <b>마지막 심박수</b> 값</td></tr>
+<tr><td class="l">커널가중 심박 kwHR</td><td class="l"><code>kw_심박수</code></td><td class="l">그 시점 주변 심박을 <b>시간커널로 가중평균</b>(순간 튐 완화)</td></tr>
+<tr><td class="l">안정대비 심박상승 dHR</td><td class="l">HR · 개인 HR 분포</td><td class="l">HR − <b>안정심박</b>(개인 HR <b>하위 10% 분위</b>)</td></tr>
+<tr><td class="l">심박변이 HRV</td><td class="l"><code>last_심박 변이</code></td><td class="l">세션 마지막 HRV (자율신경 상태)</td></tr>
+<tr><td class="l">손목온도 WT</td><td class="l"><code>last_손목 온도</code></td><td class="l">세션 마지막 손목 피부온도 (말초저항 대리)</td></tr>
+<tr><td class="l">대사당량 METs</td><td class="l"><code>last_절대적 운동 강도</code></td><td class="l">세션 마지막 METs (절대 운동강도)</td></tr>
+<tr><td class="l">활동 active</td><td class="l">METs · <code>last_걸음</code></td><td class="l"><b>METs≥3 또는 걸음≥300</b> → 1</td></tr>
+<tr><td class="l">수면 sleep</td><td class="l">시각 tod · active</td><td class="l"><b>야간(06시 이전 또는 22시 이후) & 비활동</b> → 1</td></tr>
+</table>
+<div class="note"><b>공통 처리.</b> 결측은 <b>train 데이터의 중앙값</b>으로 대치(<b>train·role=train에서만</b> 적합 — 누수 방지). 과거 BP 추정치 파생변수(pmean·ptyp·lag1 등)는 모델에서 <b>제외</b>. 워치 8종은 raw BP가 아니라 <b>편차 r = BP − E0</b>를 표적한다.</div>
 <table>
 <tr><th class="l">설명변수</th><th>SBP r</th><th>DBP r</th><th class="l">방향 · 해석</th></tr>
 <tr class="best"><td class="l">수준 E0 (설문·외부·day1)</td><td><b>+0.81</b></td><td><b>+0.72</b></td><td class="l">강한 직선 — "누구인가(수준)"</td></tr>
