@@ -51,6 +51,7 @@ th,td{border:1px solid #e6e6ee;padding:5px 7px;text-align:center}th{background:#
 <a href="#c6"><span class="ci">📐</span><span class="ct">편차 모델</span></a>
 <a href="#c7"><span class="ci">🏆</span><span class="ct">전 모형 zoo</span></a>
 <a href="#ci"><span class="ci">🔬</span><span class="ct">SHAP·시차</span></a>
+<a href="#cwb"><span class="ci">👥</span><span class="ct">환자간·내</span></a>
 <a href="#c8"><span class="ci">⚠️</span><span class="ct">과적합</span></a>
 <a href="#c9"><span class="ci">🏁</span><span class="ct">결론</span></a></div>
 
@@ -135,6 +136,23 @@ th,td{border:1px solid #e6e6ee;padding:5px 7px;text-align:center}th{background:#
 <div class="win"><b>읽기.</b> 편차를 줄이는 워치 신호는 <b>ΔHR·심박수(각성/활동 → BP↑)</b>가 지배적이고, 특히 <b>이완기(DBP)에 HR 기여가 크다</b>. 손목온도·수면은 작은 보조.</div>
 <div class="fig"><img src="fig_p2_lag.png"><div class="cap">워치 기여 + 잔차 구조. <b>왼쪽</b>: 워치의 편차 총기여 — <b>SBP보다 DBP(이완기)에 더 크게</b> 기여. <b>오른쪽</b>: 잔차 자기상관이 세션 lag1에서 <b>0.09</b>로 낮음(이후 ≈0), 워치 동시점 상관 약 0.13.</div></div>
 <div class="note"><b>요약.</b> 모형은 <b>동시점(lag 0) 워치</b>로 급성 편차를 잡는다(심박·각성 중심, DBP에 유리). E0+편차 이후 <b>세션 잔차 자기상관이 0.09로 낮아</b> 그날의 출렁임은 본질적으로 예측이 어렵다 — <b>일평균이 세션보다 정확한 이유</b>이자 세션 SBP가 Grade B에 머무는 구조적 한계와 일치.</div>
+</div>
+
+<div class="chap" id="cwb"><div class="no">분해</div><h2>환자간 vs 환자내 — 오차는 어디서 오나</h2></div>
+<div class="card">
+<p>세션 오차를 두 축으로 분해했다 — <b>환자간</b>(사람들 사이 = 그 사람 평소 수준을 맞추나)과 <b>환자내</b>(한 사람 안 = 그날그날 시간 변동을 맞추나). 개인 out-of-fold 챔피언 기준.</p>
+<table>
+<tr><th class="l">구분</th><th>세션 SBP</th><th>세션 DBP</th></tr>
+<tr><td class="l">전체 세션 MAE</td><td>6.45</td><td>5.11</td></tr>
+<tr class="best"><td class="l">환자간(수준): 전체평균 → 모델</td><td>9.70 → <b>3.53</b></td><td>5.65 → <b>2.44</b></td></tr>
+<tr><td class="l">환자간 순위상관 r</td><td>0.93</td><td>0.90</td></tr>
+<tr><td class="l">환자내(변동): 목표 → 모델오차</td><td>5.67 → 5.46</td><td>4.41 → 4.37</td></tr>
+<tr class="best"><td class="l">환자내 설명 비율</td><td><b>4%</b></td><td><b>1%</b></td></tr>
+</table>
+<div class="fig"><img src="fig_p2_withinbetween.png"><div class="cap">세션 오차의 환자간/환자내 분해(왼쪽 SBP·오른쪽 DBP). 환자간(파랑)=개인 수준 오차(전체평균 → 모델), 환자내(빨강)=한 사람 안 시간변동(목표 변동 → 모델 오차). 모델은 환자간을 크게 줄이지만(r 약 0.9) 환자내는 거의 못 줄인다.</div></div>
+<div class="win"><b>✅ 환자간(누구인가): 아주 잘한다.</b> 개인 수준 오차를 SBP 9.70 → <b>3.53</b>으로 크게 줄이고, 환자 순위를 <b>r=0.93</b>으로 정확히 맞춘다. 외부앵커+day1 보정이 "평소 혈압"을 잘 잡는다.</div>
+<div class="twist"><b>🌀 환자내(그날 변동): 거의 못 한다.</b> 한 사람 안의 세션 변동(SBP 5.67)을 <b>단 4%</b>(DBP 1%)만 설명. 집계 워치엔 순간 변동 정보가 거의 없다.</div>
+<div class="note"><b>이게 "일평균 A · 세션 B"의 근본 이유다.</b> 세션 MAE(6.45)는 <b>못 잡는 환자내 변동(5.46)</b>이 지배한다. 일평균은 이 변동을 평균으로 상쇄해 잘 맞추는 환자간(수준)만 남으므로 Grade A. 세션 Grade A(≤5)엔 환자내 변동을 봐야 하는데, 그건 raw PPG·PTT가 필요하다.</div>
 </div>
 
 <div class="chap" id="c8"><div class="no">진단</div><h2>과적합 — 단순 모형이 일반화한다</h2></div>
