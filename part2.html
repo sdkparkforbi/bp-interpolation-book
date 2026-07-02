@@ -51,6 +51,7 @@ th,td{border:1px solid #e6e6ee;padding:5px 7px;text-align:center}th{background:#
 <a href="#c6"><span class="ci">📐</span><span class="ct">편차 모델</span></a>
 <a href="#c7"><span class="ci">🏆</span><span class="ct">전 모형 zoo</span></a>
 <a href="#ci"><span class="ci">🔬</span><span class="ct">SHAP·시차</span></a>
+<a href="#cscat"><span class="ci">🔵</span><span class="ct">산점도</span></a>
 <a href="#cwb"><span class="ci">👥</span><span class="ct">환자간·내</span></a>
 <a href="#c8"><span class="ci">⚠️</span><span class="ct">과적합</span></a>
 <a href="#c9"><span class="ci">🏁</span><span class="ct">결론</span></a></div>
@@ -136,6 +137,28 @@ th,td{border:1px solid #e6e6ee;padding:5px 7px;text-align:center}th{background:#
 <div class="win"><b>읽기.</b> 편차를 줄이는 워치 신호는 <b>ΔHR·심박수(각성/활동 → BP↑)</b>가 지배적이고, 특히 <b>이완기(DBP)에 HR 기여가 크다</b>. 손목온도·수면은 작은 보조.</div>
 <div class="fig"><img src="fig_p2_lag.png"><div class="cap">워치 기여 + 잔차 구조. <b>왼쪽</b>: 워치의 편차 총기여 — <b>SBP보다 DBP(이완기)에 더 크게</b> 기여. <b>오른쪽</b>: 잔차 자기상관이 세션 lag1에서 <b>0.09</b>로 낮음(이후 ≈0), 워치 동시점 상관 약 0.13.</div></div>
 <div class="note"><b>요약.</b> 모형은 <b>동시점(lag 0) 워치</b>로 급성 편차를 잡는다(심박·각성 중심, DBP에 유리). E0+편차 이후 <b>세션 잔차 자기상관이 0.09로 낮아</b> 그날의 출렁임은 본질적으로 예측이 어렵다 — <b>일평균이 세션보다 정확한 이유</b>이자 세션 SBP가 Grade B에 머무는 구조적 한계와 일치.</div>
+</div>
+
+<div class="chap" id="cscat"><div class="no">관계</div><h2>설명변수 ↔ 타깃 산점도 — 무엇이 혈압과 함께 움직이나</h2></div>
+<div class="card">
+<p>개별 설명변수(수준 E0 + 워치 8종)와 세션 혈압의 관계를 전체 <b>3,549세션</b> 산점도로 본다. 주황=OLS 회귀선, r=Pearson 상관, ***p&lt;.001.</p>
+<table>
+<tr><th class="l">설명변수</th><th>SBP r</th><th>DBP r</th><th class="l">방향 · 해석</th></tr>
+<tr class="best"><td class="l">수준 E0 (설문·외부·day1)</td><td><b>+0.81</b></td><td><b>+0.72</b></td><td class="l">강한 직선 — "누구인가(수준)"</td></tr>
+<tr><td class="l">손목온도 WT</td><td>−0.13</td><td>−0.14</td><td class="l">온도↑ → BP↓ (혈관확장)</td></tr>
+<tr><td class="l">심박수 HR</td><td>+0.07</td><td>+0.15</td><td class="l">심박↑ → BP↑</td></tr>
+<tr><td class="l">안정대비 심박상승 dHR</td><td>+0.08</td><td>+0.06</td><td class="l">운동부하↑ → BP↑</td></tr>
+<tr><td class="l">대사당량 METs</td><td>+0.09</td><td>+0.04</td><td class="l">활동↑ → BP↑</td></tr>
+<tr><td class="l">활동량 active (0/1)</td><td>+0.09</td><td>+0.04</td><td class="l">활동중 → BP↑</td></tr>
+<tr><td class="l">심박변이 HRV</td><td>−0.05</td><td>−0.05</td><td class="l">HRV↑ → BP↓</td></tr>
+<tr><td class="l">커널가중 심박 kwHR</td><td>+0.05</td><td>+0.01</td><td class="l">약함</td></tr>
+<tr><td class="l">수면 sleep (0/1)</td><td>−0.02</td><td>−0.04</td><td class="l">매우 약함</td></tr>
+</table>
+<div class="fig"><img src="fig_scatter_sbp.png"><div class="cap">세션 SBP vs 개별 설명변수(|r| 내림차순 3×3). 수준 E0만 뚜렷한 직선, 워치는 흩어짐. 활동·수면은 0/1 이진이라 두 세로 밴드.</div></div>
+<div class="fig"><img src="fig_scatter_dbp.png"><div class="cap">세션 DBP vs 개별 설명변수. DBP는 심박수 HR(r=0.15)이 워치 중 가장 강하다.</div></div>
+<div class="win"><b>✅ 수준 E0만 압도적</b>(r 0.72~0.81, 거의 직선). 모델의 <b>환자간(누구인가)</b> 능력이 이 한 장에 그대로 드러난다.</div>
+<div class="twist"><b>🌀 워치는 전부 약함</b>(|r|≤0.15). 단 N=3,549이라 HR·WT·dHR·METs는 <b>통계적으로 유의</b>하고 방향도 생리학적으로 맞다(심박·활동↑→BP↑, 손목온도·HRV↑→BP↓). "도긴개긴"이 아니라 <b>크기가 작은 진짜 신호</b>.</div>
+<div class="note">워치가 약해 보이는 건 raw BP가 아니라 <b>편차 r=BP−E0</b>(그 사람 안 변동)를 표적하기 때문이기도 하다. 이 그림이 곧 다음 절 <b>환자간/환자내 분해</b>의 원인이다.</div>
 </div>
 
 <div class="chap" id="cwb"><div class="no">분해</div><h2>환자간 vs 환자내 — 오차는 어디서 오나</h2></div>
