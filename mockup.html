@@ -1,9 +1,9 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>DAY BP · 환자 대시보드 (Mock-up)</title>
-<meta property="og:title" content="DAY BP · 환자 대시보드 — 과거·현재·미래 혈압">
+<meta property="og:title" content="DAY BP · 환자 대시보드 — 과거·현재 혈압 + what-if 시나리오">
 <meta property="og:image" content="https://sdkparkforbi.github.io/bp-interpolation-book/og_image.png">
-<meta property="og:description" content="대상을 선택하면 과거(실측)·현재(Nowcast)·미래(Forecast) 혈압을 분단위로. 운동·수면부족·스트레스 시나리오. 수준+위상+편차 엔진.">
+<meta property="og:description" content="대상을 선택하면 과거(실측)·현재(Nowcast) 혈압을 분단위로 + 운동·수면부족·스트레스 what-if 시나리오. 수준+위상+편차 엔진.">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#0a0e1a;color:#e8edf6;min-height:100vh;padding:22px}
@@ -46,27 +46,27 @@ svg{width:100%;height:auto;display:block}
 </style></head>
 <body><div class="app">
 <div class="top">
- <div class="brand"><div class="logo">🩺</div><div><h1>DAY BP <span class="tag">Mock-up</span></h1><p>대상을 선택하면 과거·현재·미래 혈압이 분단위로</p></div></div>
+ <div class="brand"><div class="logo">🩺</div><div><h1>DAY BP <span class="tag">Mock-up</span></h1><p>대상을 선택하면 과거·현재 혈압 + what-if 시나리오가 분단위로</p></div></div>
  <div style="font-size:12.5px;color:#8b97ad">실측 기반 평가 · 일평균 BHS A</div>
 </div>
 <div class="sel" id="sel"></div>
 <div class="grid">
  <div class="card">
-  <h2>혈압 타임라인 — 과거 6일(실측·추정) → 현재 → 미래(예측)</h2>
+  <h2>혈압 타임라인 — 과거 6일(실측·추정) → 현재 → what-if 시나리오</h2>
   <div id="chart"></div>
   <div class="legend">
    <span><i style="border-color:#ff6b6b"></i>수축기 SBP</span>
    <span><i style="border-color:#4dabf7"></i>이완기 DBP</span>
-   <span><i style="border-color:#8b97ad;border-top-style:dashed"></i>미래 예측</span>
-   <span>⬤ 과거 실측</span><span style="color:#b9a4f0">▮ 미래(7일째)</span>
+   <span><i style="border-color:#8b97ad;border-top-style:dashed"></i>시나리오(what-if)</span>
+   <span>⬤ 과거 실측</span><span style="color:#b9a4f0">▮ 시나리오(가상 하루)</span>
   </div>
-  <div class="scn"><span style="font-size:12.5px;color:#8b97ad;align-self:center;margin-right:4px">내일 시나리오:</span>
+  <div class="scn"><span style="font-size:12.5px;color:#8b97ad;align-self:center;margin-right:4px">what-if 시나리오:</span>
    <button data-s="normal" class="on">😌 정상</button>
    <button data-s="exercise">🏃 심한 운동</button>
    <button data-s="stress">⚡ 스트레스</button>
    <button data-s="nosleep">😵 수면부족</button>
   </div>
-  <div class="engine"><div class="eic">📏</div><div><b>예측 엔진 · 반듯이 <span class="tag">회귀 Ridge</span></b><p>수준(설문·외부) + 위상(일주기) + 편차(워치·지난추정). 진짜 시험에 가장 강한 이해왕</p></div></div>
+  <div class="engine"><div class="eic">📏</div><div><b>추정 엔진 · 반듯이 <span class="tag">회귀 Ridge</span></b><p>수준(설문·외부) + 위상(일주기) + 편차(워치). 진짜 시험에 가장 강한 이해왕</p></div></div>
  </div>
  <div>
   <div class="card">
@@ -74,13 +74,13 @@ svg{width:100%;height:auto;display:block}
    <div class="three">
     <div class="tb past"><div class="l">과거 평균</div><div class="v" id="pPast">—</div><div class="u">지난 6일</div></div>
     <div class="tb now"><div class="l">현재 Nowcast</div><div class="v" id="pNow">—</div><div class="u">지금</div></div>
-    <div class="tb fut"><div class="l">미래 Forecast</div><div class="v" id="pFut">—</div><div class="u">내일 평균</div></div>
+    <div class="tb fut"><div class="l">시나리오 What-if</div><div class="v" id="pFut">—</div><div class="u">가상 하루 평균</div></div>
    </div>
    <div class="grade">✓ BHS Grade <span id="grade">A</span> · 일평균</div>
    <div class="fc" style="margin-top:12px">
-    <div class="row"><span class="k">🔮 내일 아침</span><b id="fAM">—</b></div>
-    <div class="row"><span class="k">🔮 내일 오후 최고</span><b id="fPM">—</b></div>
-    <div class="row"><span class="k">🔮 내일 야간 최저</span><b id="fNT">—</b></div>
+    <div class="row"><span class="k">🔮 시나리오 아침</span><b id="fAM">—</b></div>
+    <div class="row"><span class="k">🔮 시나리오 오후 최고</span><b id="fPM">—</b></div>
+    <div class="row"><span class="k">🔮 시나리오 야간 최저</span><b id="fNT">—</b></div>
    </div>
   </div>
   <div class="card" style="margin-top:16px">
@@ -96,7 +96,7 @@ svg{width:100%;height:auto;display:block}
 <a href="index.html">← 책으로</a> · <a href="part2.html">PART2 추정</a> · <a href="paper.html">논문</a></div>
 </div>
 <script>
-var W=720,H=300,P=42, DAYS=7, NOWX=6; // 과거 6일(0~6) + 미래 1일(6~7), 현재=6일째 끝
+var W=720,H=300,P=42, DAYS=7, NOWX=6; // 과거 6일(0~6) + 가상 하루(6~7, what-if), 현재=6일째 끝
 var PATS=[
  {id:'A-128',nm:'익명 #A-128',ag:'34·남',cl:'C2',s:122,d:79},
  {id:'B-203',nm:'익명 #B-203',ag:'52·남',cl:'C4',s:138,d:88},
@@ -114,7 +114,7 @@ function gen(p,scen){
    var x=d + t/1440;
    var base=p.s+11*circ(t)+de, bd=p.d+7*circ(t)+de*0.6;
    if(t<6*60){base-=8;bd-=6;}
-   if(d===DAYS-1){ // 미래(7일째) 시나리오
+   if(d===DAYS-1){ // 가상 하루(what-if) 시나리오
     if(scen==='exercise'&&t>=17*60&&t<18.5*60){var z=(t-17*60)/30;base+=22*Math.exp(-Math.pow(z-1,2));bd+=10*Math.exp(-Math.pow(z-1,2));}
     if(scen==='stress'){base+=11;bd+=7;}
     if(scen==='nosleep'){base+=6;bd+=4;if(t<6*60){base+=8;bd+=5;}}

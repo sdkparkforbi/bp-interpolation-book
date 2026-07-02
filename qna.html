@@ -49,7 +49,7 @@ body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f4
 <h2>🎬 AI 스튜디오 소개 영상</h2>
 <video controls preload="metadata" playsinline style="width:100%;border-radius:13px;background:#000;display:block" id="vidbox">
 <source src="heygen_intro.mp4" type="video/mp4">브라우저가 영상을 지원하지 않습니다.</video>
-<p style="font-size:12px;color:#7a8699;margin-top:7px">🎬 AI 아바타(dkpark)가 차트(편차·모형비교·정적/동적·궤적)와 함께 DAY BP 연구를 설명합니다</p>
+<p style="font-size:12px;color:#7a8699;margin-top:7px">🎬 AI 아바타(dkpark)가 차트(편차·모형비교·워치 SHAP·궤적)와 함께 DAY BP 연구를 설명합니다</p>
 </div></div>
 
 <div class="card">
@@ -63,7 +63,7 @@ body{font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:#f4
 <div id="pane-ttt" class="pane">
 <div class="msgs" id="msgs"></div>
 <div class="chips" id="chips"></div>
-<div class="inp"><input id="q" type="text" placeholder="예: 얼마나 정확해? / 정적이랑 동적 차이?" aria-label="질문"/><button onclick="askText()">물어보기</button></div>
+<div class="inp"><input id="q" type="text" placeholder="예: 얼마나 정확해? / 위상이 뭐야?" aria-label="질문"/><button onclick="askText()">물어보기</button></div>
 </div>
 
 <div id="pane-sts" class="pane hidden">
@@ -90,17 +90,17 @@ var KB=[
  {k:["세션","순간","왜 안","a 안","에이 안","올리","높이"],a:"순간 혈압을 A로 올리려면 요약 숫자만으론 부족해. 맥파 모양인 PPG, 맥파 도착 시간인 PTT, 그리고 자주 보정이 필요해. 센서의 한계지 모형 잘못이 아니야!"},
  {k:["모형","모델","제일","최고","챔피언","반듯","좋은","어떤 모"],a:"챔피언은 능선 회귀, Ridge regression이야! 꾸준하고 반듯해서 처음 보는 사람한테도 안 흔들려. 우린 이런 친구를 이해왕이라고 불러."},
  {k:["암기왕","과적합","트리","gbm","외우","숲이","부스터","날쌘"],a:"암기왕은 랜덤 포레스트랑 그래디언트 부스팅 같은 트리 모형이야. 연습 문제는 100점인데 진짜 시험은 약해. 통째로 외워버려서 처음 보는 사람한텐 헷갈려해."},
- {k:["정적","동적","static","dynamic","1-step","롤아웃","굴"],a:"정적은 매번 진짜 측정값을 보고 딱 한 걸음만 예측해서 아주 정확해. 동적은 자기 예측을 믿고 하루를 쭉 굴려서 오차가 쌓여. 그래서 정적이 더 정확해."},
+ {k:["위상","리듬","일주기","보간","추정 차이","보간이랑"],a:"위상은 하루 혈압 리듬이야 — 낮엔 높고 새벽엔 낮지! 보간은 네 실제 측정점을 이어서 진짜 그날 리듬을 그리고, 추정은 첫날 몇 점이랑 비슷한 사람들의 평균 리듬을 빌려와. 그래서 추정은 그날의 갑작스런 변화는 조금 놓쳐."},
  {k:["수준","위상","편차","분해","나누"],a:"혈압을 셋으로 나눠 — 수준은 평소 혈압, 위상은 하루 리듬, 편차는 운동이나 스트레스로 잠깐 출렁이는 부분. 셋을 합치면 분단위 혈압 곡선이 돼!"},
  {k:["어떻게 만","데이터","몇 명","만들","수집"],a:"120명이 7일 동안 하루 약 5번 혈압을 재고, 애플워치 24가지 신호랑 설문을 모았어. 그걸로 모형을 학습시켰지!"},
  {k:["워치","시계","신호","변수","애플"],a:"심박수·심박변이·산소·호흡·활동·걸음·운동강도·손목온도·수면·걸음걸이 등 24가지! 각 신호가 혈압이랑 어떻게 연결되는지 선행연구도 다 찾아봤어."},
- {k:["목업","대시보드","데모","화면"],a:"환자를 고르면 과거·현재·미래 혈압이 분단위로 나오는 대시보드를 만들었어! 운동·수면부족·스트레스 시나리오도 눌러볼 수 있어."},
+ {k:["목업","대시보드","데모","화면"],a:"환자를 고르면 과거와 현재 혈압을 분단위로 보여주는 대시보드를 만들었어! 운동·수면부족·스트레스 what-if 시나리오도 눌러볼 수 있어."},
  {k:["bhs","등급","평가","mae","채점"],a:"BHS는 혈압계 시험 기준이야. 오차가 5, 10, 15 안에 든 비율로 A B C를 줘. 우리는 MAE랑 BHS를 항상 같이 봐."},
  {k:["한계","단점","앞으로","future","다음","숙제"],a:"솔직한 한계 — 순간 혈압은 B야. raw PPG 파형이랑 PTT 센서, 자주 보정이 있으면 A로 갈 수 있어. 그게 다음 숙제!"},
  {k:["고마","감사","잘했","멋지","최고야"],a:"헤헤 고마워! 더 궁금한 거 있으면 언제든 물어봐."}
 ];
-var DEF="음, 그건 잘 모르겠어! 이런 걸 물어봐 — 얼마나 정확해? 암기왕이 뭐야? 정적이랑 동적 차이? 세션은 왜 A가 안 돼? 목업 보여줘";
-var CHIPS=["이게 뭐야?","얼마나 정확해?","암기왕이 뭐야?","정적이랑 동적 차이","세션은 왜 A가 안 돼?","목업 보여줘"];
+var DEF="음, 그건 잘 모르겠어! 이런 걸 물어봐 — 얼마나 정확해? 암기왕이 뭐야? 위상이 뭐야? 세션은 왜 A가 안 돼? 목업 보여줘";
+var CHIPS=["이게 뭐야?","얼마나 정확해?","암기왕이 뭐야?","위상이 뭐야?","세션은 왜 A가 안 돼?","목업 보여줘"];
 function answer(q){var s=q.toLowerCase(),best=null,bn=0;KB.forEach(function(e){var n=0;e.k.forEach(function(k){if(s.indexOf(k.toLowerCase())>=0)n+=k.length;});if(n>bn){bn=n;best=e;}});return best?best.a:DEF;}
 function strip(h){var d=document.createElement('div');d.innerHTML=h;return d.textContent;}
 // TTT
