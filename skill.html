@@ -54,7 +54,7 @@ python aday_bp_colab.py --csv my_bp.csv # 실데이터 (열: ID,day,tod,SBP,DBP,
 <pre>~/.claude/skills/aday-bp-pipeline/
   ├─ SKILL.md          # 방법론·파일맵·실행순서
   ├─ heygen_knowledge.md
-  └─ scripts/          # PART1 보간·PART2 추정·PART3 예측 + 그림/책 빌더 + 레퍼런스 JSON</pre>
+  └─ scripts/          # PART1 보간·PART2 추정 + 그림/책 빌더 + 레퍼런스 JSON</pre>
 <div class="btns">
 <a class="btn b-git" href="https://github.com/sdkparkforbi/bp-interpolation-book/tree/main/skill" target="_blank" rel="noopener">📂 skill/ 폴더 (GitHub)</a>
 <a class="btn b-dl" href="skill/SKILL.md" download>⬇ SKILL.md</a>
@@ -66,13 +66,12 @@ python aday_bp_colab.py --csv my_bp.csv # 실데이터 (열: ID,day,tod,SBP,DBP,
 <h2>📦 포함 내용</h2>
 <ul>
 <li><b>PART1 보간</b> — 정제·분할·분단위 하이브리드 보간</li>
-<li><b>PART2 추정</b> — 특징행렬·20모형 zoo·웨이블릿·편차 ablation</li>
-<li><b>PART3 예측</b> — AR 정적/동적</li>
+<li><b>PART2 추정</b> — 특징행렬·모형 zoo·워치 편차(과거변수 제외)·SHAP</li>
 <li><b>빌더</b> — 책·논문·그림 자동 생성</li>
 <li><b>선행연구 JSON</b> — 워치 변수·세션 Grade A 요건(DOI)</li>
 </ul>
 <p class="muted">환자 데이터는 민감정보라 미포함. 스크립트는 방법론 템플릿이며 합성 데모로 동작합니다.</p>
 </div>
 
-<div class="foot"><a href="index.html">← 책으로</a> · <a href="part2.html">PART2</a> · <a href="part3.html">PART3</a> · <a href="paper.html">논문</a></div>
+<div class="foot"><a href="index.html">← 책으로</a> · <a href="part2.html">PART2</a> · <a href="paper.html">논문</a></div>
 </div></body></html>
