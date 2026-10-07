@@ -1,12 +1,6 @@
 # The Calibration Dial: On Identical Data, Disclosed Design Choices — Not the Estimator — Govern Reported Accuracy of Wearable Blood Pressure Estimation
 
-**Gyuseong Lee¹ (first author); Seung-gyu Kim²; Hyoyoung Kim³,†; Daegeun Park¹,†**
-
-¹ Department of AI Healthcare Convergence, Graduate School, CHA University, Republic of Korea
-² ADAY Inc., Seoul, Republic of Korea
-³ Department of Artificial Intelligence, Tech University of Korea, Republic of Korea
-
-*† Co-corresponding authors: Hyoyoung Kim (Tech University of Korea) and Daegeun Park (AIForA Lab, CHA University) — e-mails to confirm. Seung-gyu Kim (ADAY Inc.) contributed as a collaborating co-author.*
+**Authors withheld during review.**
 
 ---
 
